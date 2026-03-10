@@ -48,6 +48,7 @@ public class CpmMergedDocumentTest {
             assertNotNull(doc.getNode(entityId));
             assertTrue(doc.getTraversalInformationPart().isEmpty());
             assertTrue(doc.getForwardConnectors().isEmpty());
+            assertTrue(doc.getSpecForwardConnectors().isEmpty());
             assertFalse(doc.getNode(entityId).getAnyElement().getType().isEmpty());
             assertEquals(type, doc.getNode(entityId).getAnyElement().getType().getFirst());
         }

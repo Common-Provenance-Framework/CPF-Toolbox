@@ -123,7 +123,7 @@ public class CpmUtilities {
     /**
      * Checks if the given {@link INode} is considered a connector node.
      * A connector node is defined as having any element with a type matching either
-     * {@link CpmType#FORWARD_CONNECTOR} or {@link CpmType#BACKWARD_CONNECTOR}.
+     * {@link CpmType#FORWARD_CONNECTOR}, {@link CpmType#SPEC_FORWARD_CONNECTOR} or {@link CpmType#BACKWARD_CONNECTOR}.
      *
      * @param node the {@link INode} to check
      * @return {@code true} if the node contains a connector element, {@code false} otherwise
@@ -136,7 +136,7 @@ public class CpmUtilities {
     /**
      * Checks if the given {@link Entity} is considered a connector.
      * A connector is defined as having a type matching either
-     * {@link CpmType#FORWARD_CONNECTOR} or {@link CpmType#BACKWARD_CONNECTOR}.
+     * {@link CpmType#FORWARD_CONNECTOR}, {@link CpmType#SPEC_FORWARD_CONNECTOR} or {@link CpmType#BACKWARD_CONNECTOR}.
      *
      * @param entity the {@link Entity} to check
      * @return {@code true} if the entity is a connector, {@code false} otherwise
@@ -145,7 +145,8 @@ public class CpmUtilities {
         return entity != null && entity.getType().stream().anyMatch(x ->
                 x.getValue() instanceof QualifiedName qN &&
                         belongsToCpmNs(qN) &&
-                        (CpmType.FORWARD_CONNECTOR.toString().equals(qN.getLocalPart()) ||
+                                (CpmType.FORWARD_CONNECTOR.toString().equals(qN.getLocalPart()) ||
+                                CpmType.SPEC_FORWARD_CONNECTOR.toString().equals(qN.getLocalPart()) ||
                                 CpmType.BACKWARD_CONNECTOR.toString().equals(qN.getLocalPart())));
     }
 

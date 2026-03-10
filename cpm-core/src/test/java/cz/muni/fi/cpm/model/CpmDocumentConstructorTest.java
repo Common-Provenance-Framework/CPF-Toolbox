@@ -219,6 +219,30 @@ public abstract class CpmDocumentConstructorTest {
 
     @Test
     public void constructor_forwardConnector_returnsExpectedForwardConnectors() {
+      Document document = pF.newDocument();
+      document.setNamespace(cPF.newCpmNamespace());
+
+      QualifiedName id = pF.newQualifiedName("uri", "bundle", "ex");
+      Bundle bundle = pF.newNamedBundle(id, new ArrayList<>());
+      document.getStatementOrBundle().add(bundle);
+
+      QualifiedName entityId = pF.newQualifiedName("uri", "entity", "ex");
+      CpmType type = CpmType.FORWARD_CONNECTOR;
+      Collection<Attribute> attributes = new ArrayList<>();
+      Entity entity = cPF.newCpmEntity(entityId, type, attributes);
+      bundle.getStatement().add(entity);
+
+      CpmDocument doc = new CpmDocument(document, pF, cPF, cF);
+
+      assertNotNull(doc.getNode(entityId));
+      assertFalse(doc.getTraversalInformationPart().isEmpty());
+      assertEquals(1, doc.getForwardConnectors().size());
+      assertEquals(entityId, doc.getForwardConnectors().getFirst().getAnyElement().getId());
+      assertEquals(entity, doc.getNode(entityId).getAnyElement());
+    }
+
+    @Test
+    public void constructor_specForwardConnector_returnsExpectedForwardConnectors() {
         Document document = pF.newDocument();
         document.setNamespace(cPF.newCpmNamespace());
 
@@ -227,7 +251,7 @@ public abstract class CpmDocumentConstructorTest {
         document.getStatementOrBundle().add(bundle);
 
         QualifiedName entityId = pF.newQualifiedName("uri", "entity", "ex");
-        CpmType type = CpmType.FORWARD_CONNECTOR;
+        CpmType type = CpmType.SPEC_FORWARD_CONNECTOR;
         Collection<Attribute> attributes = new ArrayList<>();
         Entity entity = cPF.newCpmEntity(entityId, type, attributes);
         bundle.getStatement().add(entity);
@@ -236,7 +260,8 @@ public abstract class CpmDocumentConstructorTest {
 
         assertNotNull(doc.getNode(entityId));
         assertFalse(doc.getTraversalInformationPart().isEmpty());
-        assertFalse(doc.getForwardConnectors().isEmpty());
+        assertEquals(1, doc.getSpecForwardConnectors().size());
+        assertEquals(entityId, doc.getSpecForwardConnectors().getFirst().getAnyElement().getId());
         assertEquals(entity, doc.getNode(entityId).getAnyElement());
     }
 

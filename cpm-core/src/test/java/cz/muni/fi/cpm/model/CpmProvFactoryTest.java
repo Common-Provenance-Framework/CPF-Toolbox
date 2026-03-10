@@ -29,10 +29,10 @@ public class CpmProvFactoryTest {
 
     @Test
     public void newCpmType_withValidType_returnsExpectedType() {
-        CpmType type = CpmType.FORWARD_CONNECTOR;
-        Type result = cF.newCpmType(type);
-        assertNotNull(result);
-        assertEquals(type.toString(), ((QualifiedName) result.getValue()).getLocalPart());
+      CpmType type = CpmType.FORWARD_CONNECTOR;
+      Type result = cF.newCpmType(type);
+      assertNotNull(result);
+      assertEquals(type.toString(), ((QualifiedName) result.getValue()).getLocalPart());
     }
 
     @Test
@@ -69,12 +69,12 @@ public class CpmProvFactoryTest {
 
     @Test
     public void newCpmEntity_withValidParameters_returnsExpectedEntity() {
-        QualifiedName id = cF.newCpmQualifiedName("entityId");
-        CpmType type = CpmType.FORWARD_CONNECTOR;
-        Collection<Attribute> attributes = new ArrayList<>();
-        Entity result = cF.newCpmEntity(id, type, attributes);
-        assertNotNull(result);
-        assertTrue(attributes.contains(cF.newCpmType(type)));
+      QualifiedName id = cF.newCpmQualifiedName("entityId");
+      CpmType type = CpmType.FORWARD_CONNECTOR;
+      Collection<Attribute> attributes = new ArrayList<>();
+      Entity result = cF.newCpmEntity(id, type, attributes);
+      assertNotNull(result);
+      assertTrue(attributes.contains(cF.newCpmType(type)));
     }
 
     @Test
