@@ -29,13 +29,13 @@ public abstract class CpmDocumentAdditionalTest {
         Entity entity1 = cPF.getProvFactory().newEntity(id1);
 
         QualifiedName id2 = cPF.newCpmQualifiedName("qN2");
-        Entity entity2 = cPF.newCpmEntity(id2, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity2 = cPF.newCpmBackwardConnector(id2);
 
         QualifiedName id3 = cPF.newCpmQualifiedName("qN3");
         Agent agent = cPF.getProvFactory().newAgent(id3);
 
         QualifiedName id4 = cPF.newCpmQualifiedName("qN4");
-        Entity entity4 = cPF.newCpmEntity(id4, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity4 = cPF.newCpmBackwardConnector(id4);
 
         Relation relation1 = cPF.getProvFactory().newWasAttributedTo(cPF.newCpmQualifiedName("attr"), id1, id3);
 
@@ -91,16 +91,16 @@ public abstract class CpmDocumentAdditionalTest {
     @Test
     public void getRelatedNodes_validData_returnsExpectedNodes() {
         QualifiedName id1 = cPF.newCpmQualifiedName("qN1");
-        Entity entity1 = cPF.newCpmEntity(id1, CpmType.FORWARD_CONNECTOR, new ArrayList<>());
+        Entity entity1 = cPF.newCpmForwardConnector(id1);
 
         QualifiedName id2 = cPF.newCpmQualifiedName("qN2");
-        Entity entity2 = cPF.newCpmEntity(id2, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity2 = cPF.newCpmBackwardConnector(id2);
 
         QualifiedName id3 = cPF.newCpmQualifiedName("qN3");
-        Entity entity3 = cPF.newCpmEntity(id3, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity3 = cPF.newCpmBackwardConnector(id3);
 
         QualifiedName id4 = cPF.newCpmQualifiedName("qN4");
-        Entity entity4 = cPF.newCpmEntity(id4, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity4 = cPF.newCpmBackwardConnector(id4);
 
         Relation relation1 = cPF.getProvFactory().newWasDerivedFrom(id4, id3);
         Relation relation2 = cPF.getProvFactory().newWasDerivedFrom(id3, id2);

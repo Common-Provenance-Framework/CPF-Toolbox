@@ -70,11 +70,9 @@ public class CpmProvFactoryTest {
     @Test
     public void newCpmEntity_withValidParameters_returnsExpectedEntity() {
       QualifiedName id = cF.newCpmQualifiedName("entityId");
-      CpmType type = CpmType.FORWARD_CONNECTOR;
-      Collection<Attribute> attributes = new ArrayList<>();
-      Entity result = cF.newCpmEntity(id, type, attributes);
-      assertNotNull(result);
-      assertTrue(attributes.contains(cF.newCpmType(type)));
+      Entity connector = cF.newCpmForwardConnector(id);
+      assertNotNull(connector);
+      assertTrue(connector.getType().contains(cF.newCpmType(CpmType.FORWARD_CONNECTOR)));
     }
 
     @Test
@@ -82,11 +80,10 @@ public class CpmProvFactoryTest {
         QualifiedName id = cF.newCpmQualifiedName("activityId");
         XMLGregorianCalendar startTime = datatypeFactory.newXMLGregorianCalendar("2024-11-13T10:00:00");
         XMLGregorianCalendar endTime = datatypeFactory.newXMLGregorianCalendar("2024-11-13T12:00:00");
-        CpmType type = CpmType.MAIN_ACTIVITY;
         Collection<Attribute> attributes = new ArrayList<>();
-        Activity result = cF.newCpmActivity(id, startTime, endTime, type, attributes);
+        Activity result = cF.newCpmMainActivity(id, startTime, endTime, attributes);
         assertNotNull(result);
-        assertTrue(attributes.contains(cF.newCpmType(type)));
+        assertTrue(attributes.contains(cF.newCpmType(CpmType.MAIN_ACTIVITY)));
     }
 
     @Test
