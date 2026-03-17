@@ -16,41 +16,41 @@ import static cz.muni.fi.cpm.template.deserialization.pbm.PbmNamespaceConstants.
 import static cz.muni.fi.cpm.template.deserialization.pbm.PbmNamespaceConstants.PBM_PREFIX;
 
 public class CpmStorageTransformer extends StorageTransformer {
-    public CpmStorageTransformer(Patient patient, ProvFactory pF, ICpmProvFactory cPF, PbmFactory pbmF) {
-        super(patient, pF, cPF, pbmF);
-    }
+  public CpmStorageTransformer(Patient patient, ProvFactory pF, ICpmProvFactory cPF, PbmFactory pbmF) {
+    super(patient, pF, cPF, pbmF);
+  }
 
-    @Override
-    protected Document createTI(String suffix) {
-        TraversalInformation ti = new TraversalInformation();
-        ti.setPrefixes(Map.of(BBMRI_PREFIX, BBMRI_NS, PBM_PREFIX, PBM_NS));
-        ti.setBundleName(ti.getNamespace().qualifiedName(BBMRI_PREFIX, STORAGE + "Bundle" + suffix, pF));
+  @Override
+  protected Document createTI(String suffix) {
+    TraversalInformation ti = new TraversalInformation();
+    ti.setPrefixes(Map.of(BBMRI_PREFIX, BBMRI_NS, PBM_PREFIX, PBM_NS));
+    ti.setBundleName(ti.getNamespace().qualifiedName(BBMRI_PREFIX, STORAGE + "Bundle" + suffix, pF));
 
-        MainActivity mA = new MainActivity(ti.getNamespace().qualifiedName(BBMRI_PREFIX, STORAGE + suffix, pF));
-        ti.setMainActivity(mA);
+    MainActivity mA = new MainActivity(ti.getNamespace().qualifiedName(BBMRI_PREFIX, STORAGE + suffix, pF));
+    ti.setMainActivity(mA);
 
-        QualifiedName aCID = ti.getNamespace().qualifiedName(BBMRI_PREFIX, ACQUISITION_CON + suffix, pF);
+    QualifiedName aCID = ti.getNamespace().qualifiedName(BBMRI_PREFIX, ACQUISITION_CON + suffix, pF);
 
-        BackwardConnector bC = new BackwardConnector(aCID);
-        bC.setReferencedBundleId(ti.getNamespace().qualifiedName(BBMRI_PREFIX, ACQUISITION + "Bundle" + suffix, pF));
-        ti.getBackwardConnectors().add(bC);
+    BackwardConnector bC = new BackwardConnector(aCID);
+    bC.setReferencedBundleId(ti.getNamespace().qualifiedName(BBMRI_PREFIX, ACQUISITION + "Bundle" + suffix, pF));
+    ti.getBackwardConnectors().add(bC);
 
-        MainActivityUsed used = new MainActivityUsed(aCID);
-        mA.setUsed(List.of(used));
+    MainActivityUsed used = new MainActivityUsed(aCID);
+    mA.setUsed(List.of(used));
 
-        QualifiedName fcID = ti.getNamespace().qualifiedName(BBMRI_PREFIX, STOR_CON + suffix, pF);
-        mA.setGenerated(List.of(fcID));
+    QualifiedName fcID = ti.getNamespace().qualifiedName(BBMRI_PREFIX, STOR_CON + suffix, pF);
+    mA.setGenerated(List.of(fcID));
 
-        ForwardConnector fC = new ForwardConnector(fcID);
-        fC.setDerivedFrom(List.of(bC.getId()));
-        ti.getForwardConnectors().add(fC);
+    ForwardConnector fC = new ForwardConnector(fcID);
+    fC.setDerivedFrom(List.of(bC.getId()));
+    ti.getForwardConnectors().add(fC);
 
-        QualifiedName agentId = ti.getNamespace().qualifiedName(BBMRI_PREFIX, "UNI", pF);
-        ti.setSenderAgents(List.of(new SenderAgent(agentId)));
+    QualifiedName agentId = ti.getNamespace().qualifiedName(BBMRI_PREFIX, "UNI", pF);
+    ti.setSenderAgents(List.of(new SenderAgent(agentId)));
 
-        bC.setAttributedTo(new ConnectorAttributed(agentId));
+    bC.setAttributedTo(new ConnectorAttributed(agentId));
 
-        return mapper.map(ti);
-    }
+    return mapper.toProvDocument(ti);
+  }
 
 }

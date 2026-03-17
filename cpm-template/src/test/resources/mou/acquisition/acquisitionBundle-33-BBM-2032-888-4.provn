@@ -8,7 +8,7 @@ bundle bbmri:acquisitionBundle-33-BBM:2032:888:4
 activity(bbmri:acquisition-33-BBM:2032:888:4,-,-,[prov:type = 'cpm:mainActivity', dct:hasPart = 'bbmri:acquisitionAct-33-BBM:2032:888:4'])
 wasGeneratedBy(bbmri:sampleAcqConnector-33-BBM:2032:888:4,bbmri:acquisition-33-BBM:2032:888:4,-)
 entity(bbmri:sampleAcqConnector-33-BBM:2032:888:4,[prov:type = 'cpm:forwardConnector'])
-entity(bbmri:sampleAcqConnectorSpec-33-BBM:2032:888:4,[prov:type = 'cpm:forwardConnector', cpm:referencedBundleId = 'bbmri:storageBundle-33-BBM:2032:888:4'])
+entity(bbmri:sampleAcqConnectorSpec-33-BBM:2032:888:4,[prov:type = 'cpm:specForwardConnector', cpm:referencedBundleId = 'bbmri:storageBundle-33-BBM:2032:888:4'])
 wasAttributedTo(bbmri:sampleAcqConnectorSpec-33-BBM:2032:888:4, bbmri:MOU)
 specializationOf(bbmri:sampleAcqConnectorSpec-33-BBM:2032:888:4,bbmri:sampleAcqConnector-33-BBM:2032:888:4)
 agent(bbmri:MOU,[prov:type = 'cpm:receiverAgent'])
