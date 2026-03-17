@@ -1,6 +1,5 @@
 package cz.muni.fi.cpm.template.schema;
 
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import cz.muni.fi.cpm.constants.CpmType;
@@ -18,8 +17,8 @@ public class SpecForwardConnector extends Connector {
   @JsonPropertyDescription("The content version of the referenced finalized provenance component.")
   private String referencedBundleSpecV;
 
-  // @JsonPropertyDescription("The content version of the referenced meta-component.")
-  // private String referencedMetaBundleSpecV;
+  @JsonPropertyDescription("The content version of the referenced meta-component.")
+  private String referencedMetaBundleSpecV;
 
   @JsonPropertyDescription("The URI of the provenance service")
   private String provenanceServiceUri;
@@ -67,13 +66,13 @@ public class SpecForwardConnector extends Connector {
     this.referencedBundleSpecV = referencedBundleSpecV;
   }
 
-  // public String getReferencedMetaBundleSpecV() {
-  //   return referencedMetaBundleSpecV;
-  // }
+  public String getReferencedMetaBundleSpecV() {
+    return referencedMetaBundleSpecV;
+  }
 
-  // public void setReferencedMetaBundleSpecV(String referencedMetaBundleSpecV) {
-  //   this.referencedMetaBundleSpecV = referencedMetaBundleSpecV;
-  // }
+  public void setReferencedMetaBundleSpecV(String referencedMetaBundleSpecV) {
+    this.referencedMetaBundleSpecV = referencedMetaBundleSpecV;
+  }
 
   public String getProvenanceServiceUri() {
     return provenanceServiceUri;

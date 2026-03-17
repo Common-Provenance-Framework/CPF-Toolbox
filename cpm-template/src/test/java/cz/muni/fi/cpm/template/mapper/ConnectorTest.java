@@ -226,6 +226,24 @@ public class ConnectorTest {
     assertEquals(version, LangString.class.cast(attr.getValue()).getValue());
   }
 
+  @Test
+  public void toStatements_withReferencedMetaBundleSpecV_returnsCorrectUri() {
+    SpecForwardConnector connector = new SpecForwardConnector();
+    connector.setId(new QualifiedName("uri", "connectorExample", "ex"));
+    String version = "x.y.z";
+    connector.setReferencedMetaBundleSpecV(version);
+
+    List<Statement> statements = mapper.toStatementsStream(connector).toList();
+    Entity entity = (Entity) statements.get(0);
+
+    assertNotNull(entity.getOther());
+    assertEquals(1, entity.getOther().size());
+
+    Attribute attr = entity.getOther().getFirst();
+    assertEquals(CpmAttribute.REFERENCED_META_BUNDLE_SPECV.toString(), attr.getElementName().getLocalPart());
+    assertInstanceOf(LangString.class, attr.getValue());
+    assertEquals(version, LangString.class.cast(attr.getValue()).getValue());
+  }
 
   @Test
   public void toStatements_nullConnector_returnsNull() {
