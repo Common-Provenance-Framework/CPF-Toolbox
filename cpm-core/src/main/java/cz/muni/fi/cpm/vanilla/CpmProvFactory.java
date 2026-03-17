@@ -139,6 +139,16 @@ public class CpmProvFactory implements ICpmProvFactory {
   }
 
   @Override
+  public Other newCpmAttributeReferencedBundleSpecV(String value) {
+    return newCpmAttribute(CpmAttribute.REFERENCED_BUNDLE_SPECV, value);
+  }
+
+  @Override
+  public Other newCpmAttributeReferencedMetaBundleSpecV(String value) {
+    return newCpmAttribute(CpmAttribute.REFERENCED_META_BUNDLE_SPECV, value);
+  }
+
+  @Override
   public Entity newCpmEntity(QualifiedName id, CpmType type, Collection<Attribute> attributes) {
     attributes.add(newCpmType(type));
     return pF.newEntity(id, attributes);

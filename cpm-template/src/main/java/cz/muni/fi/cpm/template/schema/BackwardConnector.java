@@ -15,14 +15,11 @@ public class BackwardConnector extends Connector {
   @JsonPropertyDescription("The referenced meta bundle's identifier")
   private QualifiedName referencedMetaBundleId;
 
-  // Not used yet, just to be ready
-  // @JsonPropertyDescription("The content version of the referenced finalized
-  // provenance component.")
-  // private String referencedBundleSpecV;
+  @JsonPropertyDescription("The content version of the referenced finalized provenance component.")
+  private String referencedBundleSpecV;
 
-  // @JsonPropertyDescription("The content version of the referenced
-  // meta-component.")
-  // private String referencedMetaBundleSpecV;
+  @JsonPropertyDescription("The content version of the referenced meta-component.")
+  private String referencedMetaBundleSpecV;
 
   @JsonPropertyDescription("The referenced bundle's hash value's algorithm")
   private HashAlgorithms hashAlg;
@@ -56,21 +53,21 @@ public class BackwardConnector extends Connector {
     this.referencedMetaBundleId = referencedMetaBundleId;
   }
 
-  // public String getReferencedBundleSpecV() {
-  // return referencedBundleSpecV;
-  // }
+  public String getReferencedBundleSpecV() {
+    return referencedBundleSpecV;
+  }
 
-  // public void setReferencedBundleSpecV(String referencedBundleSpecV) {
-  // this.referencedBundleSpecV = referencedBundleSpecV;
-  // }
+  public void setReferencedBundleSpecV(String referencedBundleSpecV) {
+    this.referencedBundleSpecV = referencedBundleSpecV;
+  }
 
-  // public String getReferencedMetaBundleSpecV() {
-  // return referencedMetaBundleSpecV;
-  // }
+  public String getReferencedMetaBundleSpecV() {
+    return referencedMetaBundleSpecV;
+  }
 
-  // public void setReferencedMetaBundleSpecV(String referencedMetaBundleSpecV) {
-  // this.referencedMetaBundleSpecV = referencedMetaBundleSpecV;
-  // }
+  public void setReferencedMetaBundleSpecV(String referencedMetaBundleSpecV) {
+    this.referencedMetaBundleSpecV = referencedMetaBundleSpecV;
+  }
 
   public HashAlgorithms getHashAlg() {
     return hashAlg;
