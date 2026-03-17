@@ -16,20 +16,31 @@ public class TraversalInformation {
     @JsonIgnore
     @JsonDeserialize(using = CustomNamespacePrefixDeserializer.class)
     private Namespace namespace = new Namespace();
+
     @JsonProperty(required = true)
     @JsonPropertyDescription("The main activity of the traversal information part")
     private MainActivity mainActivity;
+
     @JsonProperty(required = true)
     @JsonPropertyDescription("The bundle's identifier")
     private QualifiedName bundleName;
+
     @JsonPropertyDescription("The backward connectors")
     private List<BackwardConnector> backwardConnectors;
+
+    // TODO: Maybe there is exact one forward connector, so we can change it to a single object instead of a list?
     @JsonPropertyDescription("The forward connectors")
     private List<ForwardConnector> forwardConnectors;
+
+    @JsonPropertyDescription("The specialization forward connectors")
+    private List<SpecForwardConnector> specForwardConnectors;
+
     @JsonPropertyDescription("The sender agents")
     private List<SenderAgent> senderAgents;
+
     @JsonPropertyDescription("The receiver agents")
     private List<ReceiverAgent> receiverAgents;
+
     @JsonPropertyDescription("The identifier entities")
     private List<IdentifierEntity> identifierEntities;
 
@@ -89,7 +100,18 @@ public class TraversalInformation {
     }
 
     public void setForwardConnectors(List<ForwardConnector> forwardConnectors) {
-        this.forwardConnectors = forwardConnectors;
+      this.forwardConnectors = forwardConnectors;
+    }
+
+    public List<SpecForwardConnector> getSpecForwardConnectors() {
+        if (specForwardConnectors == null) {
+            specForwardConnectors = new ArrayList<>();
+        }
+        return specForwardConnectors;
+    }
+
+    public void setSpecForwardConnectors(List<SpecForwardConnector> specForwardConnectors) {
+        this.specForwardConnectors = specForwardConnectors;
     }
 
     public List<SenderAgent> getSenderAgents() {

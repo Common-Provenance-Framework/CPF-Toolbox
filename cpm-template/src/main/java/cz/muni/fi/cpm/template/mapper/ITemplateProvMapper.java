@@ -14,5 +14,5 @@ public interface ITemplateProvMapper {
      * @param ti the {@link TraversalInformation} to map
      * @return a PROV {@link Document} containing one named bundle with all mapped statements
      */
-    Document map(TraversalInformation ti);
+    Document toProvDocument(TraversalInformation ti);
 }

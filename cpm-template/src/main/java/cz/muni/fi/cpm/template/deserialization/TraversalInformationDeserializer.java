@@ -39,7 +39,7 @@ public class TraversalInformationDeserializer implements ITraversalInformationDe
 
     @Override
     public Document deserializeDocument(InputStream in) throws IOException {
-        return templateMapper.map(deserializeTI(in));
+        return templateMapper.toProvDocument(deserializeTI(in));
     }
 
     private void customize(ObjectMapper mapper) {
