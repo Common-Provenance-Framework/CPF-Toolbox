@@ -12,6 +12,7 @@ public enum CpmAttribute {
     COMMENT("comment"),
     REFERENCED_BUNDLE_ID("referencedBundleId"),
     REFERENCED_META_BUNDLE_ID("referencedMetaBundleId"),
+    REFERENCED_BUNDLE_SPECV("referencedBundleSpecV"),
     PROVENANCE_SERVICE_URI("provenanceServiceUri"),
     HASH_VALUE("hashValue"),
     REFERENCED_BUNDLE_HASH_VALUE("referencedBundleHashValue"),

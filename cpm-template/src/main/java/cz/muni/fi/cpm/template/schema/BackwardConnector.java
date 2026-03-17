@@ -15,10 +15,8 @@ public class BackwardConnector extends Connector {
   @JsonPropertyDescription("The referenced meta bundle's identifier")
   private QualifiedName referencedMetaBundleId;
 
-  // Not used yet, just to be ready
-  // @JsonPropertyDescription("The content version of the referenced finalized
-  // provenance component.")
-  // private String referencedBundleSpecV;
+  @JsonPropertyDescription("The content version of the referenced finalized provenance component.")
+  private String referencedBundleSpecV;
 
   // @JsonPropertyDescription("The content version of the referenced
   // meta-component.")
@@ -56,13 +54,13 @@ public class BackwardConnector extends Connector {
     this.referencedMetaBundleId = referencedMetaBundleId;
   }
 
-  // public String getReferencedBundleSpecV() {
-  // return referencedBundleSpecV;
-  // }
+  public String getReferencedBundleSpecV() {
+    return referencedBundleSpecV;
+  }
 
-  // public void setReferencedBundleSpecV(String referencedBundleSpecV) {
-  // this.referencedBundleSpecV = referencedBundleSpecV;
-  // }
+  public void setReferencedBundleSpecV(String referencedBundleSpecV) {
+    this.referencedBundleSpecV = referencedBundleSpecV;
+  }
 
   // public String getReferencedMetaBundleSpecV() {
   // return referencedMetaBundleSpecV;

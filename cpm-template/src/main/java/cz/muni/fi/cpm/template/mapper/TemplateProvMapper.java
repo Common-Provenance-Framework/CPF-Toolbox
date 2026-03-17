@@ -76,6 +76,10 @@ public class TemplateProvMapper implements ITemplateProvMapper {
               .map(cPF::newCpmAttributeReferencedBundleId)
               .ifPresent(entity.getOther()::add);
 
+          Optional.ofNullable(connector.getReferencedBundleSpecV())
+              .map(cPF::newCpmAttributeReferencedBundleSpecV)
+              .ifPresent(entity.getOther()::add);
+
           Optional.ofNullable(connector.getReferencedMetaBundleId())
               .map(cPF::newCpmAttributeReferencedMetaBundleId)
               .ifPresent(entity.getOther()::add);
@@ -141,6 +145,10 @@ public class TemplateProvMapper implements ITemplateProvMapper {
 
           Optional.ofNullable(connector.getReferencedMetaBundleId())
               .map(cPF::newCpmAttributeReferencedMetaBundleId)
+              .ifPresent(entity.getOther()::add);
+
+          Optional.ofNullable(connector.getReferencedBundleSpecV())
+              .map(cPF::newCpmAttributeReferencedBundleSpecV)
               .ifPresent(entity.getOther()::add);
 
           Stream<Statement> relations = scalarToStreamSafe(connector.getAttributedTo())

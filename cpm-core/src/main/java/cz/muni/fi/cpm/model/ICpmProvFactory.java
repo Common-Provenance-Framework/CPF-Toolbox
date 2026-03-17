@@ -143,6 +143,15 @@ public interface ICpmProvFactory {
     Other newCpmAttributeReferencedMetaBundleId(QualifiedName value);
 
     /**
+     * Creates a new referencedBundleSpecV attribute with the specified value.
+     *
+     * @param value the value for the attribute
+     * @return a new {@link Other} instance configured with the provided value
+     */
+    Other newCpmAttributeReferencedBundleSpecV(String value);
+
+
+    /**
      * Creates a new DCT attribute with the specified qualified name value.
      *
      * @param value the qualified name value for the DCT attribute
