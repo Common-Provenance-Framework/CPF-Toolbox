@@ -84,6 +84,22 @@ public class CpmUtilities {
                                 belongsToCpmNs(qN) && Objects.equals(type.toString(), qN.getLocalPart()));
     }
 
+    public static boolean isSpecForwardConnector(Entity entity) {
+      return hasCpmType(entity, CpmType.SPEC_FORWARD_CONNECTOR);
+    }
+
+    public static boolean isForwardConnector(Entity entity) {
+      return hasCpmType(entity, CpmType.FORWARD_CONNECTOR);
+    }
+
+    public static boolean isReceiverAgent(Agent agent) {
+      return hasCpmType(agent, CpmType.RECEIVER_AGENT);
+    }
+
+    public static boolean isSenderAgent(Agent agent) {
+      return hasCpmType(agent, CpmType.SENDER_AGENT);
+    }
+
     /**
      * Checks if the given {@link HasOther} contains a specific CPM attribute.
      * This method verifies if the statement includes an "other" attribute matching

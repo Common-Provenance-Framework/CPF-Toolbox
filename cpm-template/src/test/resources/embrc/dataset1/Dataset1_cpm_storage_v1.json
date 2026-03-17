@@ -23,13 +23,13 @@
           "cpm:hashAlg" : [ "SHA256" ],
           "prov:type" : [ {
             "type" : "prov:QUALIFIED_NAME",
-            "$" : "cpm:forwardConnector"
+            "$" : "cpm:specForwardConnector"
           } ],
           "cpm:referencedMetaBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:ProcessingBundle_V0_meta"
           } ],
-          "cpm:referencedBundleHashValue" : [ "3651b98fe75f50082a2d002a067edd56d8104ef441a670c5b8ae2f12fdb26e7f" ],
+          "cpm:referencedBundleHashValue" : [ "350fdebaab938c4ab69b5979e1a9458758a2b4851ae2519789f5e32ef9536513" ],
           "cpm:referencedBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:ProcessingBundle_V0"
@@ -125,13 +125,13 @@
           "cpm:hashAlg" : [ "SHA256" ],
           "prov:type" : [ {
             "type" : "prov:QUALIFIED_NAME",
-            "$" : "cpm:forwardConnector"
+            "$" : "cpm:specForwardConnector"
           } ],
           "cpm:referencedMetaBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:DnaSequencingBundle_V0_meta"
           } ],
-          "cpm:referencedBundleHashValue" : [ "1c5ac03315acd3d93f1b08620279e98724c357258c7c590c7a0191a1ea74b580" ],
+          "cpm:referencedBundleHashValue" : [ "cccac48ca8e8aae7462b394fbce3f355c5e4e0b21ee34240c5153dc4d405eabe" ],
           "cpm:referencedBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:DnaSequencingBundle_V0"
@@ -267,13 +267,13 @@
           "cpm:hashAlg" : [ "SHA256" ],
           "prov:type" : [ {
             "type" : "prov:QUALIFIED_NAME",
-            "$" : "cpm:forwardConnector"
+            "$" : "cpm:specForwardConnector"
           } ],
           "cpm:referencedMetaBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:SpeciesIdentificationBundle_V0_meta"
           } ],
-          "cpm:referencedBundleHashValue" : [ "e3479b9e849e6b5c841fe8ff135eecd484189aa407d6ddbc43d1f1bc4657786d" ],
+          "cpm:referencedBundleHashValue" : [ "4ca9b4672f26f9c0fde6af0eae27e8d9675c8fc8ce85934ef119d284ac4638d0" ],
           "cpm:referencedBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:SpeciesIdentificationBundle_V0"
@@ -602,17 +602,17 @@
         }
       },
       "wasAttributedTo" : {
-        "_:n120" : {
-          "prov:entity" : "blank:StoredSampleCon_r1_Spec",
-          "prov:agent" : "blank:NiceMarineStation"
+        "_:n123" : {
+          "prov:entity" : "blank:StoredSampleCon_r2_3um_Spec",
+          "prov:agent" : "blank:SequencingIsUsHQ"
         },
         "_:n125" : {
           "prov:entity" : "blank:IdentifiedSpeciesConSpec",
           "prov:agent" : "blank:NiceMarineStation"
         },
-        "_:n122" : {
-          "prov:entity" : "blank:StoredSampleCon_r2_3um_Spec",
-          "prov:agent" : "blank:SequencingIsUsHQ"
+        "_:n121" : {
+          "prov:entity" : "blank:StoredSampleCon_r1_Spec",
+          "prov:agent" : "blank:NiceMarineStation"
         },
         "_:n154" : {
           "prov:entity" : "blank:ABSPermit_ircc2345678",
@@ -621,10 +621,6 @@
         }
       },
       "specializationOf" : {
-        "_:n123" : {
-          "prov:specificEntity" : "blank:StoredSampleCon_r2_3um_Spec",
-          "prov:generalEntity" : "blank:StoredSampleCon_r2_3um"
-        },
         "_:n156" : {
           "prov:specificEntity" : "blank:StoredSample_r2_3um",
           "prov:generalEntity" : "blank:StoredSampleCon_r2_3um"
@@ -633,17 +629,21 @@
           "prov:specificEntity" : "blank:IdentifiedSpeciesConSpec",
           "prov:generalEntity" : "blank:IdentifiedSpeciesCon"
         },
+        "_:n122" : {
+          "prov:specificEntity" : "blank:StoredSampleCon_r1_Spec",
+          "prov:generalEntity" : "blank:StoredSampleCon_r1"
+        },
         "_:n155" : {
           "prov:specificEntity" : "blank:StoredSample_r1",
           "prov:generalEntity" : "blank:StoredSampleCon_r1"
         },
-        "_:n121" : {
-          "prov:specificEntity" : "blank:StoredSampleCon_r1_Spec",
-          "prov:generalEntity" : "blank:StoredSampleCon_r1"
+        "_:n124" : {
+          "prov:specificEntity" : "blank:StoredSampleCon_r2_3um_Spec",
+          "prov:generalEntity" : "blank:StoredSampleCon_r2_3um"
         }
       },
       "wasDerivedFrom" : {
-        "_:n124" : {
+        "_:n120" : {
           "prov:generatedEntity" : "blank:IdentifiedSpeciesCon",
           "prov:usedEntity" : "blank:StoredSampleCon_r1"
         }
