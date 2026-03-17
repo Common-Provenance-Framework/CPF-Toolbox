@@ -15,11 +15,6 @@
     "@context" : [ { }, "https://openprovenance.org/prov-jsonld/context.jsonld" ],
     "@id" : "_:SpeciesIdentificationBundle",
     "@graph" : [ {
-      "@type" : "Activity",
-      "@id" : "_:SpeciesIdentification",
-      "dct:hasPart" : [ "_:FlowCamSpeciesIdentification" ],
-      "type" : [ "cpm:mainActivity" ]
-    }, {
       "@type" : "Usage",
       "activity" : "_:SpeciesIdentification",
       "entity" : "_:ProcessedSampleCon"
@@ -28,17 +23,26 @@
       "entity" : "_:IdentifiedSpeciesCon",
       "activity" : "_:SpeciesIdentification"
     }, {
-      "@type" : "Entity",
-      "@id" : "_:ProcessedSampleCon",
-      "type" : [ "cpm:backwardConnector" ],
-      "cpm:referencedBundleId" : [ "_:ProcessingBundle" ]
+      "@type" : "Activity",
+      "@id" : "_:SpeciesIdentification",
+      "dct:hasPart" : [ "_:FlowCamSpeciesIdentification" ],
+      "type" : [ "cpm:mainActivity" ]
+    }, {
+      "@type" : "Attribution",
+      "entity" : "_:ProcessedSampleCon",
+      "agent" : "_:NiceMarineStation"
     }, {
       "@type" : "Derivation",
       "generatedEntity" : "_:ProcessedSampleCon",
       "usedEntity" : "_:StoredSampleCon_r1"
     }, {
+      "@type" : "Entity",
+      "@id" : "_:ProcessedSampleCon",
+      "type" : [ "cpm:backwardConnector" ],
+      "cpm:referencedBundleId" : [ "_:ProcessingBundle" ]
+    }, {
       "@type" : "Attribution",
-      "entity" : "_:ProcessedSampleCon",
+      "entity" : "_:StoredSampleCon_r1",
       "agent" : "_:NiceMarineStation"
     }, {
       "@type" : "Entity",
@@ -46,17 +50,13 @@
       "type" : [ "cpm:backwardConnector" ],
       "cpm:referencedBundleId" : [ "_:SamplingBundle" ]
     }, {
-      "@type" : "Attribution",
-      "entity" : "_:StoredSampleCon_r1",
-      "agent" : "_:NiceMarineStation"
+      "@type" : "Derivation",
+      "generatedEntity" : "_:IdentifiedSpeciesCon",
+      "usedEntity" : "_:ProcessedSampleCon"
     }, {
       "@type" : "Entity",
       "@id" : "_:IdentifiedSpeciesCon",
       "type" : [ "cpm:forwardConnector" ]
-    }, {
-      "@type" : "Derivation",
-      "generatedEntity" : "_:IdentifiedSpeciesCon",
-      "usedEntity" : "_:ProcessedSampleCon"
     }, {
       "@type" : "Agent",
       "@id" : "_:NiceMarineStation",

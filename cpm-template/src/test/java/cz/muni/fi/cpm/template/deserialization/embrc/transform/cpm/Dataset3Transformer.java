@@ -52,7 +52,7 @@ public class Dataset3Transformer extends DatasetTransformer {
         ti.setForwardConnectors(List.of(fC));
 
         mA.setGenerated(List.of(fC.getId()));
-        return mapper.map(ti);
+        return mapper.toProvDocument(ti);
     }
 
     @Override
