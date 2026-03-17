@@ -54,7 +54,7 @@ public class Dataset4Transformer extends DatasetTransformer {
 
         mA.setGenerated(List.of(fC.getId()));
 
-        return mapper.map(ti);
+        return mapper.toProvDocument(ti);
     }
 
     @Override

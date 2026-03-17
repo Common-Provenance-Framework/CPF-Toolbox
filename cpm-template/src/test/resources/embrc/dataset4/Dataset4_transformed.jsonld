@@ -324,6 +324,13 @@
     } ],
     "type" : [ "schema:DefinedTerm" ]
   }, {
+    "@type" : "Association",
+    "agent" : "orcid:0000-0001-0001-0002",
+    "activity" : "_:StoringActivity",
+    "role" : [ {
+      "@value" : "laboratory technician"
+    } ]
+  }, {
     "@type" : "Entity",
     "schema:name" : [ {
       "@value" : "BigProject_eDNAstorage"
@@ -337,13 +344,6 @@
     "@type" : "Usage",
     "entity" : "gen:db6e9e476b5ea9b48c2846fb061dc1b683289c939ddc977059c761f69de45884",
     "activity" : "_:StoringActivity"
-  }, {
-    "@type" : "Association",
-    "agent" : "orcid:0000-0001-0001-0002",
-    "activity" : "_:StoringActivity",
-    "role" : [ {
-      "@value" : "laboratory technician"
-    } ]
   }, {
     "@type" : "Usage",
     "entity" : "_:BigProject_belgium_water_10m_1000um_r2_3um",
@@ -411,6 +411,13 @@
     "entity" : "_:BigProject_belgium_water_10m_1000um_r2_3um",
     "activity" : "_:MaterialAcquiringActivity1"
   }, {
+    "@type" : "Association",
+    "agent" : "_:DNATechnicianPerson",
+    "activity" : "_:StoringActivity2",
+    "role" : [ {
+      "@value" : "laboratory technician"
+    } ]
+  }, {
     "@type" : "Entity",
     "schema:description" : [ {
       "@value" : "instructions for storage of filter membranes until further processing"
@@ -422,16 +429,16 @@
     "entity" : "gen:6a3784dc2ccf422d90e9407efe7739eadfa23af77cb0d1af4fcfca120379f7ef",
     "activity" : "_:StoringActivity2"
   }, {
-    "@type" : "Association",
-    "agent" : "_:DNATechnicianPerson",
-    "activity" : "_:StoringActivity2",
-    "role" : [ {
-      "@value" : "laboratory technician"
-    } ]
-  }, {
     "@type" : "Usage",
     "entity" : "_:BigProject_belgium_water_10m_1000um_r2_3um",
     "activity" : "_:StoringActivity2"
+  }, {
+    "@type" : "Association",
+    "agent" : "_:DNATechnicianPerson",
+    "activity" : "_:MaterialProcessingActivity1",
+    "role" : [ {
+      "@value" : "laboratory technician"
+    } ]
   }, {
     "@type" : "Entity",
     "schema:description" : [ {
@@ -466,13 +473,6 @@
     "entity" : "gen:bc0c02f720bbc1a23dabc680839d0ca8b7e95f8e4ced98ca66e916525cdc8ac8",
     "activity" : "_:MaterialProcessingActivity1"
   }, {
-    "@type" : "Association",
-    "agent" : "_:DNATechnicianPerson",
-    "activity" : "_:MaterialProcessingActivity1",
-    "role" : [ {
-      "@value" : "laboratory technician"
-    } ]
-  }, {
     "@type" : "Usage",
     "entity" : "_:SiU_BP_0001",
     "activity" : "_:MaterialProcessingActivity1"
@@ -480,6 +480,13 @@
     "@type" : "Generation",
     "activity" : "_:MaterialProcessingActivity1",
     "entity" : "_:SiU_BP_0001_a"
+  }, {
+    "@type" : "Association",
+    "agent" : "_:DNATechnicianPerson",
+    "activity" : "_:MaterialProcessingActivity2",
+    "role" : [ {
+      "@value" : "laboratory technician"
+    } ]
   }, {
     "@type" : "Entity",
     "schema:description" : [ {
@@ -506,13 +513,6 @@
     "entity" : "gen:fd7886aa860433ed5e61d174c653a8d5d6f4bdfc27e3a86496d7cb35624dfeec",
     "activity" : "_:MaterialProcessingActivity2"
   }, {
-    "@type" : "Association",
-    "agent" : "_:DNATechnicianPerson",
-    "activity" : "_:MaterialProcessingActivity2",
-    "role" : [ {
-      "@value" : "laboratory technician"
-    } ]
-  }, {
     "@type" : "Usage",
     "entity" : "_:SiU_BP_0001_a",
     "activity" : "_:MaterialProcessingActivity2"
@@ -520,6 +520,13 @@
     "@type" : "Generation",
     "activity" : "_:MaterialProcessingActivity2",
     "entity" : "_:SiU_BP_0001_b"
+  }, {
+    "@type" : "Association",
+    "agent" : "_:DNATechnicianPerson",
+    "activity" : "_:MaterialProcessingActivity3",
+    "role" : [ {
+      "@value" : "laboratory technician"
+    } ]
   }, {
     "@type" : "Entity",
     "schema:name" : [ {
@@ -549,13 +556,6 @@
     "entity" : "gen:0e65a7073c1069eb2fd589f691a2b611b8767fb7b04d580abd854abf932774ef",
     "activity" : "_:MaterialProcessingActivity3"
   }, {
-    "@type" : "Association",
-    "agent" : "_:DNATechnicianPerson",
-    "activity" : "_:MaterialProcessingActivity3",
-    "role" : [ {
-      "@value" : "laboratory technician"
-    } ]
-  }, {
     "@type" : "Usage",
     "entity" : "_:SiU_BP_0001_b",
     "activity" : "_:MaterialProcessingActivity3"
@@ -563,6 +563,13 @@
     "@type" : "Generation",
     "activity" : "_:MaterialProcessingActivity3",
     "entity" : "_:SiU_BP_0001_c"
+  }, {
+    "@type" : "Association",
+    "agent" : "_:DNATechnicianPerson",
+    "activity" : "_:MaterialProcessingActivity4",
+    "role" : [ {
+      "@value" : "laboratory technician"
+    } ]
   }, {
     "@type" : "Entity",
     "schema:name" : [ {
@@ -612,13 +619,6 @@
     "entity" : "gen:e52905692cf1e9e08079fcc8bdc9f9f760f4399e75f6ee6c93138435f91be76b",
     "activity" : "_:MaterialProcessingActivity4"
   }, {
-    "@type" : "Association",
-    "agent" : "_:DNATechnicianPerson",
-    "activity" : "_:MaterialProcessingActivity4",
-    "role" : [ {
-      "@value" : "laboratory technician"
-    } ]
-  }, {
     "@type" : "Usage",
     "entity" : "_:SiU_BP_0001_c",
     "activity" : "_:MaterialProcessingActivity4"
@@ -633,6 +633,13 @@
     "activity" : "_:MaterialProcessingActivity4",
     "entity" : "gen:d02fd085b9e9d705a7c90797480b2357d2cbdddcdd9549a03318d1f9b2da7199"
   }, {
+    "@type" : "Association",
+    "agent" : "_:DNATechnicianPerson",
+    "activity" : "_:DataProcessingActivity",
+    "role" : [ {
+      "@value" : "laboratory technician"
+    } ]
+  }, {
     "@type" : "Entity",
     "schema:name" : [ {
       "@value" : "Illumina filtering with proprietary software"
@@ -646,13 +653,6 @@
     "@type" : "Usage",
     "entity" : "gen:6de974e3039938b1f9491839521c28cdb6447bb7286ce3b2e705523a0bbbf0d7",
     "activity" : "_:DataProcessingActivity"
-  }, {
-    "@type" : "Association",
-    "agent" : "_:DNATechnicianPerson",
-    "activity" : "_:DataProcessingActivity",
-    "role" : [ {
-      "@value" : "laboratory technician"
-    } ]
   }, {
     "schema:description" : [ {
       "@value" : "Raw digital sequences produced by the sequencing step. See SEQUENCING. Data available upon request to BigProject (in folder BigProject_2021/fromSequencer)"

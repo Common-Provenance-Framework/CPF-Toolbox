@@ -17,11 +17,6 @@
     "@context" : [ { }, "https://openprovenance.org/prov-jsonld/context.jsonld" ],
     "@id" : "_:DnaSequencingBundle",
     "@graph" : [ {
-      "@type" : "Activity",
-      "@id" : "_:DnaSequencing",
-      "dct:hasPart" : [ "_:DataProcessingActivity", "_:MaterialProcessingActivity4", "_:MaterialProcessingActivity3", "_:StoringActivity", "_:MaterialProcessingActivity1", "_:StoringActivity2", "_:MaterialAcquiringActivity1", "_:MaterialProcessingActivity2", "_:TransportingDNAFiltersToSequencingIsUs" ],
-      "type" : [ "cpm:mainActivity" ]
-    }, {
       "@type" : "Usage",
       "activity" : "_:DnaSequencing",
       "entity" : "_:StoredSampleCon_r2_3um"
@@ -30,22 +25,27 @@
       "entity" : "_:FilteredSequencesCon",
       "activity" : "_:DnaSequencing"
     }, {
-      "@type" : "Entity",
-      "@id" : "_:StoredSampleCon_r2_3um",
-      "type" : [ "cpm:backwardConnector" ],
-      "cpm:referencedBundleId" : [ "_:SamplingBundle" ]
+      "@type" : "Activity",
+      "@id" : "_:DnaSequencing",
+      "dct:hasPart" : [ "_:DataProcessingActivity", "_:MaterialProcessingActivity4", "_:MaterialProcessingActivity3", "_:StoringActivity", "_:MaterialProcessingActivity1", "_:StoringActivity2", "_:MaterialAcquiringActivity1", "_:MaterialProcessingActivity2", "_:TransportingDNAFiltersToSequencingIsUs" ],
+      "type" : [ "cpm:mainActivity" ]
     }, {
       "@type" : "Attribution",
       "entity" : "_:StoredSampleCon_r2_3um",
       "agent" : "_:NiceMarineStation"
     }, {
       "@type" : "Entity",
-      "@id" : "_:FilteredSequencesCon",
-      "type" : [ "cpm:forwardConnector" ]
+      "@id" : "_:StoredSampleCon_r2_3um",
+      "type" : [ "cpm:backwardConnector" ],
+      "cpm:referencedBundleId" : [ "_:SamplingBundle" ]
     }, {
       "@type" : "Derivation",
       "generatedEntity" : "_:FilteredSequencesCon",
       "usedEntity" : "_:StoredSampleCon_r2_3um"
+    }, {
+      "@type" : "Entity",
+      "@id" : "_:FilteredSequencesCon",
+      "type" : [ "cpm:forwardConnector" ]
     }, {
       "@type" : "Agent",
       "@id" : "_:NiceMarineStation",
