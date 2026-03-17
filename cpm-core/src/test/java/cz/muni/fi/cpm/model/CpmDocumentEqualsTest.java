@@ -1,6 +1,5 @@
 package cz.muni.fi.cpm.model;
 
-import cz.muni.fi.cpm.constants.CpmType;
 import cz.muni.fi.cpm.vanilla.CpmProvFactory;
 import org.junit.jupiter.api.Test;
 import org.openprovenance.prov.model.*;
@@ -29,13 +28,13 @@ public abstract class CpmDocumentEqualsTest {
         Entity entity1Stat = cPF.getProvFactory().newEntity(id1Stat);
 
         QualifiedName id2Stat = cPF.newCpmQualifiedName("qN2");
-        Entity entity2Stat = cPF.newCpmEntity(id2Stat, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity2Stat = cPF.newCpmBackwardConnector(id2Stat);
 
         QualifiedName id3Stat = cPF.newCpmQualifiedName("qN3");
         Agent agentStat = cPF.getProvFactory().newAgent(id3Stat);
 
         QualifiedName id4Stat = cPF.newCpmQualifiedName("qN4");
-        Entity entity4Stat = cPF.newCpmEntity(id4Stat, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity4Stat = cPF.newCpmBackwardConnector(id4Stat);
 
         Relation relation1Stat = cPF.getProvFactory().newWasAttributedTo(cPF.newCpmQualifiedName("attr"), id1Stat, id3Stat);
 
@@ -53,7 +52,7 @@ public abstract class CpmDocumentEqualsTest {
         INode node1Graph = cF.newNode(entity1Graph);
 
         QualifiedName id2Graph = cPF.newCpmQualifiedName("qN2");
-        Entity entity2Graph = cPF.newCpmEntity(id2Graph, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity2Graph = cPF.newCpmBackwardConnector(id2Graph);
         INode node2Graph = cF.newNode(entity2Graph);
 
         QualifiedName id3Graph = cPF.newCpmQualifiedName("qN3");
@@ -61,7 +60,7 @@ public abstract class CpmDocumentEqualsTest {
         INode node3Graph = cF.newNode(agentGraph);
 
         QualifiedName id4Graph = cPF.newCpmQualifiedName("qN4");
-        Entity entity4Graph = cPF.newCpmEntity(id4Graph, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity4Graph = cPF.newCpmBackwardConnector(id4Graph);
         INode node4Graph = cF.newNode(entity4Graph);
 
         Relation relation1Graph = cPF.getProvFactory().newWasAttributedTo(cPF.newCpmQualifiedName("attr"), id1Graph, id3Graph);
@@ -93,13 +92,13 @@ public abstract class CpmDocumentEqualsTest {
         Entity entity1Doc = cPF.getProvFactory().newEntity(id1Doc);
 
         QualifiedName id2Doc = cPF.newCpmQualifiedName("qN2");
-        Entity entity2Doc = cPF.newCpmEntity(id2Doc, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity2Doc = cPF.newCpmBackwardConnector(id2Doc);
 
         QualifiedName id3Doc = cPF.newCpmQualifiedName("qN3");
         Agent agentDoc = cPF.getProvFactory().newAgent(id3Doc);
 
         QualifiedName id4Doc = cPF.newCpmQualifiedName("qN4");
-        Entity entity4Doc = cPF.newCpmEntity(id4Doc, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity4Doc = cPF.newCpmBackwardConnector(id4Doc);
 
         Relation relation1Doc = cPF.getProvFactory().newWasAttributedTo(cPF.newCpmQualifiedName("attr"), id1Doc, id3Doc);
 

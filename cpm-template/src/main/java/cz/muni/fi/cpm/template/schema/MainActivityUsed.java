@@ -11,7 +11,7 @@ public class MainActivityUsed {
     private QualifiedName id;
     @JsonProperty(required = true)
     @JsonPropertyDescription("The identifier of the backward connector")
-    private QualifiedName bcId;
+    private QualifiedName backwardConnectorId;
 
     public QualifiedName getId() {
         return id;
@@ -21,23 +21,23 @@ public class MainActivityUsed {
         this.id = id;
     }
 
-    public QualifiedName getBcId() {
-        return bcId;
+    public QualifiedName getBackwardConnectorId() {
+        return backwardConnectorId;
     }
 
-    public void setBcId(QualifiedName bcId) {
-        this.bcId = bcId;
+    public void setBackwardConnectorId(QualifiedName bcId) {
+        this.backwardConnectorId = bcId;
     }
 
     public MainActivityUsed() {
     }
 
     public MainActivityUsed(QualifiedName bcId) {
-        this.bcId = bcId;
+        this.backwardConnectorId = bcId;
     }
 
     public MainActivityUsed(QualifiedName id, QualifiedName bcId) {
         this.id = id;
-        this.bcId = bcId;
+        this.backwardConnectorId = bcId;
     }
 }

@@ -38,7 +38,7 @@ public class CpmOrderedDocumentTest extends CpmDividedDocumentTest {
             Entity entity1 = cPF.getProvFactory().newEntity(id1);
 
             QualifiedName id2 = cPF.newCpmQualifiedName("qN2");
-            Entity entity2 = cPF.newCpmEntity(id2, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+            Entity entity2 = cPF.newCpmBackwardConnector(id2);
 
             QualifiedName id3 = cPF.newCpmQualifiedName("qN3");
             Agent agent = cPF.getProvFactory().newAgent(id3);

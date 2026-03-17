@@ -30,10 +30,10 @@ public class CpmFactoryTest {
     @Test
     public void newNode_copyNode_returnsExpectedNode() {
         QualifiedName id1 = cPF.newCpmQualifiedName("qN1");
-        Entity entity = cPF.newCpmEntity(id1, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity = cPF.newCpmBackwardConnector(id1);
 
         QualifiedName id2 = cPF.newCpmQualifiedName("qN2");
-        Entity entity2 = cPF.newCpmEntity(id1, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity2 = cPF.newCpmBackwardConnector(id1);
 
         QualifiedName id3 = cPF.newCpmQualifiedName("qN3");
         Entity entity3 = cPF.getProvFactory().newEntity(id3);

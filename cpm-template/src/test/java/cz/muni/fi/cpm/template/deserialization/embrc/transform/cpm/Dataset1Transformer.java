@@ -50,14 +50,14 @@ public class Dataset1Transformer extends DatasetTransformer {
 
         ForwardConnector fcR1 = new ForwardConnector(newQNWithBlankNS(STORED_SAMPLE_CON_R1));
 
-        ForwardConnector fcR1Spec = new ForwardConnector(newQNWithBlankNS(STORED_SAMPLE_CON_R1 + "_Spec"));
+        SpecForwardConnector fcR1Spec = new SpecForwardConnector(newQNWithBlankNS(STORED_SAMPLE_CON_R1 + "_Spec"));
         fcR1Spec.setReferencedBundleId(newQNWithBlankNS(PROCESSING + "Bundle"));
         fcR1Spec.setSpecializationOf(fcR1.getId());
         fcR1Spec.setAttributedTo(new ConnectorAttributed(stationAg.getId()));
 
         ForwardConnector fcR23UM = new ForwardConnector(newQNWithBlankNS(STORED_SAMPLE_CON_R2_3UM));
 
-        ForwardConnector fcR23UMSpec = new ForwardConnector(newQNWithBlankNS(STORED_SAMPLE_CON_R2_3UM + "_Spec"));
+        SpecForwardConnector fcR23UMSpec = new SpecForwardConnector(newQNWithBlankNS(STORED_SAMPLE_CON_R2_3UM + "_Spec"));
         fcR23UMSpec.setReferencedBundleId(newQNWithBlankNS(DNA_SEQUENCING + "Bundle"));
         fcR23UMSpec.setSpecializationOf(fcR23UM.getId());
         fcR23UMSpec.setAttributedTo(new ConnectorAttributed(seqAg.getId()));
@@ -67,15 +67,15 @@ public class Dataset1Transformer extends DatasetTransformer {
         ForwardConnector fCIden = new ForwardConnector(newQNWithBlankNS(IDENTIFIED_SPECIES_CON));
         fCIden.setDerivedFrom(List.of(fcR1.getId()));
 
-        ForwardConnector fCIdenSpec = new ForwardConnector(newQNWithBlankNS(IDENTIFIED_SPECIES_CON + "Spec"));
+        SpecForwardConnector fCIdenSpec = new SpecForwardConnector(newQNWithBlankNS(IDENTIFIED_SPECIES_CON + "Spec"));
         fCIdenSpec.setReferencedBundleId(newQNWithBlankNS(SPECIES_IDENTIFICATION + "Bundle"));
         fCIdenSpec.setSpecializationOf(fCIden.getId());
         fCIdenSpec.setAttributedTo(new ConnectorAttributed(stationAg.getId()));
 
-        ti.getForwardConnectors().addAll(List.of(fcR1, fcR1Spec, fcR23UM, fcR23UMSpec, fCIden, fCIdenSpec));
+        ti.getForwardConnectors().addAll(List.of(fcR1, fcR23UM, fCIden));
+        ti.getSpecForwardConnectors().addAll(List.of(fcR1Spec, fcR23UMSpec, fCIdenSpec));
 
-
-        return mapper.map(ti);
+        return mapper.toProvDocument(ti);
     }
 
     @Override

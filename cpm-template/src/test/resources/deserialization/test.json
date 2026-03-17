@@ -13,15 +13,12 @@
     "used": [
       {
         "id": "ex:id1",
-        "bcId": "ex:input1"
-      },
-      {
-        "bcId": "ex:input2"
+        "backwardConnectorId": "ex:backConnector1"
       }
     ],
     "generated": [
-      "ex:output1",
-      "ex:output2"
+      "ex:forwardConnector1",
+      "ex:forwardConnector2"
     ]
   },
   "bundleName": "ex:bundle1",
@@ -35,7 +32,6 @@
         "hash": "abc123def456"
       },
       "hashAlg": "SHA256",
-      "provenanceServiceUri": "http://provenance.service.org",
       "derivedFrom": [
         "ex:origin1",
         "ex:origin2"
@@ -50,6 +46,21 @@
     {
       "id": "ex:forwardConnector1",
       "externalId": "externalId1",
+      "derivedFrom": [
+        "ex:backConnector1"
+      ]
+    },
+    {
+      "id": "ex:forwardConnector2",
+      "externalId": "externalId2",
+      "derivedFrom": [
+        "ex:backConnector2"
+      ]
+    }
+  ],
+  "specForwardConnectors": [
+    {
+      "id": "ex:specForwardConnector1",
       "referencedBundleId": "ex:referencedBundle2",
       "referencedMetaBundleId": "ex:referencedMeta2",
       "referencedBundleHashValue": {
@@ -57,15 +68,11 @@
       },
       "hashAlg": "SHA512",
       "provenanceServiceUri": "http://provenance.service.org",
-      "derivedFrom": [
-        "ex:origin3",
-        "ex:origin4"
-      ],
       "attributedTo": {
         "id": "ex:attribution",
         "agentId": "ex:agent2"
       },
-      "specializationOf": "ex:baseFC"
+      "specializationOf": "ex:forwardConnector1"
     }
   ],
   "senderAgents": [

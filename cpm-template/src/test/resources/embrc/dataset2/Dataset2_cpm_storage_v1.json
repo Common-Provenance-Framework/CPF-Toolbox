@@ -21,13 +21,13 @@
           "cpm:hashAlg" : [ "SHA256" ],
           "prov:type" : [ {
             "type" : "prov:QUALIFIED_NAME",
-            "$" : "cpm:forwardConnector"
+            "$" : "cpm:specForwardConnector"
           } ],
           "cpm:referencedMetaBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:SpeciesIdentificationBundle_V0_meta"
           } ],
-          "cpm:referencedBundleHashValue" : [ "e3479b9e849e6b5c841fe8ff135eecd484189aa407d6ddbc43d1f1bc4657786d" ],
+          "cpm:referencedBundleHashValue" : [ "4ca9b4672f26f9c0fde6af0eae27e8d9675c8fc8ce85934ef119d284ac4638d0" ],
           "cpm:referencedBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:SpeciesIdentificationBundle_V0"
@@ -53,7 +53,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:SamplingBundle_V0_meta"
           } ],
-          "cpm:referencedBundleHashValue" : [ "ecb093525375745fbccd7f398647e32d4dcca58053f7cbd244be524f18d1a40b" ],
+          "cpm:referencedBundleHashValue" : [ "d637bb8e75757ccf052369044c96bee95a6b2da9652ea5efb18a08f588e8435a" ],
           "cpm:referencedBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:SamplingBundle_V0"

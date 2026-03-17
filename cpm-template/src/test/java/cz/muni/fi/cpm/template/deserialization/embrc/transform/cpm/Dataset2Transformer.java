@@ -47,16 +47,17 @@ public class Dataset2Transformer extends DatasetTransformer {
         ForwardConnector fC = new ForwardConnector(newQNWithBlankNS(PROCESSED_SAMPLE_CON));
         fC.setDerivedFrom(List.of(bC.getId()));
 
-        ForwardConnector fCSpec = new ForwardConnector(newQNWithBlankNS(PROCESSED_SAMPLE_CON + "Spec"));
+        SpecForwardConnector fCSpec = new SpecForwardConnector(newQNWithBlankNS(PROCESSED_SAMPLE_CON + "Spec"));
         fCSpec.setReferencedBundleId(newQNWithBlankNS(SPECIES_IDENTIFICATION + "Bundle"));
         fCSpec.setAttributedTo(new ConnectorAttributed(stationAg.getId()));
         fCSpec.setSpecializationOf(fC.getId());
 
         mA.setGenerated(List.of(fC.getId()));
 
-        ti.setForwardConnectors(List.of(fC, fCSpec));
+        ti.setForwardConnectors(List.of(fC));
+        ti.setSpecForwardConnectors(List.of(fCSpec));
 
-        return mapper.map(ti);
+        return mapper.toProvDocument(ti);
     }
 
     @Override

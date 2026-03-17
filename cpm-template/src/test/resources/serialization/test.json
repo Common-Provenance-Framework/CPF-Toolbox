@@ -13,14 +13,14 @@
     "used": [
       {
         "id": "ex:id1",
-        "bcId": "ex:input1"
+        "backwardConnectorId": "ex:backConnector1"
       },
       {
-        "bcId": "ex:input2"
+        "backwardConnectorId": "ex:backConnector2"
       }
     ],
     "generated": [
-      "ex:output1",
+      "ex:forwardConnector1",
       "ex:output2"
     ]
   },
@@ -35,21 +35,50 @@
         "hash": "abc123def456"
       },
       "hashAlg": "SHA256",
-      "provenanceServiceUri": "http://provenance.service.org",
       "derivedFrom": [
         "ex:origin1",
         "ex:origin2"
       ],
       "attributedTo": {
         "id": "ex:attribution1",
-        "agentId": "ex:agent1"
+        "agentId": "ex:senderAgent1"
+      }
+    },
+    {
+      "id": "ex:backConnector2",
+      "externalId": "ex:external2",
+      "referencedBundleId": "ex:referencedBundle2",
+      "referencedMetaBundleId": "ex:referencedMeta2",
+      "referencedBundleHashValue": {
+        "hash": "efg123def456"
+      },
+      "hashAlg": "SHA256",
+      "attributedTo": {
+        "id": "ex:attribution2",
+        "agentId": "ex:senderAgent1"
       }
     }
   ],
   "forwardConnectors": [
     {
       "id": "ex:forwardConnector1",
-      "externalId": "ex:external2",
+      "externalId": "ex:external3",
+      "derivedFrom": [
+        "ex:backConnector1"
+      ]
+    },
+    {
+      "id": "ex:forwardConnector2",
+      "externalId": "ex:external4",
+      "derivedFrom": [
+        "ex:backConnector2"
+      ]
+    }
+  ],
+  "specForwardConnectors": [
+    {
+      "id": "ex:specForwardConnector1",
+      "externalId": "ex:external3",
       "referencedBundleId": "ex:referencedBundle2",
       "referencedMetaBundleId": "ex:referencedMeta2",
       "referencedBundleHashValue": {
@@ -57,15 +86,11 @@
       },
       "hashAlg": "SHA512",
       "provenanceServiceUri": "http://provenance.service.org",
-      "derivedFrom": [
-        "ex:origin3",
-        "ex:origin4"
-      ],
       "attributedTo": {
-        "id": "ex:attribution",
-        "agentId": "ex:agent2"
+        "id": "ex:attributionSender",
+        "agentId": "ex:receiverAgent1"
       },
-      "specializationOf": "ex:baseFC"
+      "specializationOf": "ex:forwardConnector1"
     }
   ],
   "senderAgents": [

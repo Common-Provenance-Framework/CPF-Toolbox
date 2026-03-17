@@ -88,15 +88,15 @@ public class EmbrcProvStorageTransformer {
 
     private void setReferenceAttributes(List<INode> connectors) {
         connectors.forEach(n ->
-                n.getElements().forEach(e -> {
-                    Entity con = (Entity) e;
-                    con.getOther().stream()
+                n.getElements().forEach(element -> {
+                  Entity connector = Entity.class.cast(element);
+                    connector.getOther().stream()
                             .filter(o -> CpmAttribute.REFERENCED_BUNDLE_ID.toString().equals(o.getElementName().getLocalPart()))
                             .findFirst().ifPresent(o -> {
                                 QualifiedName val = (QualifiedName) o.getValue();
-                                con.getOther().remove(o);
+                                connector.getOther().remove(o);
                                 try {
-                                    pST.addFileReferenceToConnector(con, getFilePath(val.getLocalPart()), Formats.ProvFormat.JSON);
+                                    pST.addFileReferenceToConnector(connector, getFilePath(val.getLocalPart()), Formats.ProvFormat.JSON);
                                 } catch (IOException ex) {
                                     throw new RuntimeException(ex);
                                 }
@@ -135,43 +135,44 @@ public class EmbrcProvStorageTransformer {
         List<Statement> toRemove = new ArrayList<>();
 
         bun.getStatement().stream()
-                .filter(st -> st instanceof Entity)
-                .map(st -> (Entity) st)
-                .filter(e -> CpmUtilities.hasCpmType(e, CpmType.FORWARD_CONNECTOR) &&
-                        CpmUtilities.containsCpmAttribute(e, CpmAttribute.REFERENCED_BUNDLE_ID))
+                .filter(Entity.class::isInstance)
+                .map(Entity.class::cast)
+                .filter(CpmUtilities::isSpecForwardConnector)
                 .forEach(toRemove::add);
 
         bun.getStatement().stream()
-                .filter(st -> st instanceof Entity)
-                .map(st -> (Entity) st)
-                .filter(e -> CpmUtilities.hasCpmType(e, CpmType.FORWARD_CONNECTOR))
+                .filter(Entity.class::isInstance)
+                .map(Entity.class::cast)
+                .filter(CpmUtilities::isForwardConnector)
                 .filter(e -> Dataset3Transformer.IDENTIFIED_SPECIES_CON.equals(e.getId().getLocalPart()))
                 .findFirst().ifPresent(toRemove::add);
 
         List<QualifiedName> ids = toRemove.stream().map(e -> ((Identifiable) e).getId()).toList();
 
         bun.getStatement().stream()
-                .filter(st -> st instanceof SpecializationOf || st instanceof WasDerivedFrom || st instanceof WasAttributedTo)
-                .map(st -> (Relation) st)
+                .filter(st -> SpecializationOf.class.isInstance(st)
+                    || WasDerivedFrom.class.isInstance(st)
+                    || WasAttributedTo.class.isInstance(st))
+                .map(Relation.class::cast)
                 .filter(r -> ids.contains(u.getEffect(r)))
                 .forEach(toRemove::add);
 
         bun.getStatement().stream()
-                .filter(st -> st instanceof Agent)
-                .map(st -> (Agent) st)
-                .filter(e -> CpmUtilities.hasCpmType(e, CpmType.RECEIVER_AGENT))
-                .forEach(e -> {
-                    if (CpmUtilities.hasCpmType(e, CpmType.SENDER_AGENT)) {
-                        e.getType().removeIf(t -> t.getValue() instanceof QualifiedName qN &&
-                                CpmType.RECEIVER_AGENT.toString().equals(qN.getLocalPart()));
+                .filter(Agent.class::isInstance)
+                .map(Agent.class::cast)
+                .filter(CpmUtilities::isReceiverAgent)
+                .forEach(agent -> {
+                    if (CpmUtilities.isSenderAgent(agent)) {
+                      agent.getType().removeIf(t -> t.getValue() instanceof QualifiedName qN
+                        && CpmType.RECEIVER_AGENT.toString().equals(qN.getLocalPart()));
                     } else {
-                        toRemove.add(e);
+                        toRemove.add(agent);
                     }
                 });
 
         bun.getStatement().removeAll(toRemove);
         CpmDocument cpmDoc = new CpmDocument(doc, pF, cPF, cF);
-        setReferenceAttributes(cpmDoc.getForwardConnectors());
+        setReferenceAttributes(cpmDoc.getSpecForwardConnectors());
 
         setReferenceAttributes(cpmDoc.getBackwardConnectors());
 
@@ -183,7 +184,7 @@ public class EmbrcProvStorageTransformer {
 
         Document doc = interop.readDocument(iS, Formats.ProvFormat.JSONLD);
         CpmDocument cpmDoc = new CpmDocument(doc, pF, cPF, cF);
-        setReferenceAttributes(cpmDoc.getForwardConnectors());
+        setReferenceAttributes(cpmDoc.getSpecForwardConnectors());
 
         setReferenceAttributes(cpmDoc.getBackwardConnectors());
 

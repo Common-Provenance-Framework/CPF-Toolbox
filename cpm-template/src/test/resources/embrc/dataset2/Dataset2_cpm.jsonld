@@ -17,11 +17,6 @@
     "@context" : [ { }, "https://openprovenance.org/prov-jsonld/context.jsonld" ],
     "@id" : "_:ProcessingBundle",
     "@graph" : [ {
-      "@type" : "Activity",
-      "@id" : "_:Processing",
-      "dct:hasPart" : [ "_:MaterialProcessing" ],
-      "type" : [ "cpm:mainActivity" ]
-    }, {
       "@type" : "Usage",
       "activity" : "_:Processing",
       "entity" : "_:StoredSampleCon_r1"
@@ -30,27 +25,27 @@
       "entity" : "_:ProcessedSampleCon",
       "activity" : "_:Processing"
     }, {
-      "@type" : "Entity",
-      "@id" : "_:StoredSampleCon_r1",
-      "type" : [ "cpm:backwardConnector" ],
-      "cpm:referencedBundleId" : [ "_:SamplingBundle" ]
+      "@type" : "Activity",
+      "@id" : "_:Processing",
+      "dct:hasPart" : [ "_:MaterialProcessing" ],
+      "type" : [ "cpm:mainActivity" ]
     }, {
       "@type" : "Attribution",
       "entity" : "_:StoredSampleCon_r1",
       "agent" : "_:NiceMarineStation"
     }, {
       "@type" : "Entity",
-      "@id" : "_:ProcessedSampleCon",
-      "type" : [ "cpm:forwardConnector" ]
+      "@id" : "_:StoredSampleCon_r1",
+      "type" : [ "cpm:backwardConnector" ],
+      "cpm:referencedBundleId" : [ "_:SamplingBundle" ]
     }, {
       "@type" : "Derivation",
       "generatedEntity" : "_:ProcessedSampleCon",
       "usedEntity" : "_:StoredSampleCon_r1"
     }, {
       "@type" : "Entity",
-      "@id" : "_:ProcessedSampleConSpec",
-      "type" : [ "cpm:forwardConnector" ],
-      "cpm:referencedBundleId" : [ "_:SpeciesIdentificationBundle" ]
+      "@id" : "_:ProcessedSampleCon",
+      "type" : [ "cpm:forwardConnector" ]
     }, {
       "@type" : "Attribution",
       "entity" : "_:ProcessedSampleConSpec",
@@ -59,6 +54,11 @@
       "@type" : "Specialization",
       "specificEntity" : "_:ProcessedSampleConSpec",
       "generalEntity" : "_:ProcessedSampleCon"
+    }, {
+      "@type" : "Entity",
+      "@id" : "_:ProcessedSampleConSpec",
+      "type" : [ "cpm:specForwardConnector" ],
+      "cpm:referencedBundleId" : [ "_:SpeciesIdentificationBundle" ]
     }, {
       "@type" : "Agent",
       "@id" : "_:NiceMarineStation",

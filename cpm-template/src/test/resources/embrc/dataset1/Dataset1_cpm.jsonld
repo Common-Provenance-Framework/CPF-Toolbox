@@ -19,11 +19,6 @@
     "@context" : [ { }, "https://openprovenance.org/prov-jsonld/context.jsonld" ],
     "@id" : "_:SamplingBundle",
     "@graph" : [ {
-      "@type" : "Activity",
-      "@id" : "_:Sampling",
-      "dct:hasPart" : [ "gen:09a6f65fe087c3806631e8926fa3cae8e049cfdfa2b0b63fe6de04bc88144e80", "gen:fd7e5c8ca79a78538b324f8426a3a6c48fdb58a0a3e2718e185455205b48d7e2", "gen:324df37d2e503522d56f379d8856e4d14599331df280bf0d011fe3060871261a", "gen:36294ecf35d15ba81da0bb55dfd8ee07934568e28ec56a51774b3e331ed6fd99", "gen:67c557a442ca2446b987928fb47c4bbbd59c54395e61f01949d76c06e0106925", "gen:190fd43b1968737f3501420a6bfd9b74873e32416c6e14fef26238fbe3b197a2" ],
-      "type" : [ "cpm:mainActivity" ]
-    }, {
       "@type" : "Generation",
       "entity" : "_:StoredSampleCon_r1",
       "activity" : "_:Sampling"
@@ -32,14 +27,26 @@
       "entity" : "_:StoredSampleCon_r2_3um",
       "activity" : "_:Sampling"
     }, {
+      "@type" : "Activity",
+      "@id" : "_:Sampling",
+      "dct:hasPart" : [ "gen:09a6f65fe087c3806631e8926fa3cae8e049cfdfa2b0b63fe6de04bc88144e80", "gen:fd7e5c8ca79a78538b324f8426a3a6c48fdb58a0a3e2718e185455205b48d7e2", "gen:324df37d2e503522d56f379d8856e4d14599331df280bf0d011fe3060871261a", "gen:36294ecf35d15ba81da0bb55dfd8ee07934568e28ec56a51774b3e331ed6fd99", "gen:67c557a442ca2446b987928fb47c4bbbd59c54395e61f01949d76c06e0106925", "gen:190fd43b1968737f3501420a6bfd9b74873e32416c6e14fef26238fbe3b197a2" ],
+      "type" : [ "cpm:mainActivity" ]
+    }, {
       "@type" : "Entity",
       "@id" : "_:StoredSampleCon_r1",
       "type" : [ "cpm:forwardConnector" ]
     }, {
       "@type" : "Entity",
-      "@id" : "_:StoredSampleCon_r1_Spec",
-      "type" : [ "cpm:forwardConnector" ],
-      "cpm:referencedBundleId" : [ "_:ProcessingBundle" ]
+      "@id" : "_:StoredSampleCon_r2_3um",
+      "type" : [ "cpm:forwardConnector" ]
+    }, {
+      "@type" : "Derivation",
+      "generatedEntity" : "_:IdentifiedSpeciesCon",
+      "usedEntity" : "_:StoredSampleCon_r1"
+    }, {
+      "@type" : "Entity",
+      "@id" : "_:IdentifiedSpeciesCon",
+      "type" : [ "cpm:forwardConnector" ]
     }, {
       "@type" : "Attribution",
       "entity" : "_:StoredSampleCon_r1_Spec",
@@ -50,13 +57,9 @@
       "generalEntity" : "_:StoredSampleCon_r1"
     }, {
       "@type" : "Entity",
-      "@id" : "_:StoredSampleCon_r2_3um",
-      "type" : [ "cpm:forwardConnector" ]
-    }, {
-      "@type" : "Entity",
-      "@id" : "_:StoredSampleCon_r2_3um_Spec",
-      "type" : [ "cpm:forwardConnector" ],
-      "cpm:referencedBundleId" : [ "_:DnaSequencingBundle" ]
+      "@id" : "_:StoredSampleCon_r1_Spec",
+      "type" : [ "cpm:specForwardConnector" ],
+      "cpm:referencedBundleId" : [ "_:ProcessingBundle" ]
     }, {
       "@type" : "Attribution",
       "entity" : "_:StoredSampleCon_r2_3um_Spec",
@@ -67,17 +70,9 @@
       "generalEntity" : "_:StoredSampleCon_r2_3um"
     }, {
       "@type" : "Entity",
-      "@id" : "_:IdentifiedSpeciesCon",
-      "type" : [ "cpm:forwardConnector" ]
-    }, {
-      "@type" : "Derivation",
-      "generatedEntity" : "_:IdentifiedSpeciesCon",
-      "usedEntity" : "_:StoredSampleCon_r1"
-    }, {
-      "@type" : "Entity",
-      "@id" : "_:IdentifiedSpeciesConSpec",
-      "type" : [ "cpm:forwardConnector" ],
-      "cpm:referencedBundleId" : [ "_:SpeciesIdentificationBundle" ]
+      "@id" : "_:StoredSampleCon_r2_3um_Spec",
+      "type" : [ "cpm:specForwardConnector" ],
+      "cpm:referencedBundleId" : [ "_:DnaSequencingBundle" ]
     }, {
       "@type" : "Attribution",
       "entity" : "_:IdentifiedSpeciesConSpec",
@@ -86,6 +81,11 @@
       "@type" : "Specialization",
       "specificEntity" : "_:IdentifiedSpeciesConSpec",
       "generalEntity" : "_:IdentifiedSpeciesCon"
+    }, {
+      "@type" : "Entity",
+      "@id" : "_:IdentifiedSpeciesConSpec",
+      "type" : [ "cpm:specForwardConnector" ],
+      "cpm:referencedBundleId" : [ "_:SpeciesIdentificationBundle" ]
     }, {
       "@type" : "Agent",
       "@id" : "_:NiceMarineStation",

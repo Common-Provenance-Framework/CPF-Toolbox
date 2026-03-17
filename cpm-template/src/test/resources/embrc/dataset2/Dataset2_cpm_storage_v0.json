@@ -37,7 +37,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:SamplingBundle_V0_meta"
           } ],
-          "cpm:referencedBundleHashValue" : [ "ecb093525375745fbccd7f398647e32d4dcca58053f7cbd244be524f18d1a40b" ],
+          "cpm:referencedBundleHashValue" : [ "d637bb8e75757ccf052369044c96bee95a6b2da9652ea5efb18a08f588e8435a" ],
           "cpm:referencedBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:SamplingBundle_V0"

@@ -31,6 +31,7 @@ public class CpmUtilitiesTest {
     private static Stream<Object[]> provideConnectorTypes() {
         return Stream.of(
                 new Object[]{CpmType.FORWARD_CONNECTOR.toString()},
+                new Object[]{CpmType.SPEC_FORWARD_CONNECTOR.toString()},
                 new Object[]{CpmType.BACKWARD_CONNECTOR.toString()}
         );
     }
@@ -71,9 +72,25 @@ public class CpmUtilitiesTest {
 
     @Test
     public void hasCpmType_withValidCpmElementAndType_returnsTrue() {
+      QualifiedName validQualifiedName = new QualifiedName(
+          CpmNamespaceConstants.CPM_NS,
+          CpmType.FORWARD_CONNECTOR.toString(),
+          CpmNamespaceConstants.CPM_PREFIX);
+
+      org.openprovenance.prov.model.QualifiedName id = pF.newQualifiedName("uri", "entity", "ex");
+      Attribute attribute = pF.newType(validQualifiedName, pF.getName().PROV_QUALIFIED_NAME);
+
+      Element element = pF.newEntity(id, Collections.singletonList(attribute));
+      INode node = cF.newNode(element);
+
+      assertTrue(CpmUtilities.hasCpmType(node, CpmType.FORWARD_CONNECTOR));
+    }
+
+    @Test
+    public void hasCpmType_withValidCpmElementAndSpecForwConType_returnsTrue() {
         QualifiedName validQualifiedName = new QualifiedName(
                 CpmNamespaceConstants.CPM_NS,
-                CpmType.FORWARD_CONNECTOR.toString(),
+                CpmType.SPEC_FORWARD_CONNECTOR.toString(),
                 CpmNamespaceConstants.CPM_PREFIX);
 
         org.openprovenance.prov.model.QualifiedName id = pF.newQualifiedName("uri", "entity", "ex");
@@ -82,7 +99,7 @@ public class CpmUtilitiesTest {
         Element element = pF.newEntity(id, Collections.singletonList(attribute));
         INode node = cF.newNode(element);
 
-        assertTrue(CpmUtilities.hasCpmType(node, CpmType.FORWARD_CONNECTOR));
+        assertTrue(CpmUtilities.hasCpmType(node, CpmType.SPEC_FORWARD_CONNECTOR));
     }
 
     @Test

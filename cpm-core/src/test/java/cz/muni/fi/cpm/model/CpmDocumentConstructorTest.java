@@ -75,7 +75,7 @@ public abstract class CpmDocumentConstructorTest {
         INode node1 = cF.newNode(entity1);
 
         QualifiedName id2 = cPF.newCpmQualifiedName("qN2");
-        Entity entity2 = cPF.newCpmEntity(id2, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity2 = cPF.newCpmBackwardConnector(id2);
         INode node2 = cF.newNode(entity2);
 
         QualifiedName id3 = cPF.newCpmQualifiedName("qN3");
@@ -83,7 +83,7 @@ public abstract class CpmDocumentConstructorTest {
         INode node3 = cF.newNode(agent);
 
         QualifiedName id4 = cPF.newCpmQualifiedName("qN4");
-        Entity entity4 = cPF.newCpmEntity(id4, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity4 = cPF.newCpmBackwardConnector(id4);
         INode node4 = cF.newNode(entity4);
 
         Relation relation1 = cPF.getProvFactory().newWasAttributedTo(cPF.newCpmQualifiedName("attr"), id1, id3);
@@ -127,13 +127,13 @@ public abstract class CpmDocumentConstructorTest {
         Entity entity1 = cPF.getProvFactory().newEntity(id1);
 
         QualifiedName id2 = cPF.newCpmQualifiedName("qN2");
-        Entity entity2 = cPF.newCpmEntity(id2, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity2 = cPF.newCpmBackwardConnector(id2);
 
         QualifiedName id3 = cPF.newCpmQualifiedName("qN3");
         Agent agent = cPF.getProvFactory().newAgent(id3);
 
         QualifiedName id4 = cPF.newCpmQualifiedName("qN4");
-        Entity entity4 = cPF.newCpmEntity(id4, CpmType.BACKWARD_CONNECTOR, new ArrayList<>());
+        Entity entity4 = cPF.newCpmBackwardConnector(id4);
 
         Relation relation1 = cPF.getProvFactory().newWasAttributedTo(cPF.newCpmQualifiedName("attr"), id1, id3);
 
@@ -182,9 +182,8 @@ public abstract class CpmDocumentConstructorTest {
         QualifiedName activityId = pF.newQualifiedName("uri", "activity", "ex");
         XMLGregorianCalendar startTime = datatypeFactory.newXMLGregorianCalendar("2024-11-13T10:00:00");
         XMLGregorianCalendar endTime = datatypeFactory.newXMLGregorianCalendar("2024-11-13T12:00:00");
-        CpmType type = CpmType.MAIN_ACTIVITY;
         Collection<Attribute> attributes = new ArrayList<>();
-        Activity activity = cPF.newCpmActivity(activityId, startTime, endTime, type, attributes);
+        Activity activity = cPF.newCpmMainActivity(activityId, startTime, endTime, attributes);
         bundle.getStatement().add(activity);
 
         CpmDocument doc = new CpmDocument(document, pF, cPF, cF);
@@ -219,6 +218,28 @@ public abstract class CpmDocumentConstructorTest {
 
     @Test
     public void constructor_forwardConnector_returnsExpectedForwardConnectors() {
+      Document document = pF.newDocument();
+      document.setNamespace(cPF.newCpmNamespace());
+
+      QualifiedName id = pF.newQualifiedName("uri", "bundle", "ex");
+      Bundle bundle = pF.newNamedBundle(id, new ArrayList<>());
+      document.getStatementOrBundle().add(bundle);
+
+      QualifiedName entityId = pF.newQualifiedName("uri", "entity", "ex");
+      Entity entity = cPF.newCpmForwardConnector(entityId);
+      bundle.getStatement().add(entity);
+
+      CpmDocument doc = new CpmDocument(document, pF, cPF, cF);
+
+      assertNotNull(doc.getNode(entityId));
+      assertFalse(doc.getTraversalInformationPart().isEmpty());
+      assertEquals(1, doc.getForwardConnectors().size());
+      assertEquals(entityId, doc.getForwardConnectors().getFirst().getAnyElement().getId());
+      assertEquals(entity, doc.getNode(entityId).getAnyElement());
+    }
+
+    @Test
+    public void constructor_specForwardConnector_returnsExpectedForwardConnectors() {
         Document document = pF.newDocument();
         document.setNamespace(cPF.newCpmNamespace());
 
@@ -227,16 +248,15 @@ public abstract class CpmDocumentConstructorTest {
         document.getStatementOrBundle().add(bundle);
 
         QualifiedName entityId = pF.newQualifiedName("uri", "entity", "ex");
-        CpmType type = CpmType.FORWARD_CONNECTOR;
-        Collection<Attribute> attributes = new ArrayList<>();
-        Entity entity = cPF.newCpmEntity(entityId, type, attributes);
+        Entity entity = cPF.newCpmSpecForwardConnector(entityId);
         bundle.getStatement().add(entity);
 
         CpmDocument doc = new CpmDocument(document, pF, cPF, cF);
 
         assertNotNull(doc.getNode(entityId));
         assertFalse(doc.getTraversalInformationPart().isEmpty());
-        assertFalse(doc.getForwardConnectors().isEmpty());
+        assertEquals(1, doc.getSpecForwardConnectors().size());
+        assertEquals(entityId, doc.getSpecForwardConnectors().getFirst().getAnyElement().getId());
         assertEquals(entity, doc.getNode(entityId).getAnyElement());
     }
 

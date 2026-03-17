@@ -36,7 +36,7 @@ public class TraversalInformationDeserializerTest {
             ITraversalInformationDeserializer deserializer = new TraversalInformationDeserializer();
             TraversalInformation ti = deserializer.deserializeTI(inputStream);
             ProvSerialiser serialiser = new ProvSerialiser(pF);
-            Document doc = mapper.map(ti);
+            Document doc = mapper.toProvDocument(ti);
 
             File outputFile = new File(TEST_RESOURCES + DESERIALIZE_FOLDER + "output.provn");
             serialiser.serialiseDocument(new FileOutputStream(outputFile), doc, true);

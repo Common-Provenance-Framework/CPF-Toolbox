@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public enum CpmType {
     BACKWARD_CONNECTOR("backwardConnector"),
     FORWARD_CONNECTOR("forwardConnector"),
+    SPEC_FORWARD_CONNECTOR("specForwardConnector"),
     IDENTIFIER("id"),
     MAIN_ACTIVITY("mainActivity"),
     SENDER_AGENT("senderAgent"),
@@ -22,6 +23,7 @@ public enum CpmType {
     public static final Map<CpmType, Kind> CPM_TYPE_TO_KIND = Map.of(
             BACKWARD_CONNECTOR, Kind.PROV_ENTITY,
             FORWARD_CONNECTOR, Kind.PROV_ENTITY,
+            SPEC_FORWARD_CONNECTOR, Kind.PROV_ENTITY,
             IDENTIFIER, Kind.PROV_ENTITY,
             MAIN_ACTIVITY, Kind.PROV_ACTIVITY,
             SENDER_AGENT, Kind.PROV_AGENT,

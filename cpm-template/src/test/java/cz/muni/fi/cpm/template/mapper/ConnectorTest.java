@@ -1,178 +1,215 @@
 package cz.muni.fi.cpm.template.mapper;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.openprovenance.prov.model.Attribute;
+import org.openprovenance.prov.model.Entity;
+import org.openprovenance.prov.model.LangString;
+import org.openprovenance.prov.model.Other;
+import org.openprovenance.prov.model.SpecializationOf;
+import org.openprovenance.prov.model.Statement;
+import org.openprovenance.prov.model.Type;
+import org.openprovenance.prov.model.WasAttributedTo;
+import org.openprovenance.prov.model.WasDerivedFrom;
+import org.openprovenance.prov.vanilla.QualifiedName;
+
 import cz.muni.fi.cpm.constants.CpmAttribute;
 import cz.muni.fi.cpm.constants.CpmType;
 import cz.muni.fi.cpm.template.schema.BackwardConnector;
 import cz.muni.fi.cpm.template.schema.ConnectorAttributed;
-import cz.muni.fi.cpm.template.schema.ForwardConnector;
 import cz.muni.fi.cpm.template.schema.HashAlgorithms;
+import cz.muni.fi.cpm.template.schema.SpecForwardConnector;
 import cz.muni.fi.cpm.vanilla.CpmProvFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.openprovenance.prov.model.*;
-import org.openprovenance.prov.vanilla.QualifiedName;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ConnectorTest {
-    private TemplateProvMapper mapper;
+  private TemplateProvMapper mapper;
 
-    @BeforeEach
-    public void setUp() {
-        mapper = new TemplateProvMapper(new CpmProvFactory());
-    }
+  @BeforeEach
+  public void setUp() {
+    mapper = new TemplateProvMapper(new CpmProvFactory());
+  }
 
-    @Test
-    public void toStatements_basicIdSet_returnsOneStatement() {
-        BackwardConnector connector = new BackwardConnector();
-        QualifiedName id = new QualifiedName("uri", "connectorExample", "ex");
-        connector.setId(id);
+  @Test
+  public void toStatements_basicIdSet_returnsOneStatement() {
+    BackwardConnector connector = new BackwardConnector();
+    QualifiedName id = new QualifiedName("uri", "connectorExample", "ex");
+    connector.setId(id);
 
-        List<Statement> statements = mapper.map(connector);
+    List<Statement> statements = mapper.toStatementsStream(connector).toList();
 
-        assertNotNull(statements);
-        assertEquals(1, statements.size());
+    assertNotNull(statements);
+    assertEquals(1, statements.size());
 
-        Statement statement = statements.getFirst();
-        assertInstanceOf(Entity.class, statement);
-        Entity entity = (Entity) statement;
+    Statement statement = statements.getFirst();
+    assertInstanceOf(Entity.class, statement);
+    Entity entity = (Entity) statement;
 
-        assertNotNull(entity.getType());
-        assertEquals(1, entity.getType().size());
-        Type type = entity.getType().getFirst();
-        assertEquals(CpmType.BACKWARD_CONNECTOR.toString(), ((QualifiedName) type.getValue()).getLocalPart());
-    }
+    assertNotNull(entity.getType());
+    assertEquals(1, entity.getType().size());
+    Type type = entity.getType().getFirst();
+    assertEquals(CpmType.BACKWARD_CONNECTOR.toString(), ((QualifiedName) type.getValue()).getLocalPart());
+  }
 
-    @Test
-    public void toStatements_withExternalId_returnsCorrectExternalId() {
-        BackwardConnector connector = new BackwardConnector();
-        connector.setId(new QualifiedName("uri", "connectorExample", "ex"));
-        String externalId = "externalIdExample";
-        connector.setExternalId(externalId);
+  @Test
+  public void toStatements_withExternalId_returnsCorrectExternalId() {
+    BackwardConnector connector = new BackwardConnector();
+    connector.setId(new QualifiedName("uri", "connectorExample", "ex"));
+    String externalId = "externalIdExample";
+    connector.setExternalId(externalId);
 
-        List<Statement> statements = mapper.map(connector);
-        Entity entity = (Entity) statements.getFirst();
+    List<Statement> statements = mapper.toStatementsStream(connector).toList();
+    Entity entity = (Entity) statements.getFirst();
 
-        assertNotNull(entity.getOther());
-        assertInstanceOf(LangString.class, entity.getOther().getLast().getValue());
-        assertEquals(CpmAttribute.EXTERNAL_ID.toString(), entity.getOther().getLast().getElementName().getLocalPart());
-        assertEquals(externalId, ((LangString) entity.getOther().getLast().getValue()).getValue());
-    }
+    assertNotNull(entity.getOther());
+    assertInstanceOf(LangString.class, entity.getOther().getLast().getValue());
+    assertEquals(CpmAttribute.EXTERNAL_ID.toString(), entity.getOther().getLast().getElementName().getLocalPart());
+    assertEquals(externalId, ((LangString) entity.getOther().getLast().getValue()).getValue());
+  }
 
-    @Test
-    public void toStatements_withReferencedBundleId_returnsCorrectBundleId() {
-        BackwardConnector connector = new BackwardConnector();
-        connector.setId(new QualifiedName("uri", "connectorExample", "ex"));
-        QualifiedName bundleId = new QualifiedName("uri", "bundleExample", "ex");
-        connector.setReferencedBundleId(bundleId);
+  @Test
+  public void toStatements_withReferencedBundleId_returnsCorrectBundleId() {
+    BackwardConnector connector = new BackwardConnector();
+    connector.setId(new QualifiedName("uri", "connectorExample", "ex"));
+    QualifiedName bundleId = new QualifiedName("uri", "bundleExample", "ex");
+    connector.setReferencedBundleId(bundleId);
 
-        List<Statement> statements = mapper.map(connector);
-        Entity entity = (Entity) statements.getFirst();
+    List<Statement> statements = mapper.toStatementsStream(connector).toList();
+    Entity entity = (Entity) statements.getFirst();
 
-        assertNotNull(entity.getOther());
-        assertEquals(1, entity.getOther().size());
-        assertEquals(CpmAttribute.REFERENCED_BUNDLE_ID.toString(), entity.getOther().getFirst().getElementName().getLocalPart());
-        assertEquals(bundleId, entity.getOther().getFirst().getValue());
-    }
+    assertNotNull(entity.getOther());
+    assertEquals(1, entity.getOther().size());
+    assertEquals(CpmAttribute.REFERENCED_BUNDLE_ID.toString(),
+        entity.getOther().getFirst().getElementName().getLocalPart());
+    assertEquals(bundleId, entity.getOther().getFirst().getValue());
+  }
 
-    @Test
-    public void toStatements_withHashAndAlg_returnsCorrectValues() {
-        BackwardConnector connector = new BackwardConnector();
-        connector.setId(new QualifiedName("uri", "connectorExample", "ex"));
-        Object hashValue = "hashValue";
-        connector.setReferencedBundleHashValue(hashValue);
-        connector.setHashAlg(HashAlgorithms.SHA256);
+  @Test
+  public void toStatements_withHashAndAlg_returnsCorrectValues() {
+    BackwardConnector connector = new BackwardConnector();
+    connector.setId(new QualifiedName("uri", "connectorExample", "ex"));
+    Object hashValue = "hashValue";
+    connector.setReferencedBundleHashValue(hashValue);
+    connector.setHashAlg(HashAlgorithms.SHA256);
 
-        List<Statement> statements = mapper.map(connector);
-        Entity entity = (Entity) statements.getFirst();
+    List<Statement> statements = mapper.toStatementsStream(connector).toList();
+    Entity entity = (Entity) statements.getFirst();
 
-        assertNotNull(entity.getOther());
-        assertEquals(2, entity.getOther().size());
+    assertNotNull(entity.getOther());
+    assertEquals(2, entity.getOther().size());
 
-        Attribute hashValueAttr = entity.getOther().getFirst();
-        assertEquals(CpmAttribute.REFERENCED_BUNDLE_HASH_VALUE.toString(), hashValueAttr.getElementName().getLocalPart());
-        assertEquals(hashValue, hashValueAttr.getValue());
+    Optional<Other> hashValueAttr = entity.getOther().stream()
+        .filter(o -> o.getElementName().getLocalPart().equals(CpmAttribute.REFERENCED_BUNDLE_HASH_VALUE.toString()))
+        .findFirst();
 
-        assertInstanceOf(LangString.class, entity.getOther().getLast().getValue());
-        assertEquals(CpmAttribute.HASH_ALG.toString(), entity.getOther().getLast().getElementName().getLocalPart());
-        assertEquals(HashAlgorithms.SHA256.toString(), ((LangString) entity.getOther().getLast().getValue()).getValue());
+    assertTrue(hashValueAttr.isPresent());
+    assertEquals(hashValue, hashValueAttr.get().getValue());
 
-    }
+    Optional<Other> hashAlgAttr = entity.getOther().stream()
+        .filter(o -> o.getElementName().getLocalPart().equals(CpmAttribute.HASH_ALG.toString()))
+        .findFirst();
 
-    @Test
-    public void toStatements_withProvenanceUri_returnsCorrectUri() {
-        BackwardConnector connector = new BackwardConnector();
-        connector.setId(new QualifiedName("uri", "connectorExample", "ex"));
-        String provenanceUri = "http://example.com/provenance";
-        connector.setProvenanceServiceUri(provenanceUri);
+    assertTrue(hashAlgAttr.isPresent());
+    assertInstanceOf(LangString.class, hashAlgAttr.get().getValue());
+    assertEquals(HashAlgorithms.SHA256.toString(), ((LangString) hashAlgAttr.get().getValue()).getValue());
+  }
 
-        List<Statement> statements = mapper.map(connector);
-        Entity entity = (Entity) statements.get(0);
+  @Test
+  public void toStatements_withDerivedFrom_returnsCorrectRelation() {
+    BackwardConnector connector = new BackwardConnector();
+    QualifiedName qN = new QualifiedName("uri", "connectorExample", "ex");
+    connector.setId(qN);
+    QualifiedName derivedFromId = new QualifiedName("uri", "derivedFromExample", "ex");
+    connector.setDerivedFrom(List.of(derivedFromId));
 
-        assertNotNull(entity.getOther());
-        assertEquals(1, entity.getOther().size());
+    List<Statement> statements = mapper.toStatementsStream(connector).toList();
+    assertEquals(2, statements.size());
 
-        Attribute uri = entity.getOther().getFirst();
-        assertEquals(CpmAttribute.PROVENANCE_SERVICE_URI.toString(), uri.getElementName().getLocalPart());
-        assertEquals(provenanceUri, uri.getValue());
-    }
+    Optional<WasDerivedFrom> relations = statements.stream()
+        .filter(WasDerivedFrom.class::isInstance)
+        .map(WasDerivedFrom.class::cast)
+        .findFirst();
 
-    @Test
-    public void toStatements_withDerivedFrom_returnsCorrectRelation() {
-        BackwardConnector connector = new BackwardConnector();
-        QualifiedName qN = new QualifiedName("uri", "connectorExample", "ex");
-        connector.setId(qN);
-        QualifiedName derivedFromId = new QualifiedName("uri", "derivedFromExample", "ex");
-        connector.setDerivedFrom(List.of(derivedFromId));
+    assertTrue(relations.isPresent());
 
-        List<Statement> statements = mapper.map(connector);
-        assertEquals(2, statements.size());
+    Statement derivedFromStatement = relations.get();
+    assertInstanceOf(WasDerivedFrom.class, derivedFromStatement);
+    assertEquals(derivedFromId, ((WasDerivedFrom) derivedFromStatement).getUsedEntity());
+    assertEquals(qN, ((WasDerivedFrom) derivedFromStatement).getGeneratedEntity());
+  }
 
-        Statement derivedFromStatement = statements.get(1);
-        assertInstanceOf(WasDerivedFrom.class, derivedFromStatement);
-        assertEquals(derivedFromId, ((WasDerivedFrom) derivedFromStatement).getUsedEntity());
-        assertEquals(qN, ((WasDerivedFrom) derivedFromStatement).getGeneratedEntity());
-    }
+  @Test
+  public void toStatements_withAttributedTo_returnsCorrectAttribution() {
+    BackwardConnector connector = new BackwardConnector();
+    QualifiedName qN = new QualifiedName("uri", "connectorExample", "ex");
+    connector.setId(qN);
+    QualifiedName attributedToId = new QualifiedName("uri", "attributedToExample", "ex");
+    ConnectorAttributed cA = new ConnectorAttributed();
+    cA.setAgentId(attributedToId);
+    connector.setAttributedTo(cA);
 
-    @Test
-    public void toStatements_withAttributedTo_returnsCorrectAttribution() {
-        BackwardConnector connector = new BackwardConnector();
-        QualifiedName qN = new QualifiedName("uri", "connectorExample", "ex");
-        connector.setId(qN);
-        QualifiedName attributedToId = new QualifiedName("uri", "attributedToExample", "ex");
-        ConnectorAttributed cA = new ConnectorAttributed();
-        cA.setAgentId(attributedToId);
-        connector.setAttributedTo(cA);
+    List<Statement> statements = mapper.toStatementsStream(connector).toList();
+    assertEquals(2, statements.size());
 
-        List<Statement> statements = mapper.map(connector);
-        assertEquals(2, statements.size());
-        Statement attributedToStatement = statements.getLast();
-        assertInstanceOf(WasAttributedTo.class, attributedToStatement);
-        assertEquals(qN, ((WasAttributedTo) attributedToStatement).getEntity());
-        assertEquals(attributedToId, ((WasAttributedTo) attributedToStatement).getAgent());
-    }
+    Optional<WasAttributedTo> attributedToStatement = statements.stream()
+        .filter(WasAttributedTo.class::isInstance)
+        .map(WasAttributedTo.class::cast)
+        .findFirst();
 
-    @Test
-    public void toStatements_forwardConnectorSpecialisation_returnsCorrectSpecialisation() {
-        ForwardConnector connector = new ForwardConnector();
-        QualifiedName qN = new QualifiedName("uri", "connectorExample", "ex");
-        connector.setId(qN);
-        QualifiedName specialisationId = new QualifiedName("uri", "specialisationExample", "ex");
-        connector.setSpecializationOf(specialisationId);
+    assertTrue(attributedToStatement.isPresent());
+    assertEquals(qN, attributedToStatement.get().getEntity());
+    assertEquals(attributedToId, attributedToStatement.get().getAgent());
+  }
 
-        List<Statement> statements = mapper.map(connector);
-        assertEquals(2, statements.size());
-        Statement specStatement = statements.getLast();
-        assertInstanceOf(SpecializationOf.class, specStatement);
-        assertEquals(qN, ((SpecializationOf) specStatement).getSpecificEntity());
-        assertEquals(specialisationId, ((SpecializationOf) specStatement).getGeneralEntity());
-    }
+  @Test
+  public void toStatements_forwardConnectorSpecialisation_returnsCorrectSpecialisation() {
+    SpecForwardConnector connector = new SpecForwardConnector();
+    QualifiedName qN = new QualifiedName("uri", "connectorExample", "ex");
+    connector.setId(qN);
+    QualifiedName specialisationId = new QualifiedName("uri", "specialisationExample", "ex");
+    connector.setSpecializationOf(specialisationId);
 
-    @Test
-    public void toStatements_nullConnector_returnsNull() {
-        assertNull(mapper.map((BackwardConnector) null));
-        assertNull(mapper.map((ForwardConnector) null));
-    }
+    List<Statement> statements = mapper.toStatementsStream(connector).toList();
+    assertEquals(2, statements.size());
+
+    Optional<SpecializationOf> specStatement = statements.stream()
+        .filter(SpecializationOf.class::isInstance)
+        .map(SpecializationOf.class::cast)
+        .findFirst();
+
+    assertTrue(specStatement.isPresent());
+    assertEquals(specialisationId, specStatement.get().getGeneralEntity());
+    assertEquals(qN, specStatement.get().getSpecificEntity());
+  }
+
+  @Test
+  public void toStatements_withProvenanceUri_returnsCorrectUri() {
+    SpecForwardConnector connector = new SpecForwardConnector();
+    connector.setId(new QualifiedName("uri", "connectorExample", "ex"));
+    String provenanceUri = "http://example.com/provenance";
+    connector.setProvenanceServiceUri(provenanceUri);
+
+    List<Statement> statements = mapper.toStatementsStream(connector).toList();
+    Entity entity = (Entity) statements.get(0);
+
+    assertNotNull(entity.getOther());
+    assertEquals(1, entity.getOther().size());
+
+    Attribute uri = entity.getOther().getFirst();
+    assertEquals(CpmAttribute.PROVENANCE_SERVICE_URI.toString(), uri.getElementName().getLocalPart());
+    assertEquals(provenanceUri, uri.getValue());
+  }
+
+  @Test
+  public void toStatements_nullConnector_returnsNull() {
+    assertTrue(mapper.toStatementsStream((BackwardConnector) null).toList().isEmpty());
+    assertTrue(mapper.toStatementsStream((SpecForwardConnector) null).toList().isEmpty());
+  }
 }

@@ -36,7 +36,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:SamplingBundle_V0_meta"
           } ],
-          "cpm:referencedBundleHashValue" : [ "ecb093525375745fbccd7f398647e32d4dcca58053f7cbd244be524f18d1a40b" ],
+          "cpm:referencedBundleHashValue" : [ "d637bb8e75757ccf052369044c96bee95a6b2da9652ea5efb18a08f588e8435a" ],
           "cpm:referencedBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:SamplingBundle_V0"
@@ -72,7 +72,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:ProcessingBundle_V0_meta"
           } ],
-          "cpm:referencedBundleHashValue" : [ "3651b98fe75f50082a2d002a067edd56d8104ef441a670c5b8ae2f12fdb26e7f" ],
+          "cpm:referencedBundleHashValue" : [ "350fdebaab938c4ab69b5979e1a9458758a2b4851ae2519789f5e32ef9536513" ],
           "cpm:referencedBundleId" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:ProcessingBundle_V0"
@@ -173,12 +173,12 @@
         }
       },
       "wasAttributedTo" : {
-        "_:n96" : {
-          "prov:entity" : "blank:StoredSampleCon_r1",
+        "_:n94" : {
+          "prov:entity" : "blank:ProcessedSampleCon",
           "prov:agent" : "blank:NiceMarineStation"
         },
-        "_:n95" : {
-          "prov:entity" : "blank:ProcessedSampleCon",
+        "_:n96" : {
+          "prov:entity" : "blank:StoredSampleCon_r1",
           "prov:agent" : "blank:NiceMarineStation"
         }
       },
@@ -193,13 +193,13 @@
         }
       },
       "wasDerivedFrom" : {
-        "_:n94" : {
-          "prov:generatedEntity" : "blank:ProcessedSampleCon",
-          "prov:usedEntity" : "blank:StoredSampleCon_r1"
-        },
         "_:n97" : {
           "prov:generatedEntity" : "blank:IdentifiedSpeciesCon",
           "prov:usedEntity" : "blank:ProcessedSampleCon"
+        },
+        "_:n95" : {
+          "prov:generatedEntity" : "blank:ProcessedSampleCon",
+          "prov:usedEntity" : "blank:StoredSampleCon_r1"
         }
       },
       "wasGeneratedBy" : {

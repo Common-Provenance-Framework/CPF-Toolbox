@@ -594,6 +594,15 @@ public class CpmDocument implements StatementAction {
     }
 
     /**
+     * Retrieves a list of specialized forward connector nodes from the traversal information.
+     *
+     * @return a list of specialized forward connector nodes
+     */
+    public List<INode> getSpecForwardConnectors() {
+        return getConnectors(CpmType.SPEC_FORWARD_CONNECTOR);
+    }
+
+    /**
      * Retrieves a list of backward connector nodes from the traversal information.
      *
      * @return a list of backward connector nodes
