@@ -59,7 +59,7 @@ import cz.muni.fi.cpm.template.deserialization.TraversalInformationDeserializer;
 import org.openprovenance.prov.model.Document;
 import org.openprovenance.prov.model.Bundle;
 
-// Step 2 — add domain-specific part (Section 5)
+// Step 2 — add domain-specific part
 import org.openprovenance.prov.model.*;
 import org.openprovenance.prov.vanilla.ProvFactory;
 import java.util.Arrays;
@@ -70,7 +70,7 @@ import org.openprovenance.prov.interop.InteropFramework;
 
 ---
 
-## 0. What This Toolbox Does
+## What This Toolbox Does
 
 The CPF Toolbox generates the **traversal information** part of a CPM bundle. Traversal information is the standardized backbone that links provenance bundles across organizations — it contains the main activity, backward and forward connectors, and sender/receiver agents.
 
@@ -100,7 +100,7 @@ The arrows between the two parts represent `specializationOf` relations — they
 
 ---
 
-## 1. Workflow
+## Workflow
 
 Building a CPM bundle is a three-step process:
 
@@ -127,11 +127,11 @@ Steps 2 and 3 use the ProvToolBox API directly — the CPF Toolbox is only invol
 
 ---
 
-## 2. Building the Input JSON Template
+## Building the Input JSON Template
 
 The input template is a JSON file that describes the traversal information for one bundle. It is **not** PROV-JSON — it is a separate format consumed by `TraversalInformationDeserializer`. The full schema is defined in [template_schema.json](cpm-template/src/main/resources/template_schema.json).
 
-### 2.1 Required fields
+### Required fields
 
 | Field | Type | Description |
 |---|---|---|
@@ -139,7 +139,7 @@ The input template is a JSON file that describes the traversal information for o
 | `bundleName` | string | Qualified name for the output bundle (e.g. `"gen:bundle_dna_extraction_TS4420"`). |
 | `mainActivity.id` | string | Qualified name for the main activity — the single core process of this bundle. |
 
-### 2.2 Optional fields
+### Optional fields
 
 | Field | Type | Description |
 |---|---|---|
@@ -154,7 +154,7 @@ The input template is a JSON file that describes the traversal information for o
 | `receiverAgents` | array of objects | Each has `id` (required). |
 | `identifierEntities` | array of objects | External identifiers only (e.g. accession numbers). Each has `id`, `externalId`, `externalIdType`. |
 
-### 2.3 Identifier rules
+### Identifier rules
 
 Every identifier in the template must follow the `prefix:localName` format, where `prefix` is a key in `prefixes`.
 
@@ -167,9 +167,9 @@ gen:centrifuge_5810R              ← clean identifier
 gen:Centrifuge Model 5810R        ← will cause escaping problems
 ```
 
-### 2.4 Minimal example
+### Basic example
 
-The simplest valid template — one backward connector, one forward connector, one main activity:
+One backward connector, one forward connector, one main activity:
 
 **Input** (`template_minimal.json`):
 ```json
@@ -255,7 +255,7 @@ The toolbox automatically:
 - Generates `used` from `mainActivity.used`
 - Adds `cpm`, `dct`, `xsd`, `prov` namespace prefixes
 
-### 2.5 Realistic example — biobank processing
+### Realistic example — biobank processing
 
 A biobank receives a tissue sample and extracts two DNA aliquots. The template describes only the traversal backbone — the equipment, protocol, and actual sample entities are added in Step 2.
 
@@ -381,7 +381,7 @@ This output is the traversal backbone only. The microcentrifuge, thermal cycler,
 
 ---
 
-## 3. What Must Be in the Input
+## What Must Be in the Input
 
 For the traversal backbone to be structurally complete, the template needs:
 
@@ -391,7 +391,7 @@ For the traversal backbone to be structurally complete, the template needs:
 | Main activity | `mainActivity.id` | Deserialization fails |
 | Backward connector(s) | `backwardConnectors[].id` | No input entity — the chain cannot be traced backward |
 | Forward connector(s) | `forwardConnectors[].id` | No output entity — the chain cannot be traced forward |
-| Forward → backward lineage | `forwardConnectors[].derivedFrom` | **No `wasDerivedFrom` in output — silent data loss** (see Section 4) |
+| Forward → backward lineage | `forwardConnectors[].derivedFrom` | **No `wasDerivedFrom` in output — silent data loss** (see "What Must Not Be in the Input") |
 | Activity uses input | `mainActivity.used[].backwardConnectorId` | No `used` relation — activity is disconnected from its input |
 | Activity generates output | `mainActivity.generated[]` | No `wasGeneratedBy` — output entities are disconnected from the activity |
 | Prefix declarations | `prefixes` | Identifiers cannot be resolved |
@@ -400,11 +400,11 @@ The toolbox does not validate CPM structural rules. A template with only a `bund
 
 ---
 
-## 4. What Must Not Be in the Input
+## What Must Not Be in the Input
 
 The traversal information template accepts **only** the CPM navigation backbone. Domain-specific content — the actual science — is added in Step 2 using the ProvToolBox API.
 
-### 4.1 Common mistakes
+### Common mistakes
 
 | What people put in the template | Why it's wrong | Where it actually belongs |
 |---|---|---|
@@ -415,7 +415,7 @@ The traversal information template accepts **only** the CPM navigation backbone.
 | Technicians / operators | Not traversal information | Step 2: add as agents with `wasAssociatedWith` |
 | Devices as agents | Template only allows sender/receiver agents | Step 2: add as entities with `used`, or as agents via ProvToolBox API |
 
-### 4.2 What goes wrong
+### What goes wrong
 
 The toolbox does not reject invalid input. It processes whatever it receives and produces output — but the output is structurally wrong.
 
@@ -540,7 +540,7 @@ Four things went wrong in this output:
 
 **4. No `wasDerivedFrom`.** The forward connectors had no `derivedFrom` in the template, so the output contains no `wasDerivedFrom` relations. The DNA aliquots have no recorded lineage back to the tissue sample. This breaks backward traversal — a tool following the chain will find the aliquots but cannot determine where they came from.
 
-### 4.3 Side-by-side comparison
+### Side-by-side comparison
 
 | | Wrong template | Correct template |
 |---|---|---|
@@ -553,17 +553,17 @@ Four things went wrong in this output:
 | Output `wasDerivedFrom` | **missing** | 2 relations |
 | Output `dct:hasPart` | lists devices | absent |
 
-The correct template from Section 2.5 produces a clean backbone with only connectors, one `used`, two `wasDerivedFrom`, and two `wasGeneratedBy`. Devices, the SOP, and real sample entities are added in Step 2.
+The correct template from the realistic example above produces a clean backbone with only connectors, one `used`, two `wasDerivedFrom`, and two `wasGeneratedBy`. Devices, the SOP, and real sample entities are added in Step 2.
 
 ---
 
-## 5. Adding the Domain-Specific Part (Step 2)
+## Adding the Domain-Specific Part (Step 2)
 
 Step 1 produces a traversal backbone — connectors, main activity, and the relations between them. The backbone alone is not a complete CPM bundle. Step 2 adds the actual science: real sample entities, equipment, protocols, and the detailed relations between them, to the same bundle.
 
 This step uses the ProvToolBox API directly. The CPF Toolbox is not involved.
 
-### 5.1 What to add
+### What to add
 
 | Category | Examples | ProvToolBox method |
 |---|---|---|
@@ -575,9 +575,9 @@ Domain relations connect domain entities to each other and to the main activity.
 
 `specializationOf` is the bridge between the two parts. Each domain entity that corresponds to a connector needs a `specializationOf` relation linking it to that connector. Without these links, the domain-specific part is present in the bundle but disconnected from the traversal backbone.
 
-### 5.2 Java example
+### Java example
 
-Continuing with the DNA extraction scenario from Section 2.5. After Step 1 produces the traversal backbone, the code below adds five domain entities (tissue sample, two DNA aliquots, two devices), their relations, and the `specializationOf` cross-links.
+Continuing with the DNA extraction scenario from the realistic example above. After Step 1 produces the traversal backbone, the code below adds five domain entities (tissue sample, two DNA aliquots, two devices), their relations, and the `specializationOf` cross-links.
 
 <details>
 <summary>View Java code</summary>
@@ -684,7 +684,7 @@ new InteropFramework(pF).writeDocument("output_complete.json", doc);
 
 The main activity (`gen:dnaExtraction_TS4420`) is not redeclared — it already exists in the bundle from Step 1. The domain relations reference it by its qualified name.
 
-### 5.3 The `specializationOf` cross-links
+### The `specializationOf` cross-links
 
 Each `specializationOf` says: "this domain entity is a more specific version of that traversal connector." The connector carries the cross-bundle navigation role; the domain entity carries the real-world detail.
 
@@ -698,9 +698,9 @@ In the ProvToolBox API, `pF.newSpecializationOf(specificEntity, generalEntity)` 
 
 Devices (`gen:microcentrifuge_Z200`, `gen:thermal_cycler_T100`) do not get `specializationOf` relations. They are not counterparts of any connector — they are standalone domain entities linked to the activity through `used`.
 
-### 5.4 Complete output
+### Complete output
 
-After adding the domain-specific part to the DNA extraction backbone from Section 2.5, the serialized bundle contains both parts:
+After adding the domain-specific part to the DNA extraction backbone, the serialized bundle contains both parts:
 
 <details>
 <summary>View complete output</summary>
@@ -841,11 +841,11 @@ The bundle now contains both parts:
 
 ---
 
-## 6. FAQ and Common Errors
+## FAQ and Common Errors
 
 The CPF Toolbox generates traversal information only. It does not process, validate, or produce domain-specific content. This is by design.
 
-### 6.1 Errors
+### Errors
 
 These exceptions stop execution with an error message.
 
@@ -856,7 +856,7 @@ These exceptions stop execution with an error message.
 | `JsonParseException` / `MismatchedInputException` | Malformed JSON, wrong value types, or invalid date format | Validate JSON syntax; use ISO-8601 dates (`"2025-03-10T09:30:00.000Z"`); check every id follows `prefix:localName` |
 | `Document cannot be null` | `toProvDocument()` returned null because the input template was null | Check that deserialization succeeded before passing the Document downstream |
 
-### 6.2 Silent issues
+### Silent issues
 
 These produce output without any error, but the output is structurally wrong. The toolbox does not validate CPM structural rules — it accepts any syntactically valid JSON and maps it to PROV.
 
@@ -867,7 +867,7 @@ These produce output without any error, but the output is structurally wrong. Th
 | Put a non-connector id in `backwardConnectorId` | A `used` relation is emitted pointing at whatever you referenced, regardless of what it is |
 | Omitted connectors, used, or generated entirely | Toolbox accepts it — the output is valid PROV-JSON but not a valid CPM component |
 
-### 6.3 Common questions
+### Common questions
 
 **Q: How do I add devices, protocols, or real sample entities using the toolbox?**
 The CPF Toolbox generates traversal information only. Domain-specific content is not supported by design.
