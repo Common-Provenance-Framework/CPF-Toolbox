@@ -16,7 +16,7 @@ The CPF Toolbox is not published to Maven Central. Download the JAR files from t
 After installation, add these dependencies to your `pom.xml`:
 
 <details>
-<summary>Maven dependencies</summary>
+<summary><b>Click to expand — Maven dependencies (pom.xml)</b></summary>
 
 ```xml
 <!-- CPF Toolbox (locally installed — use the version matching your JARs) -->
@@ -197,7 +197,7 @@ One backward connector, one forward connector, one main activity:
 **Output** (PROV-JSON):
 
 <details>
-<summary>View output</summary>
+<summary><b>Click to expand — Output PROV-JSON</b></summary>
 
 ```json
 {
@@ -262,7 +262,7 @@ A biobank receives a tissue sample and extracts two DNA aliquots. The template d
 **Input** (`template_dna_extraction.json`):
 
 <details>
-<summary>View input JSON</summary>
+<summary><b>Click to expand — Input JSON template</b></summary>
 
 ```json
 {
@@ -310,7 +310,7 @@ A biobank receives a tissue sample and extracts two DNA aliquots. The template d
 **Output** (PROV-JSON):
 
 <details>
-<summary>View output</summary>
+<summary><b>Click to expand — Output PROV-JSON</b></summary>
 
 ```json
 {
@@ -422,7 +422,7 @@ The toolbox does not reject invalid input. It processes whatever it receives and
 **Example — devices and SOP placed in the template (wrong):**
 
 <details>
-<summary>View wrong input</summary>
+<summary><b>Click to expand — Wrong input JSON (devices in template)</b></summary>
 
 ```json
 {
@@ -469,7 +469,7 @@ This template has three problems:
 The toolbox produces this output **without any error**:
 
 <details>
-<summary>View wrong output</summary>
+<summary><b>Click to expand — Wrong output PROV-JSON</b></summary>
 
 ```json
 {
@@ -580,7 +580,7 @@ Domain relations connect domain entities to each other and to the main activity.
 Continuing with the DNA extraction scenario from the realistic example above. After Step 1 produces the traversal backbone, the code below adds five domain entities (tissue sample, two DNA aliquots, two devices), their relations, and the `specializationOf` cross-links.
 
 <details>
-<summary>View Java code</summary>
+<summary><b>Click to expand — Full Java code for Step 2</b></summary>
 
 ```java
 import org.openprovenance.prov.model.*;
@@ -703,7 +703,7 @@ Devices (`gen:microcentrifuge_Z200`, `gen:thermal_cycler_T100`) do not get `spec
 After adding the domain-specific part to the DNA extraction backbone, the serialized bundle contains both parts:
 
 <details>
-<summary>View complete output</summary>
+<summary><b>Click to expand — Complete output PROV-JSON (traversal + domain)</b></summary>
 
 ```json
 {
