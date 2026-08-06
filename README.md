@@ -15,8 +15,10 @@ The CPF Toolbox is not published to Maven Central. Download the JAR files from t
 
 After installation, add these dependencies to your `pom.xml`:
 
+<blockquote>
+
 <details>
-<summary><b>Click to expand — Maven dependencies (pom.xml)</b></summary>
+<summary><b>📦 Maven dependencies (pom.xml)</b></summary>
 
 ```xml
 <!-- CPF Toolbox (locally installed — use the version matching your JARs) -->
@@ -50,6 +52,8 @@ After installation, add these dependencies to your `pom.xml`:
 ```
 
 </details>
+
+</blockquote>
 
 ### Java imports
 
@@ -196,8 +200,10 @@ One backward connector, one forward connector, one main activity:
 
 **Output** (PROV-JSON):
 
+<blockquote>
+
 <details>
-<summary><b>Click to expand — Output PROV-JSON</b></summary>
+<summary><b>📄 Output PROV-JSON</b></summary>
 
 ```json
 {
@@ -248,6 +254,8 @@ One backward connector, one forward connector, one main activity:
 
 </details>
 
+</blockquote>
+
 The toolbox automatically:
 - Assigns CPM types (`cpm:mainActivity`, `cpm:backwardConnector`, `cpm:forwardConnector`)
 - Generates `wasGeneratedBy` from `mainActivity.generated`
@@ -261,8 +269,10 @@ A biobank receives a tissue sample and extracts two DNA aliquots. The template d
 
 **Input** (`template_dna_extraction.json`):
 
+<blockquote>
+
 <details>
-<summary><b>Click to expand — Input JSON template</b></summary>
+<summary><b>📥 Input JSON template</b></summary>
 
 ```json
 {
@@ -307,10 +317,14 @@ A biobank receives a tissue sample and extracts two DNA aliquots. The template d
 
 </details>
 
+</blockquote>
+
 **Output** (PROV-JSON):
 
+<blockquote>
+
 <details>
-<summary><b>Click to expand — Output PROV-JSON</b></summary>
+<summary><b>📄 Output PROV-JSON</b></summary>
 
 ```json
 {
@@ -377,6 +391,8 @@ A biobank receives a tissue sample and extracts two DNA aliquots. The template d
 
 </details>
 
+</blockquote>
+
 This output is the traversal backbone only. The microcentrifuge, thermal cycler, micropipette, SOP protocol, and actual DNA sample entities are not here — they belong in the domain-specific part, added in Step 2.
 
 ---
@@ -421,8 +437,10 @@ The toolbox does not reject invalid input. It processes whatever it receives and
 
 **Example — devices and SOP placed in the template (wrong):**
 
+<blockquote>
+
 <details>
-<summary><b>Click to expand — Wrong input JSON (devices in template)</b></summary>
+<summary><b>❌ Wrong input JSON (devices in template)</b></summary>
 
 ```json
 {
@@ -461,6 +479,8 @@ The toolbox does not reject invalid input. It processes whatever it receives and
 
 </details>
 
+</blockquote>
+
 This template has three problems:
 1. Devices and SOP are in `identifierEntities` — they are not external identifiers.
 2. `mainActivity.used` has three entries — two of them point at devices, not at backward connectors.
@@ -468,8 +488,10 @@ This template has three problems:
 
 The toolbox produces this output **without any error**:
 
+<blockquote>
+
 <details>
-<summary><b>Click to expand — Wrong output PROV-JSON</b></summary>
+<summary><b>❌ Wrong output PROV-JSON</b></summary>
 
 ```json
 {
@@ -530,6 +552,8 @@ The toolbox produces this output **without any error**:
 
 </details>
 
+</blockquote>
+
 Four things went wrong in this output:
 
 **1. Devices and SOP are typed `cpm:id` (identifier entity).** They appear as entities with `"prov:type": "cpm:id"` — the type reserved for external identifiers like accession numbers. The toolbox mapped them from `identifierEntities` exactly as instructed. Downstream tools that process `cpm:id` entities will treat these as identifier references, not as physical equipment.
@@ -579,8 +603,10 @@ Domain relations connect domain entities to each other and to the main activity.
 
 Continuing with the DNA extraction scenario from the realistic example above. After Step 1 produces the traversal backbone, the code below adds five domain entities (tissue sample, two DNA aliquots, two devices), their relations, and the `specializationOf` cross-links.
 
+<blockquote>
+
 <details>
-<summary><b>Click to expand — Full Java code for Step 2</b></summary>
+<summary><b>🔧 Full Java code for Step 2</b></summary>
 
 ```java
 import org.openprovenance.prov.model.*;
@@ -682,6 +708,8 @@ new InteropFramework(pF).writeDocument("output_complete.json", doc);
 
 </details>
 
+</blockquote>
+
 The main activity (`gen:dnaExtraction_TS4420`) is not redeclared — it already exists in the bundle from Step 1. The domain relations reference it by its qualified name.
 
 ### The `specializationOf` cross-links
@@ -702,8 +730,10 @@ Devices (`gen:microcentrifuge_Z200`, `gen:thermal_cycler_T100`) do not get `spec
 
 After adding the domain-specific part to the DNA extraction backbone, the serialized bundle contains both parts:
 
+<blockquote>
+
 <details>
-<summary><b>Click to expand — Complete output PROV-JSON (traversal + domain)</b></summary>
+<summary><b>📄 Complete output PROV-JSON (traversal + domain)</b></summary>
 
 ```json
 {
@@ -831,6 +861,8 @@ After adding the domain-specific part to the DNA extraction backbone, the serial
 ```
 
 </details>
+
+</blockquote>
 
 The bundle now contains both parts:
 
