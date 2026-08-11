@@ -1,4 +1,10 @@
-# CPF Toolbox — Usage Guide
+# CPF Toolbox
+
+The reference implementation of the Common Provenance Model (CPM) from the ISO 23494 standard. Originally developed as part of a master's thesis ([available here](https://is.muni.cz/auth/th/sv0z0/)), it reflects the model's state as of Spring 2025 ([reference](https://zenodo.org/records/14526108)) and is implemented as an extension of the [ProvToolbox](https://github.com/lucmoreau/ProvToolbox) library.
+
+[![Pipeline](https://github.com/Common-Provenance-Framework/CPF-Toolbox/actions/workflows/maven.yml/badge.svg)](https://github.com/Common-Provenance-Framework/CPF-Toolbox/actions/workflows/maven.yml)
+![Coverage](https://img.shields.io/badge/coverage-88%25-brightgreen)
+![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 
 ## Prerequisites
 
@@ -11,7 +17,15 @@
 
 ### Installation
 
-The CPF Toolbox is not published to Maven Central. Download the JAR files from the [GitHub Releases](https://github.com/dwwop/cpm/releases) page and install them locally by following the [installation steps in OLD_README](OLD_README.md#installation).
+The CPF Toolbox is not published to Maven Central. Build it from source to install it into your local Maven repository:
+
+```sh
+git clone https://github.com/Common-Provenance-Framework/CPF-Toolbox.git
+cd CPF-Toolbox
+mvn install -DskipTests
+```
+
+This installs `cpm-core` and `cpm-template` version **2.2.0**.
 
 After installation, add these dependencies to your `pom.xml`:
 
@@ -21,16 +35,16 @@ After installation, add these dependencies to your `pom.xml`:
 <summary><b>📦 Maven dependencies (pom.xml)</b></summary>
 
 ```xml
-<!-- CPF Toolbox (locally installed — use the version matching your JARs) -->
+<!-- CPF Toolbox (installed locally by `mvn install`) -->
 <dependency>
     <groupId>cz.muni.fi.cpm</groupId>
     <artifactId>cpm-core</artifactId>
-    <version>1.0.0</version>
+    <version>2.2.0</version>
 </dependency>
 <dependency>
     <groupId>cz.muni.fi.cpm</groupId>
     <artifactId>cpm-template</artifactId>
-    <version>1.0.0</version>
+    <version>2.2.0</version>
 </dependency>
 
 <!-- ProvToolBox (available on Maven Central) -->
@@ -133,30 +147,113 @@ Steps 2 and 3 use the ProvToolBox API directly — the CPF Toolbox is only invol
 
 ## Building the Input JSON Template
 
-The input template is a JSON file that describes the traversal information for one bundle. It is **not** PROV-JSON — it is a separate format consumed by `TraversalInformationDeserializer`. The full schema is defined in [template_schema.json](cpm-template/src/main/resources/template_schema.json).
+The input template is a JSON file that describes the traversal information for one bundle. It is **not** PROV-JSON — it is a separate format consumed by `TraversalInformationDeserializer`.
 
-### Required fields
+### Field reference
 
-| Field | Type | Description |
+Every field the template accepts, grouped by the object it belongs to. Anything not
+listed here is rejected — see [Unknown fields](#unknown-fields) below.
+
+Where a field maps to an attribute in the output, the attribute is shown as `→ cpm:…`.
+
+#### Top level
+
+| Field | Required | Description |
 |---|---|---|
-| `prefixes` | object | Namespace declarations. Every prefix used in identifiers must be declared here. |
-| `bundleName` | string | Qualified name for the output bundle (e.g. `"gen:bundle_dna_extraction_TS4420"`). |
-| `mainActivity.id` | string | Qualified name for the main activity — the single core process of this bundle. |
+| `prefixes` | yes | Namespace declarations. Every prefix used in an identifier must be declared here. |
+| `bundleName` | yes | Qualified name of the output bundle. |
+| `mainActivity` | yes | The single core process of this bundle. |
+| `backwardConnectors` | no | Entities this bundle consumed from an upstream bundle. |
+| `forwardConnectors` | no | Entities this bundle passes to a downstream bundle. |
+| `specForwardConnectors` | no | Forward connectors that also record *where* the data went. See below. |
+| `senderAgents` | no | Agents that sent the incoming data. |
+| `receiverAgents` | no | Agents that received the outgoing data. |
+| `identifierEntities` | no | External identifiers — accession numbers, sample IDs. Not equipment. |
 
-### Optional fields
+#### `mainActivity`
 
-| Field | Type | Description |
+| Field | Required | Description |
 |---|---|---|
-| `mainActivity.startTime` | string | ISO-8601 timestamp (e.g. `"2025-03-10T09:30:00.000Z"`). |
-| `mainActivity.endTime` | string | ISO-8601 timestamp. |
-| `mainActivity.hasPart` | array of strings | Qualified names of **sub-activities** (not devices or protocols). |
-| `mainActivity.used` | array of objects | Each entry has `id` (relation identifier) and `backwardConnectorId` (the backward connector the activity consumes). |
-| `mainActivity.generated` | array of strings | Qualified names of forward connectors the activity produces. |
-| `backwardConnectors` | array of objects | Each has `id` (required), plus optional `externalId`, `attributedTo`, `derivedFrom`, and hash/reference attributes. |
-| `forwardConnectors` | array of objects | Each has `id` (required), plus optional `externalId`, `derivedFrom`, `attributedTo`. |
-| `senderAgents` | array of objects | Each has `id` (required). |
-| `receiverAgents` | array of objects | Each has `id` (required). |
-| `identifierEntities` | array of objects | External identifiers only (e.g. accession numbers). Each has `id`, `externalId`, `externalIdType`. |
+| `id` | yes | Qualified name of the activity. |
+| `startTime` | no | ISO-8601, e.g. `"2025-03-10T09:30:00.000Z"`. |
+| `endTime` | no | ISO-8601. |
+| `referencedMetaBundleId` | no | Meta-bundle describing this bundle. → `cpm:referencedMetaBundleId` |
+| `hasPart` | no | Qualified names of **sub-activities**, declared in the domain-specific part. Not devices or protocols. → `dct:hasPart` |
+| `used` | no | Array of `{ "id": <optional>, "backwardConnectorId": <required> }`. → `used` |
+| `generated` | no | Qualified names of forward connectors this activity produces. → `wasGeneratedBy` |
+
+#### `backwardConnectors[]`
+
+| Field | Required | Description |
+|---|---|---|
+| `id` | yes | Qualified name of the connector. |
+| `externalId` | no | → `cpm:externalId` |
+| `derivedFrom` | no | Array of qualified names this connector derives from. → `wasDerivedFrom` |
+| `referencedBundleId` | no | The upstream bundle. → `cpm:referencedBundleId` |
+| `referencedMetaBundleId` | no | The upstream meta-bundle. → `cpm:referencedMetaBundleId` |
+| `referencedBundleSpecV` | no | Content version of the referenced bundle. → `cpm:referencedBundleSpecV` |
+| `referencedMetaBundleSpecV` | no | Content version of the referenced meta-bundle. → `cpm:referencedMetaBundleSpecV` |
+| `hashAlg` | no | One of `MD5`, `SHA1`, `SHA256`, `SHA512`. → `cpm:hashAlg` |
+| `referencedBundleHashValue` | no | Hash of the referenced bundle. Pass a plain string — a JSON object is not converted correctly. |
+| `attributedTo` | no | `{ "id": <optional>, "agentId": <required> }`. → `wasAttributedTo` |
+
+#### `forwardConnectors[]`
+
+| Field | Required | Description |
+|---|---|---|
+| `id` | yes | Qualified name of the connector. |
+| `externalId` | no | → `cpm:externalId` |
+| `derivedFrom` | no | Backward connectors this one derives from. → `wasDerivedFrom` |
+
+Forward connectors accept **nothing else**. There is no `attributedTo` and no
+`referencedBundleId` here — for those, use a spec-forward connector.
+
+#### `specForwardConnectors[]`
+
+A plain forward connector says "this bundle produced something and passed it on". A spec-forward connector also records *where it went* — use one when the receiving bundle already exists and you want the chain verifiable in both directions. Its `specializationOf` field points at the plain forward connector it refines, so both can live in the same bundle.
+
+Everything `forwardConnectors` accepts, plus:
+
+| Field | Required | Description |
+|---|---|---|
+| `specializationOf` | no | The forward connector this one refines. → `specializationOf` |
+| `referencedBundleId` | no | The downstream bundle. → `cpm:referencedBundleId` |
+| `referencedMetaBundleId` | no | → `cpm:referencedMetaBundleId` |
+| `referencedBundleSpecV` | no | → `cpm:referencedBundleSpecV` |
+| `referencedMetaBundleSpecV` | no | → `cpm:referencedMetaBundleSpecV` |
+| `provenanceServiceUri` | no | Provenance service holding the referenced bundle. → `cpm:provenanceServiceUri` |
+| `hashAlg` | no | `MD5`, `SHA1`, `SHA256` or `SHA512`. → `cpm:hashAlg` |
+| `referencedBundleHashValue` | no | Hash of the referenced bundle. Pass a plain string — a JSON object is not converted correctly. |
+| `attributedTo` | no | `{ "id": <optional>, "agentId": <required> }`. → `wasAttributedTo` |
+
+Entities get `prov:type = cpm:specForwardConnector`.
+
+#### `senderAgents[]` / `receiverAgents[]`
+
+| Field | Required | Description |
+|---|---|---|
+| `id` | yes | Qualified name of the agent. |
+| `contactIdPid` | no | Persistent identifier for the contact point. → `cpm:contactIdPid` |
+
+#### `identifierEntities[]`
+
+| Field | Required | Description |
+|---|---|---|
+| `id` | yes | Qualified name of the entity. |
+| `externalId` | no | The identifier value. → `cpm:externalId` |
+| `externalIdType` | no | What kind of identifier it is. → `cpm:externalIdType` |
+| `comment` | no | Free text. → `cpm:comment` |
+
+<a id="unknown-fields"></a>
+
+#### Unknown fields are fatal
+
+A misspelled or unsupported key anywhere in the template aborts deserialization
+with `UnrecognizedPropertyException`, and no output is produced. The message names
+the offending field and lists what is accepted at that position.
+
+This cuts both ways: the parser is strict, so if it succeeds, every key you wrote
+was understood.
 
 ### Identifier rules
 
@@ -927,3 +1024,16 @@ ITemplateProvMapper mapper = new TemplateProvMapper(new CpmProvFactory(pF), true
 
 **Q: `getMainActivity()` returns null.**
 The bundle does not contain an activity with `prov:type = cpm:mainActivity`. The toolbox does not validate CPM structure — it returns null instead of throwing an error.
+
+---
+
+## Going further
+
+- [docs/cpm-core-api.md](docs/cpm-core-api.md) — read, query and manipulate CPM bundles as graphs with `CpmDocument`
+- [docs/java-api.md](docs/java-api.md) — build traversal information in Java instead of from JSON
+- [docs/datasets.md](docs/datasets.md) — the MMCI and EMBRC example datasets
+- [docs/contributing.md](docs/contributing.md) — setup, commit conventions, pull requests
+
+## License
+
+Apache 2.0. See [LICENSE](LICENSE).
