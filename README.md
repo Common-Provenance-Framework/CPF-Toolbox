@@ -511,24 +511,21 @@ The toolbox does not validate CPM structural rules. A template with only a `bund
 
 ---
 
-## What Must Not Be in the Input
+## What SHOULD Not Be in the Input
 
-The traversal information template accepts **only** the CPM navigation backbone. Domain-specific content — the actual science — is added in Step 2 using the ProvToolBox API.
+The traversal information template is used to generate the **traversal information only**. Domain-specific content — the actual details about the process — is added in Step 2 using the ProvToolBox.
 
 ### Common mistakes
 
 | What people put in the template | Why it's wrong | Where it actually belongs |
 |---|---|---|
-| Devices / equipment | Not traversal information | Step 2: add as entities, link with `used` |
+| Devices / equipment / SW | Not traversal information | Step 2: add as entities/agents, link with `used/wasAssociatedWith` |
 | SOPs / protocols | Not traversal information | Step 2: add as entities |
-| Real sample entities (the actual tissue, DNA) | Not traversal information | Step 2: add as entities, link with `specializationOf` to connectors |
-| Sub-activities (extraction steps, centrifugation) | Partly correct in `hasPart`, but the activities themselves go in Step 2 | `hasPart` can list their IDs; the activity declarations go in Step 2 |
+| Sub-activities (extraction steps, centrifugation) | Partly correct in `hasPart`, but the activities themselves go in Step 2 | `hasPart` lists their IDs; the activity declarations go in Step 2 |
 | Technicians / operators | Not traversal information | Step 2: add as agents with `wasAssociatedWith` |
-| Devices as agents | Template only allows sender/receiver agents | Step 2: add as entities with `used`, or as agents via ProvToolBox API |
+| Devices as agents | Template only allows sender/receiver agents | Step 2: add as entities with `used`, or as agents via ProvToolBox |
 
 ### What goes wrong
-
-The toolbox does not reject invalid input. It processes whatever it receives and produces output — but the output is structurally wrong.
 
 **Example — devices and SOP placed in the template (wrong):**
 
@@ -653,9 +650,9 @@ Four things went wrong in this output:
 
 **1. Devices and SOP are typed `cpm:id` (identifier entity).** They appear as entities with `"prov:type": "cpm:id"` — the type reserved for external identifiers like accession numbers. The toolbox mapped them from `identifierEntities` exactly as instructed. Downstream tools that process `cpm:id` entities will treat these as identifier references, not as physical equipment.
 
-**2. `dct:hasPart` lists devices and a protocol.** `hasPart` is meant to reference sub-activities (e.g. a centrifugation step, a lysis step). Devices and protocols are not activities.
+**2. `dct:hasPart` lists devices and a protocol.** `hasPart` is meant to reference sub-activities of the main activity (e.g. a centrifugation step or a data preparation step). Devices and protocols are not activities.
 
-**3. Three `used` relations instead of one.** The activity appears to "use" the microcentrifuge and thermal cycler as if they were backward connectors. Only the tissue sample is a real backward connector — the other two `used` entries are structurally meaningless in the traversal backbone.
+**3. Three `used` relations instead of one.** The activity appears to "use" the microcentrifuge and thermal cycler as if they were backward connectors. Only the tissue sample is a proper backward connector in this use case — the other two `used` entries are structurally meaningless in the traversal backbone.
 
 **4. No `wasDerivedFrom`.** The forward connectors had no `derivedFrom` in the template, so the output contains no `wasDerivedFrom` relations. The DNA aliquots have no recorded lineage back to the tissue sample. This breaks backward traversal — a tool following the chain will find the aliquots but cannot determine where they came from.
 
