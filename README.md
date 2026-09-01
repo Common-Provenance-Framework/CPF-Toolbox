@@ -683,17 +683,17 @@ This step uses the ProvToolBox directly. The CPF Toolbox is not used.
 
 | Category | Examples | ProvToolBox method |
 |---|---|---|
-| Domain entities | Samples, devices, protocols | `pF.newEntity(id, attributes)` |
-| Domain relations | Activity used device; activity produced sample; output derived from input | `pF.newUsed()`, `pF.newWasGeneratedBy()`, `pF.newWasDerivedFrom()` |
-| `specializationOf` cross-links | Domain sample entity → corresponding connector | `pF.newSpecializationOf(domainEntity, connector)` |
+| Domain entities | Samples, files, datasets, protocols, configuration files | `pF.newEntity(id, attributes)` |
+| Domain relations | Activity used a file; activity produced sample; output derived from input | `pF.newUsed()`, `pF.newWasGeneratedBy()`, `pF.newWasDerivedFrom()` |
+| `specializationOf` cross-links | Domain entity → corresponding connector | `pF.newSpecializationOf(domainEntity, connector)` |
 
-Domain relations connect domain entities to each other and to the main activity. They parallel the traversal-level relations (which connect connectors), but describe what actually happened — which device was used, which sample was produced, which output came from which input.
+Relations present in the domain-specific part describe the main activity in the traversal information with finer granularity, for instance, which device and sample was used, which file or data was produced, which output came from which input.
 
-`specializationOf` is the bridge between the two parts. Each domain entity that corresponds to a connector needs a `specializationOf` relation linking it to that connector. Without these links, the domain-specific part is present in the bundle but disconnected from the traversal backbone.
+`specializationOf` is the bridge between the two parts. Each entity present in a domain-specific part that corresponds to a connector needs a `specializationOf` relation linking it to that connector. Without these links, the domain-specific part is present in the FPC but disconnected from the traversal information.
 
 ### Java example
 
-Continuing with the DNA extraction scenario from the realistic example above. After Step 1 produces the traversal backbone, the code below adds five domain entities (tissue sample, two DNA aliquots, two devices), their relations, and the `specializationOf` cross-links.
+After Step 1 produces the traversal backbone, the code below adds five domain entities (tissue sample, two DNA aliquots, two devices), their relations, and the `specializationOf` cross-links.
 
 <blockquote>
 
