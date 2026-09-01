@@ -90,11 +90,11 @@ import org.openprovenance.prov.interop.InteropFramework;
 
 ## What This Toolbox Does
 
-The CPF Toolbox generates the **traversal information** part of a CPM bundle. Traversal information is the standardized backbone that links provenance bundles across organizations — it contains the main activity, backward and forward connectors, and sender/receiver agents.
+The CPF Toolbox generates the **traversal information** part of a a finalized provenance component (FPC), which is technically realised as a PROV bundle with a restricted content. Traversal information is the standardized backbone that links FPCs across organizations — it contains the main activity, backward and forward connectors, and sender/receiver agents. 
 
-The toolbox does **not** generate the domain-specific part. Domain-specific provenance — the actual samples, devices, protocols, sub-activities, and their relations — is added separately after the traversal backbone is built. How the domain-specific part is structured depends on each use case and is handled case by case.
+The toolbox does **not** generate the domain-specific part. Domain-specific provenance covering the details of the main activity is added separately after the traversal information is built. 
 
-A complete CPM bundle consists of both parts, connected by `specializationOf` relations:
+An FPC consists of the both parts, connected by `specializationOf` relations:
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -103,10 +103,10 @@ A complete CPM bundle consists of both parts, connected by `specializationOf` re
 │  ┌──────────────────────┐  ┌─────────────────────┐  │
 │  │ Traversal Information│  │ Domain-Specific Part │  │
 │  │                      │  │                      │  │
-│  │  Main Activity       │  │  Real samples        │  │
-│  │  Backward Connector ◄├──┤► Sample entity       │  │
-│  │  Forward Connector  ◄├──┤► Aliquot entity      │  │
-│  │  Sender/Receiver Agt │  │  Devices, SOPs       │  │
+│  │  Main Activity       │  │  Domain entity       │  │
+│  │  Backward Connector ◄├──┤► Domain entity       │  │
+│  │  Forward Connector  ◄├──┤► Domain entity       │  │
+│  │  Sender/Receiver Agt │  │  Devices, SW, SOPs   │  │
 │  │                      │  │  Sub-activities      │  │
 │  └──────────────────────┘  └─────────────────────┘  │
 │           ▲                        ▲                │
@@ -114,17 +114,17 @@ A complete CPM bundle consists of both parts, connected by `specializationOf` re
 └─────────────────────────────────────────────────────┘
 ```
 
-The arrows between the two parts represent `specializationOf` relations — they attach each domain entity to its corresponding connector in the traversal backbone.
+The arrows between the two parts represent `specializationOf` relations — they attach a domain entity to its corresponding connector in the traversal information.
 
 ---
 
 ## Workflow
 
-Building a CPM bundle is a three-step process:
+Building an FPC is a three-step process. Steps 2 and 3 use the ProvToolBox API directly — the CPF Toolbox is only involved in Step 1.
 
-**Step 1 — Generate the traversal backbone.** Write a JSON template describing the main activity, connectors, and agents. Feed it to `TraversalInformationDeserializer`, which produces a ProvToolBox `Document` containing one bundle with the traversal information.
+**Step 1 — Generate the traversal information.** Write a JSON template describing the main activity, connectors, and agents. Feed it to `TraversalInformationDeserializer`, which produces a ProvToolBox `Document` containing a PROV bundle with the traversal information.
 
-**Step 2 — Add the domain-specific part.** Retrieve the bundle from the Document and add domain entities (samples, devices, protocols), domain activities (sub-steps), and domain relations (`used`, `wasGeneratedBy`, `wasDerivedFrom`) using the standard ProvToolBox API. Add `specializationOf` relations to connect domain entities to their corresponding connectors.
+**Step 2 — Add the domain-specific part.** Retrieve the bundle from the Document and add domain entities (e.g., samples, devices, protocols), domain activities (e.g., sub-steps of the main activity), and domain relations (e.g., `used`, `wasGeneratedBy`, `wasDerivedFrom`) using the standard ProvToolBox. Add `specializationOf` relations to connect relevant domain entities to the corresponding connectors.
 
 **Step 3 — Serialize.** Write the complete Document to PROV-JSON (or any other supported format) using `InteropFramework`.
 
@@ -141,13 +141,11 @@ Bundle bundle = (Bundle) doc.getStatementOrBundle().get(0);
 new InteropFramework().writeDocument("output.json", doc);
 ```
 
-Steps 2 and 3 use the ProvToolBox API directly — the CPF Toolbox is only involved in Step 1.
-
 ---
 
 ## Building the Input JSON Template
 
-The input template is a JSON file that describes the traversal information for one bundle. It is **not** PROV-JSON — it is a separate format consumed by `TraversalInformationDeserializer`.
+The input template is a JSON file that describes the traversal information for one bundle. It is **not** a PROV-JSON file — it is a separate format consumed by `TraversalInformationDeserializer`. 
 
 ### Field reference
 
