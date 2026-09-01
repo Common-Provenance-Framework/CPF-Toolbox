@@ -675,9 +675,9 @@ The correct template from the realistic example above produces a clean backbone 
 
 ## Adding the Domain-Specific Part (Step 2)
 
-Step 1 produces a traversal backbone — connectors, main activity, and the relations between them. The backbone alone is not a complete CPM bundle. Step 2 adds the actual science: real sample entities, equipment, protocols, and the detailed relations between them, to the same bundle.
+Step 1 produces a traversal information — connectors, main activity, agents, and the relations between them. Step 2 adds the details of the main activity and how the outputs of the activity were produced.
 
-This step uses the ProvToolBox API directly. The CPF Toolbox is not involved.
+This step uses the ProvToolBox directly. The CPF Toolbox is not used.
 
 ### What to add
 
