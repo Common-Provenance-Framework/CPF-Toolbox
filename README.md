@@ -806,7 +806,7 @@ The main activity (`gen:dnaExtraction_TS4420`) is not redeclared — it already 
 
 ### The `specializationOf` cross-links
 
-Each `specializationOf` says: "this domain entity is a more specific version of that traversal connector." The connector carries the cross-bundle navigation role; the domain entity carries the real-world detail.
+Each `specializationOf` says: "this domain entity is a more specific version of that traversal connector." The connector carries the cross-bundle navigation role; the domain entity can be used to carry the domain or scenario specific details.
 
 | Domain entity (specific) | Connector (general) | Meaning |
 |---|---|---|
