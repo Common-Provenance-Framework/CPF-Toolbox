@@ -989,7 +989,7 @@ These produce output without any error, but the output is structurally wrong. Th
 | Put devices/SOPs in `identifierEntities` | They appear as `cpm:id` entities — the type reserved for external identifiers, not equipment |
 | Forgot `derivedFrom` on forward connectors | No `wasDerivedFrom` in output — the lineage from output back to input is lost |
 | Put a non-connector id in `backwardConnectorId` | A `used` relation is emitted pointing at whatever you referenced, regardless of what it is |
-| Omitted connectors, used, or generated entirely | Toolbox accepts it — the output is valid PROV-JSON but not a valid CPM component |
+| Omitted used or generated relations | Toolbox accepts it — the output is valid PROV-JSON, but the semantics is missing|
 
 ### Common questions
 
