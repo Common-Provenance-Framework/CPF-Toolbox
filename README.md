@@ -244,7 +244,7 @@ Entities get `prov:type = cpm:specForwardConnector`.
 
 <a id="unknown-fields"></a>
 
-#### Unknown fields are fatal
+#### Unknown fields are considered as an error
 
 A misspelled or unsupported key anywhere in the template aborts deserialization
 with `UnrecognizedPropertyException`, and no output is produced. The message names
@@ -259,7 +259,7 @@ Every identifier in the template must follow the `prefix:localName` format, wher
 
 The local name part (after the colon) must contain only letters, digits, hyphens, and underscores. Colons, spaces, parentheses, and accented characters in local names cause escaping issues in the output and break interoperability with other PROV tools.
 
-Put human-readable descriptions in `externalId` or `prov:label` attributes — not in the identifier itself.
+Put human-readable descriptions in `cpm:comment` or `prov:label` attributes — not in the identifier itself.
 
 ```
 gen:centrifuge_5810R              ← clean identifier
