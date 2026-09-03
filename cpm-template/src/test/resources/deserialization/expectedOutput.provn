@@ -7,7 +7,7 @@ bundle ex:bundle1
 used(ex:id1;ex:activity1,ex:backConnector1,-)
 wasGeneratedBy(ex:forwardConnector1,ex:activity1,-)
 wasGeneratedBy(ex:forwardConnector2,ex:activity1,-)
-activity(ex:activity1,2011-11-16T16:05:00.000Z,2011-11-16T18:05:00.000Z,[prov:type = 'cpm:mainActivity', cpm:referencedMetaBundleId = 'ex:metaBundle1', dct:hasPart = 'ex:subActivity1'])
+activity(ex:activity1,2011-11-16T16:05:00.000Z,2011-11-16T18:05:00.000Z,[prov:type = 'cpm:mainActivity', cpm:referencedMetaBundleId = 'ex:metaBundle1', cpm:referencedMetaBundleSpecV = "1.0.0" %% xsd:string, dct:hasPart = 'ex:subActivity1'])
 wasAttributedTo(ex:attribution1;ex:backConnector1, ex:agent1)
 wasDerivedFrom(ex:backConnector1, ex:origin1)
 wasDerivedFrom(ex:backConnector1, ex:origin2)
