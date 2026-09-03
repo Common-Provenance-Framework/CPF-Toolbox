@@ -5,6 +5,7 @@ prefix ex <test>
 bundle ex:bundle1
 
 entity(ex:identifierEntity1,[prov:type = 'cpm:id', cpm:externalId = "ex:extID1" %% xsd:string, cpm:externalIdType = "Document" %% xsd:string, cpm:comment = "An example identifier entity" %% xsd:string])
+agent(ex:currentAgent1,[prov:type = 'cpm:currentAgent', cpm:contactIdPid = "contact003" %% xsd:string])
 activity(ex:activity1,2011-11-16T16:05:00.000Z,2011-11-16T18:05:00.000Z,[prov:type = 'cpm:mainActivity', cpm:referencedMetaBundleId = 'ex:metaBundle1', dct:hasPart = 'ex:subActivity1'])
 entity(ex:specForwardConnector1,[prov:type = 'cpm:specForwardConnector', cpm:hashAlg = "SHA512" %% xsd:string, cpm:provenanceServiceUri = "http://provenance.service.org" %% xsd:anyURI, cpm:referencedBundleHashValue = "{hash=def789ghi012}" %% xsd:byte, cpm:referencedBundleId = 'ex:referencedBundle2', cpm:referencedMetaBundleId = 'ex:referencedMeta2'])
 agent(ex:receiverAgent1,[prov:type = 'cpm:receiverAgent', cpm:contactIdPid = "contact002" %% xsd:string])
@@ -15,6 +16,7 @@ entity(ex:forwardConnector1,[prov:type = 'cpm:forwardConnector', cpm:externalId 
 used(ex:id1;ex:activity1,ex:backConnector1,-)
 wasGeneratedBy(ex:forwardConnector1,ex:activity1,-)
 wasGeneratedBy(ex:forwardConnector2,ex:activity1,-)
+wasAssociatedWith(ex:association1;ex:activity1,ex:currentAgent1,-)
 wasAttributedTo(ex:attribution1;ex:backConnector1, ex:agent1)
 wasDerivedFrom(ex:backConnector1, ex:origin1)
 wasDerivedFrom(ex:backConnector1, ex:origin2)

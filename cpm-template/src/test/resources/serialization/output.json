@@ -15,7 +15,11 @@
     }, {
       "backwardConnectorId" : "ex:backConnector2"
     } ],
-    "generated" : [ "ex:forwardConnector1", "ex:output2" ]
+    "generated" : [ "ex:forwardConnector1", "ex:output2" ],
+    "associatedWith" : {
+      "id" : "ex:association1",
+      "agentId" : "ex:currentAgent1"
+    }
   },
   "bundleName" : "ex:bundle1",
   "backwardConnectors" : [ {
@@ -79,6 +83,10 @@
     "id" : "ex:receiverAgent1",
     "contactIdPid" : "contact002"
   } ],
+  "currentAgent" : {
+    "id" : "ex:currentAgent1",
+    "contactIdPid" : "contact003"
+  },
   "identifierEntities" : [ {
     "id" : "ex:identifierEntity1",
     "externalId" : "ex:extID1",
