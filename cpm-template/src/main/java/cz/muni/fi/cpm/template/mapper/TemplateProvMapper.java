@@ -239,6 +239,10 @@ public class TemplateProvMapper implements ITemplateProvMapper {
               .map(cPF::newCpmAttributeReferencedMetaBundleId)
               .ifPresent(activity.getOther()::add);
 
+          Optional.ofNullable(mA.getReferencedMetaBundleSpecV())
+              .map(cPF::newCpmAttributeReferencedMetaBundleSpecV)
+              .ifPresent(activity.getOther()::add);
+
           listToStreamSafe(mA.getHasPart())
               .map(cPF::newDctAttribute)
               .forEach(activity.getOther()::add);

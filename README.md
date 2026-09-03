@@ -176,6 +176,7 @@ Where a field maps to an attribute in the output, the attribute is shown as `→
 | `startTime` | no | ISO-8601, e.g. `"2025-03-10T09:30:00.000Z"`. |
 | `endTime` | no | ISO-8601. |
 | `referencedMetaBundleId` | no | Meta-bundle describing this bundle. → `cpm:referencedMetaBundleId` |
+| `referencedMetaBundleSpecV` | no | Content version of the referenced meta-bundle. → `cpm:referencedMetaBundleSpecV` |
 | `hasPart` | no | Qualified names of **sub-activities**, declared in the domain-specific part. Not devices or protocols. → `dct:hasPart` |
 | `used` | no | Array of `{ "id": <optional>, "backwardConnectorId": <required> }`. → `used` |
 | `generated` | no | Qualified names of forward connectors this activity produces. → `wasGeneratedBy` |

@@ -8,6 +8,7 @@
     "startTime" : "2011-11-16T16:05:00.000Z",
     "endTime" : "2011-11-16T18:05:00.000Z",
     "referencedMetaBundleId" : "ex:metaBundle1",
+    "referencedMetaBundleSpecV" : "1.0.0",
     "hasPart" : [ "ex:subActivity1" ],
     "used" : [ {
       "id" : "ex:id1",
