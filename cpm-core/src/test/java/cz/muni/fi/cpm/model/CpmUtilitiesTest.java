@@ -288,6 +288,70 @@ public class CpmUtilitiesTest {
         assertTrue(CpmUtilities.hasValidCpmType(node));
     }
 
+    private Attribute cpmTypeAttribute(CpmType type) {
+        return pF.newType(new QualifiedName(
+                CpmNamespaceConstants.CPM_NS,
+                type.toString(),
+                CpmNamespaceConstants.CPM_PREFIX), pF.getName().PROV_QUALIFIED_NAME);
+    }
+
+    @Test
+    public void hasValidCpmType_currentAgentOnly_returnsTrue() {
+        org.openprovenance.prov.model.QualifiedName id = pF.newQualifiedName("uri", "agent", "ex");
+        Element element = pF.newAgent(id, List.of(cpmTypeAttribute(CpmType.CURRENT_AGENT)));
+
+        assertTrue(CpmUtilities.hasValidCpmType(cF.newNode(element)));
+    }
+
+    @Test
+    public void hasValidCpmType_currentAndSenderAgent_returnsTrue() {
+        org.openprovenance.prov.model.QualifiedName id = pF.newQualifiedName("uri", "agent", "ex");
+        Element element = pF.newAgent(id, List.of(
+                cpmTypeAttribute(CpmType.CURRENT_AGENT),
+                cpmTypeAttribute(CpmType.SENDER_AGENT)));
+
+        assertTrue(CpmUtilities.hasValidCpmType(cF.newNode(element)));
+    }
+
+    @Test
+    public void hasValidCpmType_allThreeAgentRoles_returnsTrue() {
+        org.openprovenance.prov.model.QualifiedName id = pF.newQualifiedName("uri", "agent", "ex");
+        Element element = pF.newAgent(id, List.of(
+                cpmTypeAttribute(CpmType.CURRENT_AGENT),
+                cpmTypeAttribute(CpmType.SENDER_AGENT),
+                cpmTypeAttribute(CpmType.RECEIVER_AGENT)));
+
+        assertTrue(CpmUtilities.hasValidCpmType(cF.newNode(element)));
+    }
+
+    @Test
+    public void hasValidCpmType_currentAgentAndForwardConnector_returnsFalse() {
+        org.openprovenance.prov.model.QualifiedName id = pF.newQualifiedName("uri", "agent", "ex");
+        Element element = pF.newAgent(id, List.of(
+                cpmTypeAttribute(CpmType.CURRENT_AGENT),
+                cpmTypeAttribute(CpmType.FORWARD_CONNECTOR)));
+
+        assertFalse(CpmUtilities.hasValidCpmType(cF.newNode(element)));
+    }
+
+    @Test
+    public void hasCpmType_currentAgentInvalidKind_returnsFalse() {
+        org.openprovenance.prov.model.QualifiedName id = pF.newQualifiedName("uri", "agent", "ex");
+        Element element = pF.newEntity(id, List.of(cpmTypeAttribute(CpmType.CURRENT_AGENT)));
+
+        assertFalse(CpmUtilities.hasCpmType(cF.newNode(element), CpmType.CURRENT_AGENT));
+    }
+
+    @Test
+    public void isCurrentAgent_currentAgent_returnsTrue() {
+        assertTrue(CpmUtilities.isCurrentAgent(cPF.newCpmCurrentAgent(pF.newQualifiedName("uri", "agent", "ex"))));
+    }
+
+    @Test
+    public void isCurrentAgent_senderAgent_returnsFalse() {
+        assertFalse(CpmUtilities.isCurrentAgent(cPF.newCpmSenderAgent(pF.newQualifiedName("uri", "agent", "ex"))));
+    }
+
     @Test
     public void hasValidCpmType_noType_returnsFalse() {
         org.openprovenance.prov.model.QualifiedName id = pF.newQualifiedName("uri", "entity", "ex");
