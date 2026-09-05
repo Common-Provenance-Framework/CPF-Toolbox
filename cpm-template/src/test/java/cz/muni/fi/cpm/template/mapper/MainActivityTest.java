@@ -17,6 +17,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openprovenance.prov.model.Activity;
+import org.openprovenance.prov.model.Attribute;
+import org.openprovenance.prov.model.LangString;
 import org.openprovenance.prov.model.ProvFactory;
 import org.openprovenance.prov.model.QualifiedName;
 import org.openprovenance.prov.model.Statement;
@@ -67,6 +69,25 @@ public class MainActivityTest {
     assertEquals(1, activity.getType().size());
     Type type = activity.getType().getFirst();
     assertEquals(CpmType.MAIN_ACTIVITY.toString(), ((QualifiedName) type.getValue()).getLocalPart());
+  }
+
+  @Test
+  public void toStatements_withReferencedMetaBundleSpecV_returnsMetaBundleSpecV() {
+    MainActivity mainActivity = new MainActivity();
+    mainActivity.setId(provFactory.newQualifiedName("uri", "activityExample", "ex"));
+    String version = "x.y.z";
+    mainActivity.setReferencedMetaBundleSpecV(version);
+
+    List<Statement> statements = mapper.toStatementsStream(mainActivity).toList();
+    Activity activity = (Activity) statements.getFirst();
+
+    assertNotNull(activity.getOther());
+    assertEquals(1, activity.getOther().size());
+
+    Attribute attr = activity.getOther().getFirst();
+    assertEquals(CpmAttribute.REFERENCED_META_BUNDLE_SPECV.toString(), attr.getElementName().getLocalPart());
+    assertInstanceOf(LangString.class, attr.getValue());
+    assertEquals(version, LangString.class.cast(attr.getValue()).getValue());
   }
 
   @Test

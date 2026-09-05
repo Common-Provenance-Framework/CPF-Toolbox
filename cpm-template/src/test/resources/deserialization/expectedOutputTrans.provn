@@ -6,7 +6,7 @@ bundle ex:bundle1
 
 entity(ex:identifierEntity1,[prov:type = 'cpm:id', cpm:externalId = "ex:extID1" %% xsd:string, cpm:externalIdType = "Document" %% xsd:string, cpm:comment = "An example identifier entity" %% xsd:string])
 agent(ex:currentAgent1,[prov:type = 'cpm:currentAgent', cpm:contactIdPid = "contact003" %% xsd:string])
-activity(ex:activity1,2011-11-16T16:05:00.000Z,2011-11-16T18:05:00.000Z,[prov:type = 'cpm:mainActivity', cpm:referencedMetaBundleId = 'ex:metaBundle1', dct:hasPart = 'ex:subActivity1'])
+activity(ex:activity1,2011-11-16T16:05:00.000Z,2011-11-16T18:05:00.000Z,[prov:type = 'cpm:mainActivity', cpm:referencedMetaBundleId = 'ex:metaBundle1', cpm:referencedMetaBundleSpecV = "1.0.0" %% xsd:string, dct:hasPart = 'ex:subActivity1'])
 entity(ex:specForwardConnector1,[prov:type = 'cpm:specForwardConnector', cpm:hashAlg = "SHA512" %% xsd:string, cpm:provenanceServiceUri = "http://provenance.service.org" %% xsd:anyURI, cpm:referencedBundleHashValue = "{hash=def789ghi012}" %% xsd:byte, cpm:referencedBundleId = 'ex:referencedBundle2', cpm:referencedMetaBundleId = 'ex:referencedMeta2'])
 agent(ex:receiverAgent1,[prov:type = 'cpm:receiverAgent', cpm:contactIdPid = "contact002" %% xsd:string])
 entity(ex:forwardConnector2,[prov:type = 'cpm:forwardConnector', cpm:externalId = "externalId2" %% xsd:string])
