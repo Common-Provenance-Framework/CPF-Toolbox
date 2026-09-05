@@ -206,6 +206,12 @@ public class CpmProvFactory implements ICpmProvFactory {
   }
 
   @Override
+  public Agent newCpmAgent(QualifiedName id, Collection<CpmType> types, Collection<Attribute> attributes) {
+    types.stream().map(this::newCpmType).forEach(attributes::add);
+    return pF.newAgent(id, attributes);
+  }
+
+  @Override
   public Agent newCpmSenderAgent(QualifiedName id) {
     return this.newCpmAgent(id, CpmType.SENDER_AGENT, new ArrayList<Attribute>());
   }
@@ -216,11 +222,8 @@ public class CpmProvFactory implements ICpmProvFactory {
   }
 
   @Override
-  public Agent newCpmMergedAgent(QualifiedName id) {
-    List<Attribute> attributes = List.of(
-        this.newCpmType(CpmType.SENDER_AGENT),
-        this.newCpmType(CpmType.RECEIVER_AGENT));
-    return pF.newAgent(id, attributes);
+  public Agent newCpmCurrentAgent(QualifiedName id) {
+    return this.newCpmAgent(id, CpmType.CURRENT_AGENT, new ArrayList<Attribute>());
   }
 
   public Namespace newCpmNamespace() {

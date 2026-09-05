@@ -23,9 +23,11 @@ import org.openprovenance.prov.model.Statement;
 import org.openprovenance.prov.model.StatementOrBundle.Kind;
 import org.openprovenance.prov.model.Type;
 import org.openprovenance.prov.model.Used;
+import org.openprovenance.prov.model.WasAssociatedWith;
 import org.openprovenance.prov.model.WasGeneratedBy;
 
 import cz.muni.fi.cpm.constants.CpmAttribute;
+import cz.muni.fi.cpm.template.schema.ConnectorAttributed;
 import cz.muni.fi.cpm.constants.CpmType;
 import cz.muni.fi.cpm.constants.DctAttributeConstants;
 import cz.muni.fi.cpm.template.schema.MainActivity;
@@ -147,6 +149,51 @@ public class MainActivityTest {
     assertTrue(relation2.isPresent());
     assertEquals(activity, relation2.get().getActivity());
     assertEquals(uBc2, relation2.get().getEntity());
+  }
+
+  @Test
+  public void toStatements_withAssociatedWith_returnsCorrectAssociation() {
+    MainActivity mainActivity = new MainActivity();
+    QualifiedName activity = provFactory.newQualifiedName("uri", "activityExample", "ex");
+    mainActivity.setId(activity);
+
+    QualifiedName relationId = provFactory.newQualifiedName("uri", "association1", "ex");
+    QualifiedName agentId = provFactory.newQualifiedName("uri", "currentAgent1", "ex");
+    mainActivity.setAssociatedWith(new ConnectorAttributed(relationId, agentId));
+
+    List<Statement> statements = mapper.toStatementsStream(mainActivity).toList();
+
+    assertEquals(2, statements.size());
+
+    WasAssociatedWith relation = statements.stream()
+        .filter(WasAssociatedWith.class::isInstance)
+        .map(WasAssociatedWith.class::cast)
+        .findFirst()
+        .orElseThrow();
+
+    assertEquals(relationId, relation.getId());
+    assertEquals(activity, relation.getActivity());
+    assertEquals(agentId, relation.getAgent());
+  }
+
+  @Test
+  public void toStatements_withAssociatedWithoutRelationId_returnsNullRelationId() {
+    MainActivity mainActivity = new MainActivity();
+    mainActivity.setId(provFactory.newQualifiedName("uri", "activityExample", "ex"));
+
+    QualifiedName agentId = provFactory.newQualifiedName("uri", "currentAgent1", "ex");
+    mainActivity.setAssociatedWith(new ConnectorAttributed(agentId));
+
+    List<Statement> statements = mapper.toStatementsStream(mainActivity).toList();
+
+    WasAssociatedWith relation = statements.stream()
+        .filter(WasAssociatedWith.class::isInstance)
+        .map(WasAssociatedWith.class::cast)
+        .findFirst()
+        .orElseThrow();
+
+    assertNull(relation.getId());
+    assertEquals(agentId, relation.getAgent());
   }
 
   @Test

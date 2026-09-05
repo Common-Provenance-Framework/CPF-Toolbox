@@ -252,6 +252,16 @@ public interface ICpmProvFactory {
     Agent newCpmAgent(QualifiedName id, CpmType type, Collection<Attribute> attributes);
 
     /**
+     * Creates a new CPM agent with the given ID, types, and attributes.
+     *
+     * @param id         the ID of the agent
+     * @param types      the types of the agent
+     * @param attributes the attributes of the agent
+     * @return a new Agent
+     */
+    Agent newCpmAgent(QualifiedName id, Collection<CpmType> types, Collection<Attribute> attributes);
+
+    /**
      * Creates a new CPM sender agent with the given ID.
      *
      * @param id         the ID of the agent
@@ -268,12 +278,12 @@ public interface ICpmProvFactory {
     Agent newCpmReceiverAgent(QualifiedName id);
 
     /**
-     * Creates a new CPM agent which is sender and receiver with the given ID.
+     * Creates a new CPM current agent with the given ID.
      *
      * @param id         the ID of the agent
      * @return a new Agent
      */
-    Agent newCpmMergedAgent(QualifiedName id);
+    Agent newCpmCurrentAgent(QualifiedName id);
 
     /**
      * Creates a new PROV namespace and adds known CPM namespaces.

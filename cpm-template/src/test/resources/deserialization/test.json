@@ -16,6 +16,10 @@
         "backwardConnectorId": "ex:backConnector1"
       }
     ],
+    "associatedWith": {
+      "id": "ex:association1",
+      "agentId": "ex:currentAgent1"
+    },
     "generated": [
       "ex:forwardConnector1",
       "ex:forwardConnector2"
@@ -87,6 +91,10 @@
       "contactIdPid": "contact002"
     }
   ],
+  "currentAgent": {
+    "id": "ex:currentAgent1",
+    "contactIdPid": "contact003"
+  },
   "identifierEntities": [
     {
       "id": "ex:identifierEntity1",

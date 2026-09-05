@@ -4,15 +4,16 @@ import static cz.muni.fi.cpm.template.constants.CpmTemplateExceptionConstants.NU
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.openprovenance.prov.model.Activity;
 import org.openprovenance.prov.model.Agent;
+import org.openprovenance.prov.model.Attribute;
 import org.openprovenance.prov.model.Bundle;
 import org.openprovenance.prov.model.Document;
 import org.openprovenance.prov.model.Entity;
@@ -20,7 +21,6 @@ import org.openprovenance.prov.model.Namespace;
 import org.openprovenance.prov.model.QualifiedName;
 import org.openprovenance.prov.model.Statement;
 
-import cz.muni.fi.cpm.constants.CpmType;
 import cz.muni.fi.cpm.model.ICpmProvFactory;
 import cz.muni.fi.cpm.template.schema.BackwardConnector;
 import cz.muni.fi.cpm.template.schema.CpmAgent;
@@ -192,15 +192,7 @@ public class TemplateProvMapper implements ITemplateProvMapper {
   }
 
   private Agent buildAgent(CpmAgent cpmAgent) {
-    List<CpmType> types = cpmAgent.getType();
-
-    if (types.size() == 1 && types.contains(CpmType.SENDER_AGENT)) {
-      return cPF.newCpmSenderAgent(cpmAgent.getId());
-    } else if (types.size() == 1 && types.contains(CpmType.RECEIVER_AGENT)) {
-      return cPF.newCpmReceiverAgent(cpmAgent.getId());
-    } else {
-      return cPF.newCpmMergedAgent(cpmAgent.getId());
-    }
+    return cPF.newCpmAgent(cpmAgent.getId(), cpmAgent.getType(), new ArrayList<Attribute>());
   }
 
   public Stream<Statement> toStatementsStream(CpmAgent cpmAgent) {
@@ -254,6 +246,14 @@ public class TemplateProvMapper implements ITemplateProvMapper {
               listToStreamSafe(mA.getGenerated())
                   .map(forwardConnector -> cPF.getProvFactory().newWasGeneratedBy(null, forwardConnector, mA.getId())));
 
+          relations = Stream.concat(
+              relations,
+              scalarToStreamSafe(mA.getAssociatedWith())
+                  .map(associatedWith -> cPF.getProvFactory().newWasAssociatedWith(
+                      associatedWith.getId(),
+                      mA.getId(),
+                      associatedWith.getAgentId())));
+
           return Stream.concat(relations, Stream.of(activity));
         });
   }
@@ -264,6 +264,34 @@ public class TemplateProvMapper implements ITemplateProvMapper {
 
   private <T> Stream<T> scalarToStreamSafe(T scalar) {
     return Optional.ofNullable(scalar).stream();
+  }
+
+  /**
+   * Every agent of the traversal information, in emission order: receivers,
+   * then senders, then the current agent.
+   */
+  private List<CpmAgent> allAgents(TraversalInformation ti) {
+    return Stream.concat(
+        Stream.concat(
+            listToStreamSafe(ti.getReceiverAgents()),
+            listToStreamSafe(ti.getSenderAgents())),
+        scalarToStreamSafe(ti.getCurrentAgent()))
+        .toList();
+  }
+
+  /**
+   * Folds agents sharing an identifier into a single agent carrying every role
+   * they hold, keeping the order of first appearance.
+   */
+  private List<CpmAgent> mergeById(List<CpmAgent> agents) {
+    Map<QualifiedName, MergedAgent> byId = new LinkedHashMap<>();
+
+    for (CpmAgent agent : agents) {
+      byId.computeIfAbsent(agent.getId(), id -> new MergedAgent(id, agent.getContactIdPid()))
+          .merge(agent);
+    }
+
+    return new ArrayList<>(byId.values());
   }
 
   @Override
@@ -304,45 +332,11 @@ public class TemplateProvMapper implements ITemplateProvMapper {
         .flatMap(this::toStatementsStream)
         .forEach(tiBundle.getStatement()::add);
 
-    if (mergeAgents) {
-      // if sender and receiver agents share an id, merge them
+    List<CpmAgent> agents = mergeAgents ? mergeById(allAgents(ti)) : allAgents(ti);
 
-      Set<QualifiedName> senderAgentIds = listToStreamSafe(ti.getSenderAgents())
-          .map(CpmAgent::getId)
-          .collect(Collectors.toSet());
-
-      Set<QualifiedName> receiverAgentIds = listToStreamSafe(ti.getReceiverAgents())
-          .map(CpmAgent::getId)
-          .collect(Collectors.toSet());
-
-      Set<QualifiedName> mergedAgentIds = senderAgentIds;
-      mergedAgentIds.retainAll(receiverAgentIds);
-
-      listToStreamSafe(ti.getReceiverAgents())
-          .filter(agent -> mergedAgentIds.contains(agent.getId()))
-          .map(MergedAgent::from)
-          .flatMap(this::toStatementsStream)
-          .forEach(tiBundle.getStatement()::add);
-
-      listToStreamSafe(ti.getReceiverAgents())
-          .filter(agent -> !mergedAgentIds.contains(agent.getId()))
-          .flatMap(this::toStatementsStream)
-          .forEach(tiBundle.getStatement()::add);
-
-      listToStreamSafe(ti.getSenderAgents())
-          .filter(agent -> !mergedAgentIds.contains(agent.getId()))
-          .flatMap(this::toStatementsStream)
-          .forEach(tiBundle.getStatement()::add);
-
-    } else {
-      listToStreamSafe(ti.getReceiverAgents())
-          .flatMap(this::toStatementsStream)
-          .forEach(tiBundle.getStatement()::add);
-
-      listToStreamSafe(ti.getSenderAgents())
-          .flatMap(this::toStatementsStream)
-          .forEach(tiBundle.getStatement()::add);
-    }
+    agents.stream()
+        .flatMap(this::toStatementsStream)
+        .forEach(tiBundle.getStatement()::add);
 
     ti.getNamespace().extendWith(cPF.newCpmNamespace());
 
