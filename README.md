@@ -25,7 +25,7 @@ cd CPF-Toolbox
 mvn install -DskipTests
 ```
 
-This installs `cpm-core` and `cpm-template` version **2.2.0**.
+This installs `cpm-core` and `cpm-template` version **2.3.0**.
 
 After installation, add these dependencies to your `pom.xml`:
 
@@ -39,12 +39,12 @@ After installation, add these dependencies to your `pom.xml`:
 <dependency>
     <groupId>cz.muni.fi.cpm</groupId>
     <artifactId>cpm-core</artifactId>
-    <version>2.2.0</version>
+    <version>2.3.0</version>
 </dependency>
 <dependency>
     <groupId>cz.muni.fi.cpm</groupId>
     <artifactId>cpm-template</artifactId>
-    <version>2.2.0</version>
+    <version>2.3.0</version>
 </dependency>
 
 <!-- ProvToolBox (available on Maven Central) -->
