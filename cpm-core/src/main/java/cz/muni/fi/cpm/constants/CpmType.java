@@ -14,7 +14,8 @@ public enum CpmType {
     IDENTIFIER("id"),
     MAIN_ACTIVITY("mainActivity"),
     SENDER_AGENT("senderAgent"),
-    RECEIVER_AGENT("receiverAgent");
+    RECEIVER_AGENT("receiverAgent"),
+    CURRENT_AGENT("currentAgent");
 
     public static final Set<String> STRING_VALUES = Arrays.stream(CpmType.values())
             .map(CpmType::toString)
@@ -27,11 +28,13 @@ public enum CpmType {
             IDENTIFIER, Kind.PROV_ENTITY,
             MAIN_ACTIVITY, Kind.PROV_ACTIVITY,
             SENDER_AGENT, Kind.PROV_AGENT,
-            RECEIVER_AGENT, Kind.PROV_AGENT
+            RECEIVER_AGENT, Kind.PROV_AGENT,
+            CURRENT_AGENT, Kind.PROV_AGENT
     );
 
     private final String value;
-    public static final Set<String> AGENTS = Set.of(SENDER_AGENT.toString(), RECEIVER_AGENT.toString());
+    public static final Set<String> AGENTS = Set.of(SENDER_AGENT.toString(), RECEIVER_AGENT.toString(),
+            CURRENT_AGENT.toString());
 
 
 

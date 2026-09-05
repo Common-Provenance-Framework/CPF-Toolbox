@@ -41,6 +41,9 @@ public class TraversalInformation {
     @JsonPropertyDescription("The receiver agents")
     private List<ReceiverAgent> receiverAgents;
 
+    @JsonPropertyDescription("The current agent, i.e. the provenance controller of this bundle")
+    private CurrentAgent currentAgent;
+
     @JsonPropertyDescription("The identifier entities")
     private List<IdentifierEntity> identifierEntities;
 
@@ -134,6 +137,14 @@ public class TraversalInformation {
 
     public void setReceiverAgents(List<ReceiverAgent> receiverAgents) {
         this.receiverAgents = receiverAgents;
+    }
+
+    public CurrentAgent getCurrentAgent() {
+        return currentAgent;
+    }
+
+    public void setCurrentAgent(CurrentAgent currentAgent) {
+        this.currentAgent = currentAgent;
     }
 
     public List<IdentifierEntity> getIdentifierEntities() {

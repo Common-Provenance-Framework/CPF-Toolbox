@@ -19,6 +19,7 @@ import org.openprovenance.prov.vanilla.QualifiedName;
 
 import cz.muni.fi.cpm.constants.CpmAttribute;
 import cz.muni.fi.cpm.constants.CpmType;
+import cz.muni.fi.cpm.template.schema.CurrentAgent;
 import cz.muni.fi.cpm.template.schema.MergedAgent;
 import cz.muni.fi.cpm.template.schema.ReceiverAgent;
 import cz.muni.fi.cpm.template.schema.SenderAgent;
@@ -78,11 +79,83 @@ public class CpmAgentTest {
   }
 
   @Test
+  public void toStatements_CurrentAgent_basicIdSet_returnsOneStatement() {
+    CurrentAgent agent = new CurrentAgent();
+    QualifiedName id = new QualifiedName("uri", "agentExample", "ex");
+    agent.setId(id);
+
+    List<Statement> statements = mapper.toStatementsStream(agent).toList();
+
+    assertNotNull(statements);
+    assertEquals(1, statements.size());
+
+    Statement statement = statements.getFirst();
+    assertInstanceOf(Agent.class, statement);
+
+    Agent resultAgent = (Agent) statement;
+    assertEquals(id, resultAgent.getId());
+
+    assertNotNull(resultAgent.getType());
+    assertEquals(1, resultAgent.getType().size());
+    Type type = resultAgent.getType().getFirst();
+    assertEquals(CpmType.CURRENT_AGENT.toString(), ((QualifiedName) type.getValue()).getLocalPart());
+  }
+
+  @Test
+  public void toStatements_CurrentAgent_withContactIdPid_returnsCorrectContactId() {
+    CurrentAgent agent = new CurrentAgent(new QualifiedName("uri", "agentExample", "ex"), "contact123");
+
+    List<Statement> statements = mapper.toStatementsStream(agent).toList();
+    Agent resultAgent = (Agent) statements.getFirst();
+
+    List<Other> otherAttributes = resultAgent.getOther();
+    assertNotNull(otherAttributes);
+    assertEquals(1, otherAttributes.size());
+
+    Attribute contactIdAttr = otherAttributes.getFirst();
+    assertInstanceOf(LangString.class, contactIdAttr.getValue());
+    assertEquals(CpmAttribute.CONTACT_ID_PID.toString(), contactIdAttr.getElementName().getLocalPart());
+    assertEquals("contact123", ((LangString) contactIdAttr.getValue()).getValue());
+  }
+
+  @Test
+  public void toStatements_mergedAgent_withCurrentAgentRole_returnsAllThreeTypes() {
+    QualifiedName id = new QualifiedName("uri", "agentExample", "ex");
+    MergedAgent agent = MergedAgent.from(new CurrentAgent(id))
+        .merge(new SenderAgent(id))
+        .merge(new ReceiverAgent(id));
+
+    List<Statement> statements = mapper.toStatementsStream(agent).toList();
+    Agent resultAgent = (Agent) statements.getFirst();
+
+    List<String> types = resultAgent.getType().stream()
+        .map(Type::getValue)
+        .filter(QualifiedName.class::isInstance)
+        .map(QualifiedName.class::cast)
+        .map(QualifiedName::getLocalPart)
+        .toList();
+
+    assertEquals(3, types.size());
+    assertTrue(types.contains(CpmType.CURRENT_AGENT.toString()));
+    assertTrue(types.contains(CpmType.SENDER_AGENT.toString()));
+    assertTrue(types.contains(CpmType.RECEIVER_AGENT.toString()));
+  }
+
+  @Test
+  public void merge_agentWithoutContactIdPid_keepsFirstNonNull() {
+    QualifiedName id = new QualifiedName("uri", "agentExample", "ex");
+    MergedAgent agent = MergedAgent.from(new SenderAgent(id))
+        .merge(new ReceiverAgent(id, "contact123"));
+
+    assertEquals("contact123", agent.getContactIdPid());
+  }
+
+  @Test
   public void toStatements_mergedAgent_withContactIdPid_returnsCorrectContactId() {
-    MergedAgent agent = new MergedAgent();
-    agent.setId(new QualifiedName("uri", "agentExample", "ex"));
+    QualifiedName id = new QualifiedName("uri", "agentExample", "ex");
     String contactIdPid = "contact123";
-    agent.setContactIdPid(contactIdPid);
+    MergedAgent agent = MergedAgent.from(new SenderAgent(id, contactIdPid))
+        .merge(new ReceiverAgent(id));
 
     List<Statement> statements = mapper.toStatementsStream(agent).toList();
     Agent resultAgent = (Agent) statements.getFirst();

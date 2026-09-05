@@ -41,8 +41,11 @@ public class CpmUtilities {
                 .map(QualifiedName::getLocalPart)
                 .collect(Collectors.toSet());
 
-        // Two subtypes allowed only for sender and receiver agent
-        if (typeStrings.size() != 1 && !CpmType.AGENTS.equals(typeStrings)) return false;
+        // A node must carry at least one CPM type
+        if (typeStrings.isEmpty()) return false;
+
+        // Multiple subtypes allowed only among agent roles
+        if (typeStrings.size() != 1 && !CpmType.AGENTS.containsAll(typeStrings)) return false;
 
         return typeStrings.stream().allMatch(lp ->
                 CpmType.STRING_VALUES.contains(lp) &&
@@ -98,6 +101,10 @@ public class CpmUtilities {
 
     public static boolean isSenderAgent(Agent agent) {
       return hasCpmType(agent, CpmType.SENDER_AGENT);
+    }
+
+    public static boolean isCurrentAgent(Agent agent) {
+      return hasCpmType(agent, CpmType.CURRENT_AGENT);
     }
 
     /**

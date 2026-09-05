@@ -12,6 +12,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -94,6 +95,25 @@ public class CpmProvFactoryTest {
         Agent result = cF.newCpmAgent(id, type, attributes);
         assertNotNull(result);
         assertTrue(attributes.contains(cF.newCpmType(type)));
+    }
+
+    @Test
+    public void newCpmAgent_withMultipleTypes_returnsAgentWithAllTypes() {
+        QualifiedName id = cF.newCpmQualifiedName("agentId");
+        Collection<CpmType> types = List.of(CpmType.CURRENT_AGENT, CpmType.SENDER_AGENT);
+        Collection<Attribute> attributes = new ArrayList<>();
+        Agent result = cF.newCpmAgent(id, types, attributes);
+        assertNotNull(result);
+        assertEquals(2, attributes.size());
+        types.forEach(type -> assertTrue(attributes.contains(cF.newCpmType(type))));
+    }
+
+    @Test
+    public void newCpmCurrentAgent_withValidId_returnsExpectedAgent() {
+        QualifiedName id = cF.newCpmQualifiedName("agentId");
+        Agent result = cF.newCpmCurrentAgent(id);
+        assertNotNull(result);
+        assertTrue(CpmUtilities.isCurrentAgent(result));
     }
 
 }

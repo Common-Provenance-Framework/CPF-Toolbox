@@ -166,6 +166,7 @@ Where a field maps to an attribute in the output, the attribute is shown as `→
 | `specForwardConnectors` | no | Forward connectors that also record *where* the data went. See below. |
 | `senderAgents` | no | Agents that sent the incoming data. |
 | `receiverAgents` | no | Agents that received the outgoing data. |
+| `currentAgent` | no | The provenance controller of this bundle. A single object, not an array. |
 | `identifierEntities` | no | External identifiers — accession numbers, sample IDs. Not equipment. |
 
 #### `mainActivity`
@@ -180,6 +181,7 @@ Where a field maps to an attribute in the output, the attribute is shown as `→
 | `hasPart` | no | Qualified names of **sub-activities**, declared in the domain-specific part. Not devices or protocols. → `dct:hasPart` |
 | `used` | no | Array of `{ "id": <optional>, "backwardConnectorId": <required> }`. → `used` |
 | `generated` | no | Qualified names of forward connectors this activity produces. → `wasGeneratedBy` |
+| `associatedWith` | no | `{ "id": <optional>, "agentId": <required> }` naming the current agent. → `wasAssociatedWith` |
 
 #### `backwardConnectors[]`
 
@@ -233,6 +235,36 @@ Entities get `prov:type = cpm:specForwardConnector`.
 |---|---|---|
 | `id` | yes | Qualified name of the agent. |
 | `contactIdPid` | no | Persistent identifier for the contact point. → `cpm:contactIdPid` |
+
+#### `currentAgent`
+
+The provenance controller of the bundle — the organisation responsible for this
+provenance. A **single object**, not an array: there is one main activity per
+bundle, and it is associated with one current agent.
+
+| Field | Required | Description |
+|---|---|---|
+| `id` | yes | Qualified name of the agent. |
+| `contactIdPid` | no | Persistent identifier for the contact point. → `cpm:contactIdPid` |
+
+Agents get `prov:type = cpm:currentAgent`.
+
+The CPM specification makes `contactIdPid` **mandatory** for a current agent, and
+requires the main activity to be associated with it. The toolbox does not enforce
+either — declare the association with `mainActivity.associatedWith`:
+
+```json
+{
+  "mainActivity": {
+    "id": "ex:activity1",
+    "associatedWith": { "agentId": "ex:controller" }
+  },
+  "currentAgent": {
+    "id": "ex:controller",
+    "contactIdPid": "contact003"
+  }
+}
+```
 
 #### `identifierEntities[]`
 
@@ -1009,11 +1041,11 @@ You did not add `"derivedFrom": ["prefix:backwardConnectorId"]` to the forward c
 **Q: Python's prov library cannot parse the PROV-JSON output.**
 ProvToolBox adds an `"@id"` field inside bundles that is not part of the PROV-JSON specification. Remove it from the output JSON before passing it to other tools. Known issue: [ProvToolBox #222](https://github.com/lucmoreau/ProvToolbox/issues/222).
 
-**Q: I tried to add an agent and only `senderAgents` / `receiverAgents` work.**
-The template supports sender and receiver agents only. Other agent roles are not implemented in the toolbox.
+**Q: I tried to add an agent and only `senderAgents` / `receiverAgents` / `currentAgent` work.**
+The template supports the three CPM agent roles: sender, receiver and current. Note that `currentAgent` is a single object while the other two are arrays.
 
 **Q: My sender and receiver agents have the same identifier — why do I get two separate agents?**
-By default, sender and receiver agents with the same ID are kept as distinct entries. To merge them into a single agent with both roles, pass `true` to the mapper constructor:
+By default, agents with the same ID are kept as distinct entries. To merge them into a single agent carrying every role it holds, pass `true` to the mapper constructor. This works for any combination of the three roles, so an organisation that is both the controller and the sender of a bundle is emitted once with both types:
 ```java
 ITemplateProvMapper mapper = new TemplateProvMapper(new CpmProvFactory(pF), true);
 ```
