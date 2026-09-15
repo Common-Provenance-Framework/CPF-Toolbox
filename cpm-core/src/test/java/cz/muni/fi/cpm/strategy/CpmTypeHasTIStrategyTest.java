@@ -18,7 +18,7 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CpmTypeTIStrategyTest {
+class CpmTypeHasTIStrategyTest {
   ITIStrategy strategy;
 
   private ProvFactory pF;
@@ -30,7 +30,7 @@ class CpmTypeTIStrategyTest {
     pF = new ProvFactory();
     cF = new CpmMergedFactory();
     cPF = new CpmProvFactory();
-    strategy = new CpmTypeTIStrategy();
+    strategy = new CpmTypeHasTIStrategy();
   }
 
   @Test
@@ -183,7 +183,7 @@ class CpmTypeTIStrategyTest {
   }
 
   @Test
-  public void belongsToTraversalInformation_withTwoAgentCpmTypes_returnsFalse() {
+  public void belongsToTraversalInformation_withTwoAgentCpmTypes_returnsTrue() {
 
     QualifiedName id = pF.newQualifiedName("uri", "entity", "ex");
     Element element = pF.newEntity(id);
@@ -192,7 +192,7 @@ class CpmTypeTIStrategyTest {
 
     INode node = cF.newNode(element);
 
-    assertFalse(strategy.belongsToTraversalInformation(node));
+    assertTrue(strategy.belongsToTraversalInformation(node));
   }
 
   @Test
@@ -209,7 +209,7 @@ class CpmTypeTIStrategyTest {
   }
 
   @Test
-  public void belongsToTraversalInformation_withCpmTypeAndInvalidSecType_returnsFalse() {
+  public void belongsToTraversalInformation_withCpmTypeAndSecCpmType_returnsTrue() {
     QualifiedName validQualifiedName = pF.newQualifiedName(
         CpmNamespaceConstants.CPM_NS,
         "validQualifiedName",
@@ -222,7 +222,7 @@ class CpmTypeTIStrategyTest {
 
     INode node = cF.newNode(element);
 
-    assertFalse(strategy.belongsToTraversalInformation(node));
+    assertTrue(strategy.belongsToTraversalInformation(node));
   }
 
   @Test
@@ -268,6 +268,6 @@ class CpmTypeTIStrategyTest {
 
     INode node = cF.newNode(element);
 
-    assertFalse(strategy.belongsToTraversalInformation(node));
+    assertTrue(strategy.belongsToTraversalInformation(node));
   }
 }
