@@ -25,7 +25,7 @@ cd CPF-Toolbox
 mvn install -DskipTests
 ```
 
-This installs `cpm-core` and `cpm-template` version **2.3.0**.
+This installs `cpm-core` and `cpm-template` version **2.4.0**.
 
 After installation, add these dependencies to your `pom.xml`:
 
@@ -39,12 +39,12 @@ After installation, add these dependencies to your `pom.xml`:
 <dependency>
     <groupId>cz.muni.fi.cpm</groupId>
     <artifactId>cpm-core</artifactId>
-    <version>2.3.0</version>
+    <version>2.4.0</version>
 </dependency>
 <dependency>
     <groupId>cz.muni.fi.cpm</groupId>
     <artifactId>cpm-template</artifactId>
-    <version>2.3.0</version>
+    <version>2.4.0</version>
 </dependency>
 
 <!-- ProvToolBox (available on Maven Central) -->
@@ -90,9 +90,9 @@ import org.openprovenance.prov.interop.InteropFramework;
 
 ## What This Toolbox Does
 
-The CPF Toolbox generates the **traversal information** part of a a finalized provenance component (FPC), which is technically realised as a PROV bundle with a restricted content. Traversal information is the standardized backbone that links FPCs across organizations — it contains the main activity, backward and forward connectors, and sender/receiver agents. 
+The CPF Toolbox generates the **traversal information** part of a a finalized provenance component (FPC), which is technically realised as a PROV bundle with a restricted content. Traversal information is the standardized backbone that links FPCs across organizations — it contains the main activity, backward and forward connectors, and sender/receiver agents.
 
-The toolbox does **not** generate the domain-specific part. Domain-specific provenance covering the details of the main activity is added separately after the traversal information is built. 
+The toolbox does **not** generate the domain-specific part. Domain-specific provenance covering the details of the main activity is added separately after the traversal information is built.
 
 An FPC consists of the both parts, connected by `specializationOf` relations:
 
@@ -145,7 +145,7 @@ new InteropFramework().writeDocument("output.json", doc);
 
 ## Building the Input JSON Template
 
-The input template is a JSON file that describes the traversal information for one bundle. It is **not** a PROV-JSON file — it is a separate format consumed by `TraversalInformationDeserializer`. 
+The input template is a JSON file that describes the traversal information for one bundle. It is **not** a PROV-JSON file — it is a separate format consumed by `TraversalInformationDeserializer`.
 
 ### Field reference
 
