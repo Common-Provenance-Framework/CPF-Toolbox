@@ -6,8 +6,11 @@ import cz.muni.fi.cpm.model.ITIStrategy;
 
 /**
  * Strategy to determine whether a node belongs to traversal information part of
- * a document based on the CPM types
- * present in the underlying element
+ * a document based on the CPM types present in the underlying element
+ *
+ * element belongs to traversal if have only one type and is valid cpm type
+ *
+ * It is not traversal element, if there are other types as well.
  */
 public class CpmTypeTIStrategy implements ITIStrategy {
   @Override

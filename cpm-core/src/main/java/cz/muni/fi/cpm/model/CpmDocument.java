@@ -3,7 +3,8 @@ package cz.muni.fi.cpm.model;
 import cz.muni.fi.cpm.constants.CpmExceptionConstants;
 import cz.muni.fi.cpm.constants.CpmType;
 import cz.muni.fi.cpm.exception.NoSpecificKind;
-import cz.muni.fi.cpm.strategy.AttributeTIStrategy;
+import cz.muni.fi.cpm.strategy.CpmTypeHasTIStrategy;
+
 import org.openprovenance.prov.model.*;
 import org.openprovenance.prov.model.StatementOrBundle.Kind;
 import org.openprovenance.prov.model.extension.QualifiedAlternateOf;
@@ -41,7 +42,7 @@ public class CpmDocument implements StatementAction {
     private final List<IEdge> edges = new ArrayList<>();
     private QualifiedName bundleId;
 
-    private ITIStrategy tiStrategy = new AttributeTIStrategy();
+    private ITIStrategy tiStrategy = new CpmTypeHasTIStrategy();
 
     public CpmDocument(ProvFactory pF, ICpmProvFactory cPF, ICpmFactory cF) {
         this.pF = pF;

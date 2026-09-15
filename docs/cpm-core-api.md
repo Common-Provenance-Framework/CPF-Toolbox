@@ -86,9 +86,9 @@ The `CpmDocument` graph structure allows standard traversal algorithms. The foll
 public List<INode> getConnectedSubgraph(CpmDocument cpmDoc, QualifiedName startNodeIdentifier) {
     List<INode> result = new ArrayList<>();
     Queue<INode> toProcess = new LinkedList<>();
-    
+
     INode startNode = cpmDoc.getNode(startNodeIdentifier);
-    
+
     toProcess.add(startNode);
     result.add(startNode);
 
@@ -134,7 +134,7 @@ The `CpmDocument` supports mutation through a set of defined operations:
 
 ## Customizing Traversal Strategy
 
-The classification of nodes into traversal or domain-specific components is governed by the `ITIStrategy` interface. The default implementation relies on attributes of the underlying PROV elements.
+The classification of nodes into traversal or domain-specific components is governed by the `ITIStrategy` interface. The default implementation relies on prov type of the underlying PROV elements.
 
 To apply a custom strategy, implement `ITIStrategy` and register it with the document:
 
