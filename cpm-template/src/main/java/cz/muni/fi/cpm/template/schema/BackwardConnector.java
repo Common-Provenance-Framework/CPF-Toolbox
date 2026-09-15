@@ -21,11 +21,11 @@ public class BackwardConnector extends Connector {
   @JsonPropertyDescription("The content version of the referenced meta-component.")
   private String referencedMetaBundleSpecV;
 
-  @JsonPropertyDescription("The referenced bundle's hash value's algorithm")
-  private HashAlgorithms hashAlg;
-
   @JsonPropertyDescription("The referenced bundle's hash value")
   private Object referencedBundleHashValue;
+
+  @JsonPropertyDescription("The referenced bundle's hash value's algorithm")
+  private HashAlgorithms hashAlg;
 
   @JsonPropertyDescription("The identifier of the agent t which this connector is attributed to")
   private ConnectorAttributed attributedTo;

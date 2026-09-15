@@ -19,7 +19,9 @@ public class MainActivity {
     private XMLGregorianCalendar endTime;
     @JsonPropertyDescription("The identifier of the meta bundle which is referenced by this activity")
     private QualifiedName referencedMetaBundleId;
-    @JsonPropertyDescription("The content version of the referenced meta-component")
+    @JsonPropertyDescription("The content version of the referenced finalized provenance component.")
+    private String referencedBundleSpecV;
+    @JsonPropertyDescription("The content version of the referenced meta-component.")
     private String referencedMetaBundleSpecV;
     @JsonPropertyDescription("The identifier of the activities in domain-specific provenance, that are part of this activity")
     private List<QualifiedName> hasPart;
@@ -69,8 +71,16 @@ public class MainActivity {
         this.referencedMetaBundleId = referencedMetaBundleId;
     }
 
+    public String getReferencedBundleSpecV() {
+        return this.referencedBundleSpecV;
+    }
+
+    public void setReferencedBundleSpecV(String referencedBundleSpecV) {
+        this.referencedBundleSpecV = referencedBundleSpecV;
+    }
+
     public String getReferencedMetaBundleSpecV() {
-        return referencedMetaBundleSpecV;
+        return this.referencedMetaBundleSpecV;
     }
 
     public void setReferencedMetaBundleSpecV(String referencedMetaBundleSpecV) {

@@ -72,6 +72,25 @@ public class MainActivityTest {
   }
 
   @Test
+  public void toStatements_withReferencedBundleSpecV_returnsMetaBundleSpecV() {
+    MainActivity mainActivity = new MainActivity();
+    mainActivity.setId(provFactory.newQualifiedName("uri", "activityExample", "ex"));
+    String version = "ISO-IS-23494-2:2026";
+    mainActivity.setReferencedBundleSpecV(version);
+
+    List<Statement> statements = mapper.toStatementsStream(mainActivity).toList();
+    Activity activity = (Activity) statements.getFirst();
+
+    assertNotNull(activity.getOther());
+    assertEquals(1, activity.getOther().size());
+
+    Attribute attr = activity.getOther().getFirst();
+    assertEquals(CpmAttribute.REFERENCED_BUNDLE_SPECV.toString(), attr.getElementName().getLocalPart());
+    assertInstanceOf(LangString.class, attr.getValue());
+    assertEquals(version, LangString.class.cast(attr.getValue()).getValue());
+  }
+
+  @Test
   public void toStatements_withReferencedMetaBundleSpecV_returnsMetaBundleSpecV() {
     MainActivity mainActivity = new MainActivity();
     mainActivity.setId(provFactory.newQualifiedName("uri", "activityExample", "ex"));

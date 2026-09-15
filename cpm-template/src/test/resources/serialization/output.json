@@ -8,7 +8,8 @@
     "startTime" : "2011-11-16T16:05:00.000Z",
     "endTime" : "2011-11-16T18:05:00.000Z",
     "referencedMetaBundleId" : "ex:metaBundle1",
-    "referencedMetaBundleSpecV" : "1.0.0",
+    "referencedBundleSpecV" : "ISO-IS-23494-2:2026",
+    "referencedMetaBundleSpecV" : "ISO-IS-23494-2:2026",
     "hasPart" : [ "ex:subActivity1" ],
     "used" : [ {
       "id" : "ex:id1",
@@ -29,10 +30,10 @@
     "derivedFrom" : [ "ex:origin1", "ex:origin2" ],
     "referencedBundleId" : "ex:referencedBundle1",
     "referencedMetaBundleId" : "ex:referencedMeta1",
-    "hashAlg" : "SHA256",
     "referencedBundleHashValue" : {
       "hash" : "abc123def456"
     },
+    "hashAlg" : "SHA256",
     "attributedTo" : {
       "id" : "ex:attribution1",
       "agentId" : "ex:senderAgent1"
@@ -42,10 +43,10 @@
     "externalId" : "ex:external2",
     "referencedBundleId" : "ex:referencedBundle2",
     "referencedMetaBundleId" : "ex:referencedMeta2",
-    "hashAlg" : "SHA256",
     "referencedBundleHashValue" : {
       "hash" : "efg123def456"
     },
+    "hashAlg" : "SHA256",
     "attributedTo" : {
       "id" : "ex:attribution2",
       "agentId" : "ex:senderAgent1"

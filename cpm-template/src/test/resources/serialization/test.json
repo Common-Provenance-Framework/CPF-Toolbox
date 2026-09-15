@@ -7,7 +7,8 @@
     "startTime": "2011-11-16T16:05:00",
     "endTime": "2011-11-16T18:05:00",
     "referencedMetaBundleId": "ex:metaBundle1",
-    "referencedMetaBundleSpecV": "1.0.0",
+    "referencedMetaBundleSpecV": "ISO-IS-23494-2:2026",
+    "referencedBundleSpecV": "ISO-IS-23494-2:2026",
     "hasPart": [
       "ex:subActivity1"
     ],

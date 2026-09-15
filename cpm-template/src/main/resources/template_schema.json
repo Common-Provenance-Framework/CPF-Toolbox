@@ -37,6 +37,16 @@
           "pattern": "^[A-Za-z0-9_]+:(.*)$",
           "description": "The identifier of the meta bundle which is referenced by this activity"
         },
+        "referencedBundleSpecV": {
+          "type": "string",
+          "pattern": "^ISO-(?:IS|TS|PAS)-[0-9]+-[0-9]+:[0-9]{4}$",
+          "description": "The content version of the referenced finalized provenance component"
+        },
+        "referencedMetaBundleSpecV": {
+          "type": "string",
+          "pattern": "^ISO-(?:IS|TS|PAS)-[0-9]+-[0-9]+:[0-9]{4}$",
+          "description": "The content version of the referenced meta-component"
+        },
         "hasPart": {
           "type": "array",
           "description": "The identifier of the activities in domain-specific provenance, that are part of this activity",
@@ -108,6 +118,16 @@
             "pattern": "^[A-Za-z0-9_]+:(.*)$",
             "description": "The referenced meta bundle's identifier"
           },
+          "referencedBundleSpecV": {
+            "type": "string",
+            "pattern": "^ISO-(?:IS|TS|PAS)-[0-9]+-[0-9]+:[0-9]{4}$",
+            "description": "The content version of the referenced finalized provenance component"
+          },
+          "referencedMetaBundleSpecV": {
+            "type": "string",
+            "pattern": "^ISO-(?:IS|TS|PAS)-[0-9]+-[0-9]+:[0-9]{4}$",
+            "description": "The content version of the referenced meta-component"
+          },
           "referencedBundleHashValue": {
             "type": "object",
             "id": "urn:jsonschema:java:lang:Object",
@@ -172,6 +192,43 @@
           "externalId": {
             "type": "string"
           },
+          "derivedFrom": {
+            "type": "array",
+            "description": "The identifier's of connector's from which this connector is derived from",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_]+:(.*)$"
+            }
+          },
+          "attributedTo": {
+            "type": "object",
+            "$ref": "urn:jsonschema:cz:muni:fi:cpm:template:schema:ConnectorAttributed",
+            "description": "The identifier of the agent t which this connector is attributed to"
+          },
+          "specializationOf": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_]+:(.*)$",
+            "description": "The identifier of the connector of which this connector is a specialisation of"
+          }
+        }
+      }
+    },
+    "specForwardConnectors": {
+      "type": "array",
+      "description": "The forward connectors",
+      "items": {
+        "type": "object",
+        "id": "urn:jsonschema:cz:muni:fi:cpm:template:schema:SpecForwardConnector",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_]+:(.*)$",
+            "required": true,
+            "description": "The identifier of the connector"
+          },
+          "externalId": {
+            "type": "string"
+          },
           "referencedBundleId": {
             "type": "string",
             "pattern": "^[A-Za-z0-9_]+:(.*)$",
@@ -182,10 +239,19 @@
             "pattern": "^[A-Za-z0-9_]+:(.*)$",
             "description": "The referenced meta bundle's identifier"
           },
-          "referencedBundleHashValue": {
-            "type": "object",
-            "$ref": "urn:jsonschema:java:lang:Object",
-            "description": "The referenced bundle's hash value"
+          "referencedBundleSpecV": {
+            "type": "string",
+            "pattern": "^ISO-(?:IS|TS|PAS)-[0-9]+-[0-9]+:[0-9]{4}$",
+            "description": "The content version of the referenced finalized provenance component"
+          },
+          "referencedMetaBundleSpecV": {
+            "type": "string",
+            "pattern": "^ISO-(?:IS|TS|PAS)-[0-9]+-[0-9]+:[0-9]{4}$",
+            "description": "The content version of the referenced meta-component"
+          },
+          "provenanceServiceUri": {
+            "type": "string",
+            "description": "The URI of the provenance service"
           },
           "hashAlg": {
             "type": "string",
@@ -197,17 +263,10 @@
               "SHA512"
             ]
           },
-          "provenanceServiceUri": {
-            "type": "string",
-            "description": "The URI of the provenance service"
-          },
-          "derivedFrom": {
-            "type": "array",
-            "description": "The identifier's of connector's from which this connector is derived from",
-            "items": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_]+:(.*)$"
-            }
+          "referencedBundleHashValue": {
+            "type": "object",
+            "$ref": "urn:jsonschema:java:lang:Object",
+            "description": "The referenced bundle's hash value"
           },
           "attributedTo": {
             "type": "object",

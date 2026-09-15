@@ -127,7 +127,7 @@ public class CpmDocument implements StatementAction {
 
         List<Component> components = new ArrayList<>();
         components.addAll(getNodes());
-        components.addAll(edges);
+        components.addAll(getEdges());
 
         List<Statement> statements = cF.getComponentsTransformer().apply(components);
 
