@@ -17,9 +17,14 @@ import org.openprovenance.prov.model.Attribute;
 import org.openprovenance.prov.model.Bundle;
 import org.openprovenance.prov.model.Document;
 import org.openprovenance.prov.model.Entity;
+import org.openprovenance.prov.model.LangString;
+import org.openprovenance.prov.model.Location;
 import org.openprovenance.prov.model.Namespace;
+import org.openprovenance.prov.model.Other;
 import org.openprovenance.prov.model.QualifiedName;
 import org.openprovenance.prov.model.Statement;
+import org.openprovenance.prov.model.Type;
+import org.openprovenance.prov.model.Attribute.AttributeKind;
 
 import cz.muni.fi.cpm.model.ICpmProvFactory;
 import cz.muni.fi.cpm.template.schema.BackwardConnector;
@@ -238,6 +243,19 @@ public class TemplateProvMapper implements ITemplateProvMapper {
           listToStreamSafe(mA.getHasPart())
               .map(cPF::newDctAttribute)
               .forEach(activity.getOther()::add);
+
+          listToStreamSafe(mA.getAttributes())
+              .forEach(attr -> {
+                if (attr.getKind() == AttributeKind.PROV_TYPE)
+                  activity.getType().add(((Type) attr));
+                else if (attr.getKind() == AttributeKind.PROV_LABEL)
+                  activity.getLabel().add(((LangString) attr.getValue()));
+                else if (attr.getKind() == AttributeKind.PROV_LOCATION)
+                  activity.getLocation().add(((Location) attr));
+                else
+                  activity.getOther().add(((Other) attr));
+
+              });
 
           Stream<Statement> relations = listToStreamSafe(mA.getUsed())
               .map(mainActivityUsed -> cPF.getProvFactory().newUsed(

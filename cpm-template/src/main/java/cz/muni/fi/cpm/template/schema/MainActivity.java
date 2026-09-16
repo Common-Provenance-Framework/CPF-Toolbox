@@ -1,12 +1,19 @@
 package cz.muni.fi.cpm.template.schema;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.openprovenance.prov.model.Attribute;
+import org.openprovenance.prov.model.QualifiedName;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import org.openprovenance.prov.model.QualifiedName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.List;
+import cz.muni.fi.cpm.template.deserialization.AttributesDeserializer;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class MainActivity {
@@ -21,6 +28,11 @@ public class MainActivity {
     private QualifiedName referencedMetaBundleId;
     @JsonPropertyDescription("The content version of the referenced meta-component")
     private String referencedMetaBundleSpecV;
+
+    @JsonDeserialize(using = AttributesDeserializer.class)
+    @JsonPropertyDescription("Other arbitrary attributes in MainActivity")
+    private List<Attribute> attributes;
+
     @JsonPropertyDescription("The identifier of the activities in domain-specific provenance, that are part of this activity")
     private List<QualifiedName> hasPart;
     @JsonPropertyDescription("The identifiers of the backward connectors that are used by this activity")
@@ -67,6 +79,16 @@ public class MainActivity {
 
     public void setReferencedMetaBundleId(QualifiedName referencedMetaBundleId) {
         this.referencedMetaBundleId = referencedMetaBundleId;
+    }
+
+    public List<Attribute> getAttributes() {
+      return this.attributes == null
+          ? new ArrayList<Attribute>()
+          : this.attributes;
+    }
+
+    public void setAttributes(List<Attribute> attributes) {
+      this.attributes = attributes;
     }
 
     public String getReferencedMetaBundleSpecV() {
