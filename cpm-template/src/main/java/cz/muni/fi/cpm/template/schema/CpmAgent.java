@@ -1,15 +1,19 @@
 package cz.muni.fi.cpm.template.schema;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.openprovenance.prov.model.Attribute;
 import org.openprovenance.prov.model.QualifiedName;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import cz.muni.fi.cpm.constants.CpmType;
+import cz.muni.fi.cpm.template.deserialization.AttributesDeserializer;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public abstract class CpmAgent {
@@ -17,6 +21,10 @@ public abstract class CpmAgent {
   @JsonPropertyDescription("The identifier of the agent")
   private QualifiedName id;
   private String contactIdPid;
+
+  @JsonDeserialize(using = AttributesDeserializer.class)
+  @JsonPropertyDescription("Other arbitrary attributes in Agent")
+  private List<Attribute> attributes;
 
   public CpmAgent() {
   }
@@ -44,6 +52,16 @@ public abstract class CpmAgent {
 
   public void setContactIdPid(String contactIdPid) {
     this.contactIdPid = contactIdPid;
+  }
+
+  public List<Attribute> getAttributes() {
+    return this.attributes == null
+        ? new ArrayList<Attribute>()
+        : this.attributes;
+  }
+
+  public void setAttributes(List<Attribute> attributes) {
+    this.attributes = attributes;
   }
 
   @JsonIgnore

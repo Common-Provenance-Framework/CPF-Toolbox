@@ -126,7 +126,14 @@
   "senderAgents": [
     {
       "id": "ex:senderAgent1",
-      "contactIdPid": "contact001"
+      "contactIdPid": "contact001",
+      "attributes": {
+        "prov:type": "typeValue",
+        "ex:attrs": {
+          "$": "ex:value",
+          "type": "prov:QUALIFIED_NAME"
+        }
+      }
     }
   ],
   "receiverAgents": [
@@ -137,7 +144,14 @@
   ],
   "currentAgent": {
     "id": "ex:currentAgent1",
-    "contactIdPid": "contact003"
+    "contactIdPid": "contact003",
+    "attributes": {
+      "prov:type": {"$":"ex:person", "type":"prov:QUALIFIED_NAME"},
+      "ex:attrs": {
+        "$": "ex:org",
+        "type": "prov:QUALIFIED_NAME"
+      }
+    }
   },
   "identifierEntities": [
     {

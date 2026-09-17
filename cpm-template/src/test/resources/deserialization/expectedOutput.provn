@@ -23,7 +23,7 @@ specializationOf(ex:specForwardConnector1,ex:forwardConnector1)
 entity(ex:specForwardConnector1,[prov:type = 'cpm:specForwardConnector', prov:value = "true" %% xsd:boolean, cpm:hashAlg = "SHA512" %% xsd:string, cpm:provenanceServiceUri = "http://provenance.service.org" %% xsd:anyURI, cpm:referencedBundleHashValue = "{hash=def789ghi012}" %% xsd:byte, cpm:referencedBundleId = 'ex:referencedBundle2', cpm:referencedMetaBundleId = 'ex:referencedMeta2', ex:attrs = 'ex:value'])
 entity(ex:identifierEntity1,[prov:type = 'cpm:id', cpm:externalId = "ex:extID1" %% xsd:string, cpm:externalIdType = "Document" %% xsd:string, cpm:comment = "An example identifier entity" %% xsd:string])
 agent(ex:receiverAgent1,[prov:type = 'cpm:receiverAgent', cpm:contactIdPid = "contact002" %% xsd:string])
-agent(ex:senderAgent1,[prov:type = 'cpm:senderAgent', cpm:contactIdPid = "contact001" %% xsd:string])
-agent(ex:currentAgent1,[prov:type = 'cpm:currentAgent', cpm:contactIdPid = "contact003" %% xsd:string])
+agent(ex:senderAgent1,[prov:type = 'cpm:senderAgent', prov:type = "typeValue", cpm:contactIdPid = "contact001", ex:attrs = 'ex:value'])
+agent(ex:currentAgent1,[prov:type = 'cpm:currentAgent', prov:type = 'ex:person', cpm:contactIdPid = "contact003", ex:attrs = 'ex:org'])
 endBundle
 endDocument

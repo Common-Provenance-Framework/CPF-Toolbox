@@ -6,12 +6,12 @@ prefix schema <https://schema.org/>
 bundle ex:bundle1
 
 entity(ex:identifierEntity1,[prov:type = 'cpm:id', cpm:externalId = "ex:extID1" %% xsd:string, cpm:externalIdType = "Document" %% xsd:string, cpm:comment = "An example identifier entity" %% xsd:string])
-agent(ex:currentAgent1,[prov:type = 'cpm:currentAgent', cpm:contactIdPid = "contact003" %% xsd:string])
+agent(ex:currentAgent1,[prov:type = 'cpm:currentAgent', prov:type = 'ex:person', cpm:contactIdPid = "contact003", ex:attrs = 'ex:org'])
 activity(ex:activity1,2011-11-16T16:05:00.000Z,2011-11-16T18:05:00.000Z,[prov:type = 'cpm:mainActivity', prov:type = 'schema:Permit', prov:location = "Brno", cpm:referencedMetaBundleId = 'ex:metaBundle1', cpm:referencedMetaBundleSpecV = "1.0.0", dct:hasPart = 'ex:subActivity1', ex:inAttr2 = "1111111111", ex:inAttr2 = "adsfasd", ex:inAttr1 = "5" %% xsd:integer, ex:inAttr4 = "true" %% xsd:boolean, ex:inAttr2 = "value2", ex:attrs = "Y29udGBudCBoZXJl" %% xsd:base64Binary ])
 entity(ex:specForwardConnector1,[prov:type = 'cpm:specForwardConnector', prov:value = "true" %% xsd:boolean, cpm:hashAlg = "SHA512" %% xsd:string, cpm:provenanceServiceUri = "http://provenance.service.org" %% xsd:anyURI, cpm:referencedBundleHashValue = "{hash=def789ghi012}" %% xsd:byte, cpm:referencedBundleId = 'ex:referencedBundle2', cpm:referencedMetaBundleId = 'ex:referencedMeta2', ex:attrs = 'ex:value'])
 agent(ex:receiverAgent1,[prov:type = 'cpm:receiverAgent', cpm:contactIdPid = "contact002" %% xsd:string])
 entity(ex:forwardConnector2,[prov:type = 'cpm:forwardConnector', cpm:externalId = "externalId2" %% xsd:string])
-agent(ex:senderAgent1,[prov:type = 'cpm:senderAgent', cpm:contactIdPid = "contact001" %% xsd:string])
+agent(ex:senderAgent1,[prov:type = 'cpm:senderAgent', prov:type = "typeValue", cpm:contactIdPid = "contact001", ex:attrs = 'ex:value'])
 entity(ex:backConnector1,[prov:type = 'cpm:backwardConnector', prov:type = 'schema:Permit', prov:location = "Brno", prov:value = "5" %% xsd:integer, cpm:externalId = "ex:external1", cpm:hashAlg = "SHA256", cpm:referencedBundleHashValue = "{hash=abc123def456}" %% xsd:byte, cpm:referencedBundleId = 'ex:referencedBundle1', cpm:referencedMetaBundleId = 'ex:referencedMeta1', ex:attrs = "Y29udGBudCBoZXJl" %% xsd:base64Binary])
 entity(ex:forwardConnector1,[prov:type = 'cpm:forwardConnector', prov:value = "output", cpm:externalId = "externalId1" %% xsd:string, ex:attrs = "Y29udGBudCBoZXJlefdls" %% xsd:base64Binary])
 used(ex:id1;ex:activity1,ex:backConnector1,-)

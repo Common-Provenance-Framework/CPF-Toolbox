@@ -238,7 +238,7 @@ public class TemplateProvMapper implements ITemplateProvMapper {
   }
 
   private Agent buildAgent(CpmAgent cpmAgent) {
-    return cPF.newCpmAgent(cpmAgent.getId(), cpmAgent.getType(), new ArrayList<Attribute>());
+    return cPF.newCpmAgent(cpmAgent.getId(), cpmAgent.getType(), cpmAgent.getAttributes());
   }
 
   public Stream<Statement> toStatementsStream(CpmAgent cpmAgent) {
