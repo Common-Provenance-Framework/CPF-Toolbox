@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openprovenance.prov.model.Attribute;
 import org.openprovenance.prov.model.Entity;
-import org.openprovenance.prov.model.LangString;
 import org.openprovenance.prov.model.Other;
 import org.openprovenance.prov.model.SpecializationOf;
 import org.openprovenance.prov.model.Statement;
@@ -69,9 +68,9 @@ public class ConnectorTest {
     Entity entity = (Entity) statements.getFirst();
 
     assertNotNull(entity.getOther());
-    assertInstanceOf(LangString.class, entity.getOther().getLast().getValue());
+    assertInstanceOf(String.class, entity.getOther().getLast().getValue());
     assertEquals(CpmAttribute.EXTERNAL_ID.toString(), entity.getOther().getLast().getElementName().getLocalPart());
-    assertEquals(externalId, ((LangString) entity.getOther().getLast().getValue()).getValue());
+    assertEquals(externalId, ( entity.getOther().getLast().getValue()));
   }
 
   @Test
@@ -117,8 +116,8 @@ public class ConnectorTest {
         .findFirst();
 
     assertTrue(hashAlgAttr.isPresent());
-    assertInstanceOf(LangString.class, hashAlgAttr.get().getValue());
-    assertEquals(HashAlgorithms.SHA256.toString(), ((LangString) hashAlgAttr.get().getValue()).getValue());
+    assertInstanceOf(String.class, hashAlgAttr.get().getValue());
+    assertEquals(HashAlgorithms.SHA256.toString(), (hashAlgAttr.get().getValue()));
   }
 
   @Test
@@ -222,8 +221,8 @@ public class ConnectorTest {
 
     Attribute attr = entity.getOther().getFirst();
     assertEquals(CpmAttribute.REFERENCED_BUNDLE_SPECV.toString(), attr.getElementName().getLocalPart());
-    assertInstanceOf(LangString.class, attr.getValue());
-    assertEquals(version, LangString.class.cast(attr.getValue()).getValue());
+    assertInstanceOf(String.class, attr.getValue());
+    assertEquals(version, String.class.cast(attr.getValue()));
   }
 
   @Test
@@ -241,8 +240,8 @@ public class ConnectorTest {
 
     Attribute attr = entity.getOther().getFirst();
     assertEquals(CpmAttribute.REFERENCED_META_BUNDLE_SPECV.toString(), attr.getElementName().getLocalPart());
-    assertInstanceOf(LangString.class, attr.getValue());
-    assertEquals(version, LangString.class.cast(attr.getValue()).getValue());
+    assertInstanceOf(String.class, attr.getValue());
+    assertEquals(version, String.class.cast(attr.getValue()));
   }
 
   @Test

@@ -109,11 +109,6 @@ public class TraversalInformationTest {
     CpmDocument cpmDoc = new CpmDocument(doc, pF, cpmProvFactory, new CpmMergedFactory(pF));
     assertEquals(ti.getBundleName(), cpmDoc.getBundleId());
 
-    cpmDoc.getEdges().forEach(e -> {
-      System.out.println(e.getKind());
-      System.out.println(e.getEffect().getId() + " -> " + e.getCause().getId());
-    });
-
     INode mANode = cpmDoc.getMainActivity();
     assertNotNull(mANode);
     assertEquals(mAID, mANode.getId());

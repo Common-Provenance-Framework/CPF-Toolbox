@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openprovenance.prov.model.Agent;
 import org.openprovenance.prov.model.Attribute;
-import org.openprovenance.prov.model.LangString;
 import org.openprovenance.prov.model.Other;
 import org.openprovenance.prov.model.Statement;
 import org.openprovenance.prov.model.Type;
@@ -73,9 +72,9 @@ public class CpmAgentTest {
     assertEquals(CpmType.SENDER_AGENT.toString(), ((QualifiedName) type.getValue()).getLocalPart());
 
     Attribute contactIdAttr = otherAttributes.getFirst();
-    assertInstanceOf(LangString.class, contactIdAttr.getValue());
+    assertInstanceOf(String.class, contactIdAttr.getValue());
     assertEquals(CpmAttribute.CONTACT_ID_PID.toString(), contactIdAttr.getElementName().getLocalPart());
-    assertEquals(contactIdPid, ((LangString) contactIdAttr.getValue()).getValue());
+    assertEquals(contactIdPid, (contactIdAttr.getValue()));
   }
 
   @Test
@@ -113,9 +112,9 @@ public class CpmAgentTest {
     assertEquals(1, otherAttributes.size());
 
     Attribute contactIdAttr = otherAttributes.getFirst();
-    assertInstanceOf(LangString.class, contactIdAttr.getValue());
+    assertInstanceOf(String.class, contactIdAttr.getValue());
     assertEquals(CpmAttribute.CONTACT_ID_PID.toString(), contactIdAttr.getElementName().getLocalPart());
-    assertEquals("contact123", ((LangString) contactIdAttr.getValue()).getValue());
+    assertEquals("contact123", (contactIdAttr.getValue()));
   }
 
   @Test
@@ -164,9 +163,9 @@ public class CpmAgentTest {
     assertNotNull(otherAttributes);
     assertEquals(1, otherAttributes.size());
     Attribute contactIdAttr = otherAttributes.getFirst();
-    assertInstanceOf(LangString.class, contactIdAttr.getValue());
+    assertInstanceOf(String.class, contactIdAttr.getValue());
     assertEquals(CpmAttribute.CONTACT_ID_PID.toString(), contactIdAttr.getElementName().getLocalPart());
-    assertEquals(contactIdPid, ((LangString) contactIdAttr.getValue()).getValue());
+    assertEquals(contactIdPid, ( contactIdAttr.getValue()));
 
     List<String> types = resultAgent.getType().stream()
         .map(Type::getValue)

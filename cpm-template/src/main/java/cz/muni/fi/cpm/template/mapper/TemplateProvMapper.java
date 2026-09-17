@@ -13,13 +13,18 @@ import java.util.stream.Stream;
 
 import org.openprovenance.prov.model.Activity;
 import org.openprovenance.prov.model.Agent;
-import org.openprovenance.prov.model.Attribute;
 import org.openprovenance.prov.model.Bundle;
 import org.openprovenance.prov.model.Document;
 import org.openprovenance.prov.model.Entity;
+import org.openprovenance.prov.model.LangString;
+import org.openprovenance.prov.model.Location;
 import org.openprovenance.prov.model.Namespace;
+import org.openprovenance.prov.model.Other;
 import org.openprovenance.prov.model.QualifiedName;
 import org.openprovenance.prov.model.Statement;
+import org.openprovenance.prov.model.Type;
+import org.openprovenance.prov.model.Value;
+import org.openprovenance.prov.model.Attribute.AttributeKind;
 
 import cz.muni.fi.cpm.model.ICpmProvFactory;
 import cz.muni.fi.cpm.template.schema.BackwardConnector;
@@ -88,6 +93,20 @@ public class TemplateProvMapper implements ITemplateProvMapper {
               .map(cPF::newCpmAttributeReferencedMetaBundleId)
               .ifPresent(entity.getOther()::add);
 
+          listToStreamSafe(connector.getAttributes())
+              .forEach(attr -> {
+                if (attr.getKind() == AttributeKind.PROV_TYPE)
+                  entity.getType().add(((Type) attr));
+                else if (attr.getKind() == AttributeKind.PROV_LABEL)
+                  entity.getLabel().add(((LangString) attr.getValue()));
+                else if (attr.getKind() == AttributeKind.PROV_LOCATION)
+                  entity.getLocation().add(((Location) attr));
+                else if (attr.getKind() == AttributeKind.PROV_VALUE)
+                  entity.setValue((((Value) attr)));
+                else
+                  entity.getOther().add(((Other) attr));
+              });
+
           Stream<Statement> relations = scalarToStreamSafe(connector.getAttributedTo())
               .map(attributedTo -> cPF.getProvFactory().newWasAttributedTo(
                   attributedTo.getId(),
@@ -113,6 +132,19 @@ public class TemplateProvMapper implements ITemplateProvMapper {
               .map(cPF::newCpmAttributeExternalId)
               .ifPresent(entity.getOther()::add);
 
+          listToStreamSafe(connector.getAttributes())
+              .forEach(attr -> {
+                if (attr.getKind() == AttributeKind.PROV_TYPE)
+                  entity.getType().add(((Type) attr));
+                else if (attr.getKind() == AttributeKind.PROV_LABEL)
+                  entity.getLabel().add(((LangString) attr.getValue()));
+                else if (attr.getKind() == AttributeKind.PROV_LOCATION)
+                  entity.getLocation().add(((Location) attr));
+                else if (attr.getKind() == AttributeKind.PROV_VALUE)
+                  entity.setValue((((Value) attr)));
+                else
+                  entity.getOther().add(((Other) attr));
+              });
           Stream<Statement> relations = listToStreamSafe(connector.getDerivedFrom())
               .map(derivedFrom -> cPF.getProvFactory()
                   .newWasDerivedFrom(connector.getId(), derivedFrom));
@@ -159,6 +191,19 @@ public class TemplateProvMapper implements ITemplateProvMapper {
               .map(cPF::newCpmAttributeReferencedMetaBundleSpecV)
               .ifPresent(entity.getOther()::add);
 
+          listToStreamSafe(connector.getAttributes())
+              .forEach(attr -> {
+                if (attr.getKind() == AttributeKind.PROV_TYPE)
+                  entity.getType().add(((Type) attr));
+                else if (attr.getKind() == AttributeKind.PROV_LABEL)
+                  entity.getLabel().add(((LangString) attr.getValue()));
+                else if (attr.getKind() == AttributeKind.PROV_LOCATION)
+                  entity.getLocation().add(((Location) attr));
+                else if (attr.getKind() == AttributeKind.PROV_VALUE)
+                  entity.setValue((((Value) attr)));
+                else
+                  entity.getOther().add(((Other) attr));
+              });
           Stream<Statement> relations = scalarToStreamSafe(connector.getAttributedTo())
               .map(attributedTo -> cPF.getProvFactory().newWasAttributedTo(
                   attributedTo.getId(),
@@ -192,7 +237,7 @@ public class TemplateProvMapper implements ITemplateProvMapper {
   }
 
   private Agent buildAgent(CpmAgent cpmAgent) {
-    return cPF.newCpmAgent(cpmAgent.getId(), cpmAgent.getType(), new ArrayList<Attribute>());
+    return cPF.newCpmAgent(cpmAgent.getId(), cpmAgent.getType(), cpmAgent.getAttributes());
   }
 
   public Stream<Statement> toStatementsStream(CpmAgent cpmAgent) {
@@ -218,6 +263,19 @@ public class TemplateProvMapper implements ITemplateProvMapper {
               .map(cPF::newCpmAttributeComment)
               .ifPresent(entity.getOther()::add);
 
+          listToStreamSafe(iE.getAttributes())
+              .forEach(attr -> {
+                if (attr.getKind() == AttributeKind.PROV_TYPE)
+                  entity.getType().add(((Type) attr));
+                else if (attr.getKind() == AttributeKind.PROV_LABEL)
+                  entity.getLabel().add(((LangString) attr.getValue()));
+                else if (attr.getKind() == AttributeKind.PROV_LOCATION)
+                  entity.getLocation().add(((Location) attr));
+                else if (attr.getKind() == AttributeKind.PROV_VALUE)
+                  entity.setValue((((Value) attr)));
+                else
+                  entity.getOther().add(((Other) attr));
+              });
           return entity;
         });
   }
@@ -238,6 +296,19 @@ public class TemplateProvMapper implements ITemplateProvMapper {
           listToStreamSafe(mA.getHasPart())
               .map(cPF::newDctAttribute)
               .forEach(activity.getOther()::add);
+
+          listToStreamSafe(mA.getAttributes())
+              .forEach(attr -> {
+                if (attr.getKind() == AttributeKind.PROV_TYPE)
+                  activity.getType().add(((Type) attr));
+                else if (attr.getKind() == AttributeKind.PROV_LABEL)
+                  activity.getLabel().add(((LangString) attr.getValue()));
+                else if (attr.getKind() == AttributeKind.PROV_LOCATION)
+                  activity.getLocation().add(((Location) attr));
+                else
+                  activity.getOther().add(((Other) attr));
+
+              });
 
           Stream<Statement> relations = listToStreamSafe(mA.getUsed())
               .map(mainActivityUsed -> cPF.getProvFactory().newUsed(

@@ -113,9 +113,10 @@ public class ProvStorageTransformer {
         JsonNode jNode = mapper.readTree(iS);
 
         // workaround for this issue: https://github.com/lucmoreau/ProvToolbox/issues/222
-        String bundleId = jNode.get("bundle").fieldNames().next();
-        ((ObjectNode) jNode.get("bundle").fields().next().getValue())
-                .set(JsonLDMetaConstants.JSONLD_ID, new TextNode(bundleId));
+        // String bundleId = jNode.get("bundle").fieldNames().next();
+        // System.out.println("bundleId: " + bundleId);
+        // ((ObjectNode) jNode.get("bundle").fields().next().getValue())
+        //         .set(JsonLDMetaConstants.JSONLD_ID, new TextNode(bundleId));
 
         // escape explicit blank ns, because identifiers with blank ns uri are ignored by ProvToolBox
         String blankPrefix = jNode.get("prefix").properties().stream()

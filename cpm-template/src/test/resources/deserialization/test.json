@@ -1,6 +1,9 @@
 {
   "prefixes": {
-    "ex": "test"
+    "ex": "test",
+    "schema": "https://schema.org/",
+    "cpm": "https://www.commonprovenancemodel.org/cpm-namespace-v1-0/",
+    "prov": "http://www.w3.org/ns/prov#"
   },
   "mainActivity": {
     "id": "ex:activity1",
@@ -8,6 +11,20 @@
     "endTime": "2011-11-16T18:05:00",
     "referencedMetaBundleId": "ex:metaBundle1",
     "referencedMetaBundleSpecV": "1.0.0",
+    "attributes": {
+      "ex:inAttr1": 5,
+      "ex:inAttr2": ["value2", "adsfasd", "1111111111"],
+      "ex:inAttr4": true,
+      "prov:location": "Brno",
+      "prov:type": {
+        "type": "prov:QUALIFIED_NAME",
+        "$": "schema:Permit"
+      },
+      "ex:attrs": {
+        "$": "Y29udGBudCBoZXJl",
+        "type": "xsd:base64Binary"
+      }
+    },
     "hasPart": [
       "ex:subActivity1"
     ],
@@ -37,6 +54,18 @@
         "hash": "abc123def456"
       },
       "hashAlg": "SHA256",
+      "attributes": {
+        "prov:value": 5,
+        "prov:location": "Brno",
+        "prov:type": {
+          "type": "prov:QUALIFIED_NAME",
+          "$": "schema:Permit"
+        },
+        "ex:attrs": {
+          "$": "Y29udGBudCBoZXJl",
+          "type": "xsd:base64Binary"
+        }
+      },
       "derivedFrom": [
         "ex:origin1",
         "ex:origin2"
@@ -51,6 +80,13 @@
     {
       "id": "ex:forwardConnector1",
       "externalId": "externalId1",
+      "attributes": {
+        "prov:value": "output",
+        "ex:attrs": {
+          "$": "Y29udGBudCBoZXJlefdls",
+          "type": "xsd:base64Binary"
+        }
+      },
       "derivedFrom": [
         "ex:backConnector1"
       ]
@@ -73,6 +109,13 @@
       },
       "hashAlg": "SHA512",
       "provenanceServiceUri": "http://provenance.service.org",
+      "attributes": {
+        "prov:value": true,
+        "ex:attrs": {
+          "$": "ex:value",
+          "type": "prov:QUALIFIED_NAME"
+        }
+      },
       "attributedTo": {
         "id": "ex:attribution",
         "agentId": "ex:agent2"
@@ -83,7 +126,14 @@
   "senderAgents": [
     {
       "id": "ex:senderAgent1",
-      "contactIdPid": "contact001"
+      "contactIdPid": "contact001",
+      "attributes": {
+        "prov:type": "typeValue",
+        "ex:attrs": {
+          "$": "ex:value",
+          "type": "prov:QUALIFIED_NAME"
+        }
+      }
     }
   ],
   "receiverAgents": [
@@ -94,14 +144,31 @@
   ],
   "currentAgent": {
     "id": "ex:currentAgent1",
-    "contactIdPid": "contact003"
+    "contactIdPid": "contact003",
+    "attributes": {
+      "prov:type": {"$":"ex:person", "type":"prov:QUALIFIED_NAME"},
+      "ex:attrs": {
+        "$": "ex:org",
+        "type": "prov:QUALIFIED_NAME"
+      }
+    }
   },
   "identifierEntities": [
     {
       "id": "ex:identifierEntity1",
       "externalId": "ex:extID1",
       "externalIdType": "Document",
-      "comment": "An example identifier entity"
+      "comment": "An example identifier entity",
+      "attributes": {
+        "prov:value": {
+          "$":"ex:identification",
+          "type": "prov:QUALIFIED_NAME"
+        },
+        "ex:attr": {
+          "$": "description",
+          "type": "xsd:string"
+        }
+      }
     }
   ]
 }

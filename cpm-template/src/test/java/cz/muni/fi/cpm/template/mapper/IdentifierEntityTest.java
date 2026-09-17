@@ -10,7 +10,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openprovenance.prov.model.Entity;
-import org.openprovenance.prov.model.LangString;
 import org.openprovenance.prov.model.Statement;
 import org.openprovenance.prov.model.Type;
 import org.openprovenance.prov.vanilla.QualifiedName;
@@ -66,7 +65,7 @@ public class IdentifierEntityTest {
     assertNotNull(entity.getOther());
     assertEquals(1, entity.getOther().size());
     assertEquals(CpmAttribute.EXTERNAL_ID.toString(), entity.getOther().getFirst().getElementName().getLocalPart());
-    assertEquals(qN, ((LangString) entity.getOther().getFirst().getValue()).getValue());
+    assertEquals(qN, ((String) entity.getOther().getFirst().getValue()));
   }
 
   @Test
@@ -82,10 +81,10 @@ public class IdentifierEntityTest {
 
     assertNotNull(entity.getOther());
     assertEquals(1, entity.getOther().size());
-    assertInstanceOf(LangString.class, entity.getOther().getFirst().getValue());
+    assertInstanceOf(String.class, entity.getOther().getFirst().getValue());
     assertEquals(CpmAttribute.EXTERNAL_ID_TYPE.toString(),
         entity.getOther().getFirst().getElementName().getLocalPart());
-    assertEquals(externalIdType, ((LangString) entity.getOther().getFirst().getValue()).getValue());
+    assertEquals(externalIdType, ((String) entity.getOther().getFirst().getValue()));
   }
 
   @Test
@@ -101,9 +100,9 @@ public class IdentifierEntityTest {
 
     assertNotNull(entity.getOther());
     assertEquals(1, entity.getOther().size());
-    assertInstanceOf(LangString.class, entity.getOther().getFirst().getValue());
+    assertInstanceOf(String.class, entity.getOther().getFirst().getValue());
     assertEquals(CpmAttribute.COMMENT.toString(), entity.getOther().getFirst().getElementName().getLocalPart());
-    assertEquals(comment, ((LangString) entity.getOther().getFirst().getValue()).getValue());
+    assertEquals(comment, ((String) entity.getOther().getFirst().getValue()));
   }
 
   @Test
