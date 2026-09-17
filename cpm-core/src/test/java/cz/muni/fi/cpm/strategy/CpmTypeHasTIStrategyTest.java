@@ -135,7 +135,7 @@ class CpmTypeHasTIStrategyTest {
   }
 
   @Test
-  public void belongsToTraversalInformation_withCpmType_identifier_returnsTrue() {
+  public void belongsToTraversalInformation_withCpmType_identifier_returnsFalse() {
     QualifiedName id = pF.newQualifiedName("uri", "entity", "ex");
 
     Element element = pF.newEntity(id, Collections.emptyList());
@@ -143,7 +143,7 @@ class CpmTypeHasTIStrategyTest {
 
     INode node = cF.newNode(element);
 
-    assertTrue(strategy.belongsToTraversalInformation(node));
+    assertFalse(strategy.belongsToTraversalInformation(node));
   }
 
   @Test
