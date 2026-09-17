@@ -54,6 +54,18 @@
         "hash": "abc123def456"
       },
       "hashAlg": "SHA256",
+      "attributes": {
+        "prov:value": 5,
+        "prov:location": "Brno",
+        "prov:type": {
+          "type": "prov:QUALIFIED_NAME",
+          "$": "schema:Permit"
+        },
+        "ex:attrs": {
+          "$": "Y29udGBudCBoZXJl",
+          "type": "xsd:base64Binary"
+        }
+      },
       "derivedFrom": [
         "ex:origin1",
         "ex:origin2"
@@ -68,6 +80,13 @@
     {
       "id": "ex:forwardConnector1",
       "externalId": "externalId1",
+      "attributes": {
+        "prov:value": "output",
+        "ex:attrs": {
+          "$": "Y29udGBudCBoZXJlefdls",
+          "type": "xsd:base64Binary"
+        }
+      },
       "derivedFrom": [
         "ex:backConnector1"
       ]
@@ -90,6 +109,13 @@
       },
       "hashAlg": "SHA512",
       "provenanceServiceUri": "http://provenance.service.org",
+      "attributes": {
+        "prov:value": true,
+        "ex:attrs": {
+          "$": "ex:value",
+          "type": "prov:QUALIFIED_NAME"
+        }
+      },
       "attributedTo": {
         "id": "ex:attribution",
         "agentId": "ex:agent2"
