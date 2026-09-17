@@ -36,6 +36,7 @@ public class CpmTypeHasTIStrategy implements ITIStrategy {
         .map(QualifiedName.class::cast)
         .filter(qN -> CpmUtilities.belongsToCpmNs(qN)
             && CpmType.STRING_VALUES.contains(qN.getLocalPart()))
+        .filter(qN -> !qN.getLocalPart().equals(CpmType.IDENTIFIER.toString()))
         .toList();
 
     return cpmTypes.isEmpty()
@@ -45,7 +46,7 @@ public class CpmTypeHasTIStrategy implements ITIStrategy {
             : cpmTypes.stream()
                 .reduce(true,
                     (acc, i) -> acc && CpmType.AGENTS.contains(i.getLocalPart()),
-                    (x, y) -> x && y);
+                    Boolean::logicalAnd);
 
   }
 }
