@@ -87,13 +87,6 @@
     "startTime" : "2021-01-01",
     "type" : [ "schema:Action" ]
   }, {
-    "@type" : "Association",
-    "agent" : "orcid:0000-0001-0001-0002",
-    "activity" : "_:FlowCamSpeciesIdentification",
-    "role" : [ {
-      "@value" : "lab technician"
-    } ]
-  }, {
     "@type" : "Usage",
     "entity" : "_:VisualSpreadsheet_FlowCam",
     "activity" : "_:FlowCamSpeciesIdentification"
@@ -101,6 +94,13 @@
     "@type" : "Usage",
     "entity" : "_:classification_QC",
     "activity" : "_:FlowCamSpeciesIdentification"
+  }, {
+    "@type" : "Association",
+    "agent" : "orcid:0000-0001-0001-0002",
+    "activity" : "_:FlowCamSpeciesIdentification",
+    "role" : [ {
+      "@value" : "lab technician"
+    } ]
   }, {
     "@type" : "Entity",
     "schema:description" : [ {

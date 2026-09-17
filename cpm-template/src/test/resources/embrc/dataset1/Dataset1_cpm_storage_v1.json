@@ -29,7 +29,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:ProcessingBundle_V0_meta"
           },
-          "cpm:referencedBundleHashValue" : "faf356e15c51167f122efc942c50deb31cbc3adc315cd190589d362443c4a411",
+          "cpm:referencedBundleHashValue" : "9826ddb0e5f97cb0b175e511023ce28a85b443105422b6b955d1585300bbfc20",
           "cpm:referencedBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:ProcessingBundle_V0"
@@ -131,7 +131,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:DnaSequencingBundle_V0_meta"
           },
-          "cpm:referencedBundleHashValue" : "6080350311b702e0e3d32223e641f13a0aefeac7b1b89266fe8d204367978a7d",
+          "cpm:referencedBundleHashValue" : "feac375cf01853b8545a5375cc10e56ac7ad2f994e1738d4f44a8deca6748740",
           "cpm:referencedBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:DnaSequencingBundle_V0"
@@ -273,7 +273,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:SpeciesIdentificationBundle_V0_meta"
           },
-          "cpm:referencedBundleHashValue" : "539b9299c472184ce765f2906352a55554c14498f61721479930d5cb015be5bd",
+          "cpm:referencedBundleHashValue" : "d0ebac27a252651a4f799bf67e69437b83ab9f765f9521acaed98f80712105ee",
           "cpm:referencedBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:SpeciesIdentificationBundle_V0"

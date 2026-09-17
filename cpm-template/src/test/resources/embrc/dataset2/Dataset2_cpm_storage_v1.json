@@ -27,7 +27,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:SpeciesIdentificationBundle_V0_meta"
           },
-          "cpm:referencedBundleHashValue" : "539b9299c472184ce765f2906352a55554c14498f61721479930d5cb015be5bd",
+          "cpm:referencedBundleHashValue" : "d0ebac27a252651a4f799bf67e69437b83ab9f765f9521acaed98f80712105ee",
           "cpm:referencedBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:SpeciesIdentificationBundle_V0"
@@ -53,7 +53,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:SamplingBundle_V0_meta"
           },
-          "cpm:referencedBundleHashValue" : "dc76720f4a8a8dba16782a01aa083afcd1bf1f6907fc93983f471b5455283888",
+          "cpm:referencedBundleHashValue" : "e20e387ac2b050181e90e034677f7354665818933102daaa371642e9faedefb5",
           "cpm:referencedBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:SamplingBundle_V0"
