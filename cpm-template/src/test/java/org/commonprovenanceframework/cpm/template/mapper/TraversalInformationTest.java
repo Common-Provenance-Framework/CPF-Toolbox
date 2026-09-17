@@ -1,0 +1,284 @@
+package org.commonprovenanceframework.cpm.template.mapper;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.openprovenance.prov.model.Activity;
+import org.openprovenance.prov.model.Document;
+import org.openprovenance.prov.model.ProvFactory;
+import org.openprovenance.prov.model.QualifiedName;
+import org.openprovenance.prov.model.StatementOrBundle.Kind;
+
+import org.commonprovenanceframework.cpm.constants.CpmType;
+import org.commonprovenanceframework.cpm.divided.ordered.CpmOrderedFactory;
+import org.commonprovenanceframework.cpm.merged.CpmMergedFactory;
+import org.commonprovenanceframework.cpm.model.CpmDocument;
+import org.commonprovenanceframework.cpm.model.CpmUtilities;
+import org.commonprovenanceframework.cpm.model.INode;
+import org.commonprovenanceframework.cpm.template.schema.BackwardConnector;
+import org.commonprovenanceframework.cpm.template.schema.ConnectorAttributed;
+import org.commonprovenanceframework.cpm.template.schema.CurrentAgent;
+import org.commonprovenanceframework.cpm.template.schema.ForwardConnector;
+import org.commonprovenanceframework.cpm.template.schema.MainActivity;
+import org.commonprovenanceframework.cpm.template.schema.MainActivityUsed;
+import org.commonprovenanceframework.cpm.template.schema.ReceiverAgent;
+import org.commonprovenanceframework.cpm.template.schema.SenderAgent;
+import org.commonprovenanceframework.cpm.template.schema.SpecForwardConnector;
+import org.commonprovenanceframework.cpm.template.schema.TraversalInformation;
+import org.commonprovenanceframework.cpm.vanilla.CpmProvFactory;
+
+public class TraversalInformationTest {
+
+  private DatatypeFactory datatypeFactory;
+  private ProvFactory pF;
+  private CpmProvFactory cpmProvFactory;
+
+  private TemplateProvMapper mapper;
+  private TemplateProvMapper mergedMapper;
+
+  @BeforeEach
+  public void setUp() throws Exception {
+    datatypeFactory = DatatypeFactory.newInstance();
+    cpmProvFactory = new CpmProvFactory();
+    pF = cpmProvFactory.getProvFactory();
+
+    mapper = new TemplateProvMapper(cpmProvFactory);
+    mergedMapper = new TemplateProvMapper(cpmProvFactory, true);
+  }
+
+  @Test
+  public void toDocument_null_returnsNull() {
+    assertNull(mapper.toProvDocument((TraversalInformation) null));
+  }
+
+  @Test
+  public void toDocument_emptyTI_returnsNull() {
+    assertThrows(IllegalArgumentException.class,
+        () -> mapper.toProvDocument(new TraversalInformation()));
+  }
+
+  @Test
+  public void toDocument_basicTI_returnsDocument() {
+    TraversalInformation ti = new TraversalInformation();
+
+    ti.setPrefixes(Map.of("ex", "www.example.com/"));
+    ti.setBundleName(ti.getNamespace().qualifiedName("ex", "bundle1", pF));
+
+    QualifiedName mAID = ti.getNamespace().qualifiedName("ex", "activity1", pF);
+    MainActivity mA = new MainActivity(mAID);
+    XMLGregorianCalendar startTime = datatypeFactory.newXMLGregorianCalendar("2011-11-16T16:05:00");
+    mA.setStartTime(startTime);
+    XMLGregorianCalendar endTime = datatypeFactory.newXMLGregorianCalendar("2011-11-16T18:05:00");
+    mA.setEndTime(endTime);
+    ti.setMainActivity(mA);
+
+    QualifiedName bcID = ti.getNamespace().qualifiedName("ex", "backConnector1", pF);
+    BackwardConnector bC = new BackwardConnector(bcID);
+    ti.getBackwardConnectors().add(bC);
+
+    MainActivityUsed used = new MainActivityUsed(bcID);
+    mA.setUsed(List.of(used));
+
+    QualifiedName fcID = ti.getNamespace().qualifiedName("ex", "forwardConnector1", pF);
+    mA.setGenerated(List.of(fcID));
+
+    ForwardConnector fC = new ForwardConnector(fcID);
+    fC.setDerivedFrom(List.of(bC.getId()));
+    ti.getForwardConnectors().add(fC);
+
+    QualifiedName specFcID = ti.getNamespace().qualifiedName("ex", "specForwardConnector1", pF);
+    SpecForwardConnector specFC = new SpecForwardConnector(specFcID);
+    specFC.setSpecializationOf(fcID);
+
+    ti.getSpecForwardConnectors().add(specFC);
+
+    Document doc = mapper.toProvDocument(ti);
+
+    assertNotNull(doc);
+    CpmDocument cpmDoc = new CpmDocument(doc, pF, cpmProvFactory, new CpmMergedFactory(pF));
+    assertEquals(ti.getBundleName(), cpmDoc.getBundleId());
+
+    INode mANode = cpmDoc.getMainActivity();
+    assertNotNull(mANode);
+    assertEquals(mAID, mANode.getId());
+    assertEquals(Kind.PROV_ACTIVITY, mANode.getKind());
+    assertEquals(startTime, ((Activity) mANode.getAnyElement()).getStartTime());
+    assertEquals(endTime, ((Activity) mANode.getAnyElement()).getEndTime());
+
+    assertEquals(1, cpmDoc.getBackwardConnectors().size());
+    assertEquals(bcID, cpmDoc.getBackwardConnectors().getFirst().getId());
+
+    assertEquals(1, cpmDoc.getForwardConnectors().size());
+    assertEquals(fcID, cpmDoc.getForwardConnectors().getFirst().getId());
+    assertNotNull(cpmDoc.getEdge(fcID, bcID, Kind.PROV_DERIVATION));
+
+    assertEquals(1, cpmDoc.getSpecForwardConnectors().size());
+    assertEquals(specFcID, cpmDoc.getSpecForwardConnectors().getFirst().getId());
+    assertNotNull(cpmDoc.getEdge(specFcID, fcID, Kind.PROV_SPECIALIZATION));
+  }
+
+  @Test
+  public void toDocument_mergeAgents_returnsDocument() {
+    TraversalInformation ti = new TraversalInformation();
+
+    ti.setPrefixes(Map.of("ex", "www.example.com/"));
+    ti.setBundleName(ti.getNamespace().qualifiedName("ex", "bundle1", pF));
+
+    QualifiedName agentID = ti.getNamespace().qualifiedName("ex", "agent", pF);
+
+    SenderAgent stationSenderAg = new SenderAgent(agentID);
+    ti.setSenderAgents(List.of(stationSenderAg));
+
+    ReceiverAgent stationAg = new ReceiverAgent(agentID);
+    ti.setReceiverAgents(List.of(stationAg));
+
+    Document doc = mergedMapper.toProvDocument(ti);
+
+    assertNotNull(doc);
+    CpmDocument cpmDoc = new CpmDocument(doc, pF, cpmProvFactory, new CpmOrderedFactory(pF));
+
+    INode agentNode = cpmDoc.getNode(agentID, Kind.PROV_AGENT);
+    assertNotNull(agentNode);
+    assertEquals(1, agentNode.getElements().size());
+    assertTrue(CpmUtilities.hasCpmType(agentNode, CpmType.SENDER_AGENT));
+    assertTrue(CpmUtilities.hasCpmType(agentNode, CpmType.RECEIVER_AGENT));
+  }
+
+  @Test
+  public void toDocument_currentAgent_returnsDocument() {
+    TraversalInformation ti = new TraversalInformation();
+
+    ti.setPrefixes(Map.of("ex", "www.example.com/"));
+    ti.setBundleName(ti.getNamespace().qualifiedName("ex", "bundle1", pF));
+
+    QualifiedName agentID = ti.getNamespace().qualifiedName("ex", "controller", pF);
+    QualifiedName activityID = ti.getNamespace().qualifiedName("ex", "mainActivity", pF);
+
+    MainActivity mainActivity = new MainActivity(activityID);
+    mainActivity.setAssociatedWith(new ConnectorAttributed(agentID));
+    ti.setMainActivity(mainActivity);
+    ti.setCurrentAgent(new CurrentAgent(agentID, "contact003"));
+
+    Document doc = mapper.toProvDocument(ti);
+
+    assertNotNull(doc);
+    CpmDocument cpmDoc = new CpmDocument(doc, pF, cpmProvFactory, new CpmOrderedFactory(pF));
+
+    INode agentNode = cpmDoc.getNode(agentID, Kind.PROV_AGENT);
+    assertNotNull(agentNode);
+    assertTrue(CpmUtilities.hasCpmType(agentNode, CpmType.CURRENT_AGENT));
+
+    assertNotNull(cpmDoc.getEdge(activityID, agentID, Kind.PROV_ASSOCIATION));
+  }
+
+  @Test
+  public void toDocument_mergeCurrentAndSenderAgent_returnsDocument() {
+    TraversalInformation ti = new TraversalInformation();
+
+    ti.setPrefixes(Map.of("ex", "www.example.com/"));
+    ti.setBundleName(ti.getNamespace().qualifiedName("ex", "bundle1", pF));
+
+    QualifiedName agentID = ti.getNamespace().qualifiedName("ex", "agent", pF);
+
+    ti.setSenderAgents(List.of(new SenderAgent(agentID)));
+    ti.setCurrentAgent(new CurrentAgent(agentID));
+
+    Document doc = mergedMapper.toProvDocument(ti);
+
+    assertNotNull(doc);
+    CpmDocument cpmDoc = new CpmDocument(doc, pF, cpmProvFactory, new CpmOrderedFactory(pF));
+
+    INode agentNode = cpmDoc.getNode(agentID, Kind.PROV_AGENT);
+    assertNotNull(agentNode);
+    assertEquals(1, agentNode.getElements().size());
+    assertTrue(CpmUtilities.hasCpmType(agentNode, CpmType.CURRENT_AGENT));
+    assertTrue(CpmUtilities.hasCpmType(agentNode, CpmType.SENDER_AGENT));
+  }
+
+  @Test
+  public void toDocument_mergeAllAgentRoles_returnsDocument() {
+    TraversalInformation ti = new TraversalInformation();
+
+    ti.setPrefixes(Map.of("ex", "www.example.com/"));
+    ti.setBundleName(ti.getNamespace().qualifiedName("ex", "bundle1", pF));
+
+    QualifiedName agentID = ti.getNamespace().qualifiedName("ex", "agent", pF);
+
+    ti.setSenderAgents(List.of(new SenderAgent(agentID)));
+    ti.setReceiverAgents(List.of(new ReceiverAgent(agentID)));
+    ti.setCurrentAgent(new CurrentAgent(agentID, "contact003"));
+
+    Document doc = mergedMapper.toProvDocument(ti);
+
+    assertNotNull(doc);
+    CpmDocument cpmDoc = new CpmDocument(doc, pF, cpmProvFactory, new CpmOrderedFactory(pF));
+
+    INode agentNode = cpmDoc.getNode(agentID, Kind.PROV_AGENT);
+    assertNotNull(agentNode);
+    assertEquals(1, agentNode.getElements().size());
+    assertTrue(CpmUtilities.hasValidCpmType(agentNode));
+    assertTrue(CpmUtilities.hasCpmType(agentNode, CpmType.CURRENT_AGENT));
+    assertTrue(CpmUtilities.hasCpmType(agentNode, CpmType.SENDER_AGENT));
+    assertTrue(CpmUtilities.hasCpmType(agentNode, CpmType.RECEIVER_AGENT));
+  }
+
+  @Test
+  public void toDocument_separateCurrentAgent_returnsDocument() {
+    TraversalInformation ti = new TraversalInformation();
+
+    ti.setPrefixes(Map.of("ex", "www.example.com/"));
+    ti.setBundleName(ti.getNamespace().qualifiedName("ex", "bundle1", pF));
+
+    QualifiedName agentID = ti.getNamespace().qualifiedName("ex", "agent", pF);
+
+    ti.setSenderAgents(List.of(new SenderAgent(agentID)));
+    ti.setCurrentAgent(new CurrentAgent(agentID));
+
+    Document doc = mapper.toProvDocument(ti);
+
+    assertNotNull(doc);
+    CpmDocument cpmDoc = new CpmDocument(doc, pF, cpmProvFactory, new CpmOrderedFactory(pF));
+
+    INode agentNode = cpmDoc.getNode(agentID, Kind.PROV_AGENT);
+    assertNotNull(agentNode);
+    assertEquals(2, agentNode.getElements().size());
+  }
+
+  @Test
+  public void toDocument_separateAgents_returnsDocument() {
+    TraversalInformation ti = new TraversalInformation();
+
+    ti.setPrefixes(Map.of("ex", "www.example.com/"));
+    ti.setBundleName(ti.getNamespace().qualifiedName("ex", "bundle1", pF));
+
+    QualifiedName agentID = ti.getNamespace().qualifiedName("ex", "agent", pF);
+
+    SenderAgent stationSenderAg = new SenderAgent(agentID);
+    ti.setSenderAgents(List.of(stationSenderAg));
+
+    ReceiverAgent stationAg = new ReceiverAgent(agentID);
+    ti.setReceiverAgents(List.of(stationAg));
+
+    Document doc = mapper.toProvDocument(ti);
+
+    assertNotNull(doc);
+    CpmDocument cpmDoc = new CpmDocument(doc, pF, cpmProvFactory, new CpmOrderedFactory(pF));
+
+    INode agentNode = cpmDoc.getNode(agentID, Kind.PROV_AGENT);
+    assertNotNull(agentNode);
+    assertEquals(2, agentNode.getElements().size());
+    assertTrue(CpmUtilities.hasCpmType(agentNode, CpmType.SENDER_AGENT));
+    assertTrue(CpmUtilities.hasCpmType(agentNode, CpmType.RECEIVER_AGENT));
+  }
+}

@@ -36,7 +36,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:SamplingBundle_V0_meta"
           },
-          "cpm:referencedBundleHashValue" : "dc76720f4a8a8dba16782a01aa083afcd1bf1f6907fc93983f471b5455283888",
+          "cpm:referencedBundleHashValue" : "e20e387ac2b050181e90e034677f7354665818933102daaa371642e9faedefb5",
           "cpm:referencedBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:SamplingBundle_V0"
@@ -72,7 +72,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:ProcessingBundle_V0_meta"
           },
-          "cpm:referencedBundleHashValue" : "faf356e15c51167f122efc942c50deb31cbc3adc315cd190589d362443c4a411",
+          "cpm:referencedBundleHashValue" : "9826ddb0e5f97cb0b175e511023ce28a85b443105422b6b955d1585300bbfc20",
           "cpm:referencedBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:ProcessingBundle_V0"

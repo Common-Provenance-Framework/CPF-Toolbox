@@ -399,17 +399,6 @@
     "@id" : "gen:8fefd86e6fd2acc15cd4db7a2ecff042dcde5d323d208c85e7434630d0342588",
     "type" : [ "schema:Organization" ]
   }, {
-    "@type" : "Association",
-    "agent" : "orcid:0000-0001-0001-0001",
-    "activity" : "gen:190fd43b1968737f3501420a6bfd9b74873e32416c6e14fef26238fbe3b197a2",
-    "role" : [ {
-      "@value" : "field and laboratory technician"
-    } ]
-  }, {
-    "@type" : "Generation",
-    "activity" : "gen:190fd43b1968737f3501420a6bfd9b74873e32416c6e14fef26238fbe3b197a2",
-    "entity" : "_:BigProject_belgium_water_10m"
-  }, {
     "@type" : "Usage",
     "entity" : "_:BigProject_WaterSamples",
     "activity" : "gen:190fd43b1968737f3501420a6bfd9b74873e32416c6e14fef26238fbe3b197a2"
@@ -418,15 +407,23 @@
     "entity" : "_:ABSPermit_ircc2345678",
     "activity" : "gen:190fd43b1968737f3501420a6bfd9b74873e32416c6e14fef26238fbe3b197a2"
   }, {
-    "@id" : "_:BigHappyOrganization_rosette#1",
-    "@type" : "Entity"
+    "@type" : "Generation",
+    "activity" : "gen:190fd43b1968737f3501420a6bfd9b74873e32416c6e14fef26238fbe3b197a2",
+    "entity" : "_:BigProject_belgium_water_10m"
   }, {
     "@type" : "Association",
     "agent" : "orcid:0000-0001-0001-0001",
-    "activity" : "gen:36294ecf35d15ba81da0bb55dfd8ee07934568e28ec56a51774b3e331ed6fd99",
+    "activity" : "gen:190fd43b1968737f3501420a6bfd9b74873e32416c6e14fef26238fbe3b197a2",
     "role" : [ {
       "@value" : "field and laboratory technician"
     } ]
+  }, {
+    "@id" : "_:BigHappyOrganization_rosette#1",
+    "@type" : "Entity"
+  }, {
+    "@type" : "Usage",
+    "entity" : "_:CTD_standard_procedure_2",
+    "activity" : "gen:36294ecf35d15ba81da0bb55dfd8ee07934568e28ec56a51774b3e331ed6fd99"
   }, {
     "@type" : "Entity",
     "sosa:hasFeatureOfInterest" : [ {
@@ -450,13 +447,9 @@
     "activity" : "gen:36294ecf35d15ba81da0bb55dfd8ee07934568e28ec56a51774b3e331ed6fd99",
     "entity" : "gen:4a86c49fc31d3ba9b8a8e3c961dc7d1ef6cb59769f75fbd2b92aa36ef71b1fa2"
   }, {
-    "@type" : "Usage",
-    "entity" : "_:CTD_standard_procedure_2",
-    "activity" : "gen:36294ecf35d15ba81da0bb55dfd8ee07934568e28ec56a51774b3e331ed6fd99"
-  }, {
     "@type" : "Association",
-    "agent" : "orcid:0000-0001-0001-0002",
-    "activity" : "gen:324df37d2e503522d56f379d8856e4d14599331df280bf0d011fe3060871261a",
+    "agent" : "orcid:0000-0001-0001-0001",
+    "activity" : "gen:36294ecf35d15ba81da0bb55dfd8ee07934568e28ec56a51774b3e331ed6fd99",
     "role" : [ {
       "@value" : "field and laboratory technician"
     } ]
@@ -479,6 +472,13 @@
     "entity" : "gen:42936f9ee985b4cd422796235fa7d454c24693f07b97b65b2478f8df1ea6f5b2",
     "activity" : "gen:324df37d2e503522d56f379d8856e4d14599331df280bf0d011fe3060871261a"
   }, {
+    "@type" : "Association",
+    "agent" : "orcid:0000-0001-0001-0002",
+    "activity" : "gen:324df37d2e503522d56f379d8856e4d14599331df280bf0d011fe3060871261a",
+    "role" : [ {
+      "@value" : "field and laboratory technician"
+    } ]
+  }, {
     "@type" : "Usage",
     "entity" : "_:BigProject_belgium_water_10m",
     "activity" : "gen:324df37d2e503522d56f379d8856e4d14599331df280bf0d011fe3060871261a"
@@ -498,13 +498,6 @@
     "@id" : "gen:7d38ee5a6e0fc3fc67a78988647227bc0f07befb48f8101e78f726fb0c31ec64",
     "type" : [ "schema:Place", "prov:Location" ]
   }, {
-    "@type" : "Association",
-    "agent" : "orcid:0000-0001-0001-0002",
-    "activity" : "gen:fd7e5c8ca79a78538b324f8426a3a6c48fdb58a0a3e2718e185455205b48d7e2",
-    "role" : [ {
-      "@value" : "field and laboratory technician"
-    } ]
-  }, {
     "@type" : "Usage",
     "entity" : "_:BigProject_eDNAfiltering",
     "activity" : "gen:fd7e5c8ca79a78538b324f8426a3a6c48fdb58a0a3e2718e185455205b48d7e2"
@@ -523,6 +516,13 @@
     "entity" : "gen:92b8f2fa96e3b102c47d14fabec8e2a3ded5d27b5996e5a6967c8e39b062b9f5",
     "activity" : "gen:fd7e5c8ca79a78538b324f8426a3a6c48fdb58a0a3e2718e185455205b48d7e2"
   }, {
+    "@type" : "Association",
+    "agent" : "orcid:0000-0001-0001-0002",
+    "activity" : "gen:fd7e5c8ca79a78538b324f8426a3a6c48fdb58a0a3e2718e185455205b48d7e2",
+    "role" : [ {
+      "@value" : "field and laboratory technician"
+    } ]
+  }, {
     "@type" : "Usage",
     "entity" : "_:BigProject_belgium_water_10m_1000um_r2",
     "activity" : "gen:fd7e5c8ca79a78538b324f8426a3a6c48fdb58a0a3e2718e185455205b48d7e2"
@@ -530,6 +530,10 @@
     "@type" : "Generation",
     "activity" : "gen:fd7e5c8ca79a78538b324f8426a3a6c48fdb58a0a3e2718e185455205b48d7e2",
     "entity" : "_:BigProject_belgium_water_10m_1000um_r2_3um"
+  }, {
+    "@type" : "Usage",
+    "entity" : "_:Johnson_Fridge_type_XYZ",
+    "activity" : "gen:09a6f65fe087c3806631e8926fa3cae8e049cfdfa2b0b63fe6de04bc88144e80"
   }, {
     "@type" : "Association",
     "agent" : "orcid:0000-0001-0001-0002",
@@ -539,12 +543,12 @@
     } ]
   }, {
     "@type" : "Usage",
-    "entity" : "_:Johnson_Fridge_type_XYZ",
+    "entity" : "_:BigProject_belgium_water_10m_1000um_r1",
     "activity" : "gen:09a6f65fe087c3806631e8926fa3cae8e049cfdfa2b0b63fe6de04bc88144e80"
   }, {
     "@type" : "Usage",
-    "entity" : "_:BigProject_belgium_water_10m_1000um_r1",
-    "activity" : "gen:09a6f65fe087c3806631e8926fa3cae8e049cfdfa2b0b63fe6de04bc88144e80"
+    "entity" : "_:Johnson_Freezer_type_XYZ",
+    "activity" : "gen:67c557a442ca2446b987928fb47c4bbbd59c54395e61f01949d76c06e0106925"
   }, {
     "@type" : "Association",
     "agent" : "orcid:0000-0001-0001-0002",
@@ -552,10 +556,6 @@
     "role" : [ {
       "@value" : "field and laboratory technician"
     } ]
-  }, {
-    "@type" : "Usage",
-    "entity" : "_:Johnson_Freezer_type_XYZ",
-    "activity" : "gen:67c557a442ca2446b987928fb47c4bbbd59c54395e61f01949d76c06e0106925"
   }, {
     "@type" : "Usage",
     "entity" : "_:BigProject_belgium_water_10m_1000um_r2_3um",

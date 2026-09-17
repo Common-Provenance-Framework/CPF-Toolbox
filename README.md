@@ -37,12 +37,12 @@ After installation, add these dependencies to your `pom.xml`:
 ```xml
 <!-- CPF Toolbox (installed locally by `mvn install`) -->
 <dependency>
-    <groupId>cz.muni.fi.cpm</groupId>
+    <groupId>org.commonprovenanceframework</groupId>
     <artifactId>cpm-core</artifactId>
     <version>2.4.0</version>
 </dependency>
 <dependency>
-    <groupId>cz.muni.fi.cpm</groupId>
+    <groupId>org.commonprovenanceframework</groupId>
     <artifactId>cpm-template</artifactId>
     <version>2.4.0</version>
 </dependency>
@@ -73,7 +73,7 @@ After installation, add these dependencies to your `pom.xml`:
 
 ```java
 // Step 1 — deserialize traversal backbone
-import cz.muni.fi.cpm.template.deserialization.TraversalInformationDeserializer;
+import org.commonprovenanceframework.cpm.template.deserialization.TraversalInformationDeserializer;
 import org.openprovenance.prov.model.Document;
 import org.openprovenance.prov.model.Bundle;
 
@@ -737,7 +737,7 @@ After Step 1 produces the traversal backbone, the code below adds five domain en
 import org.openprovenance.prov.model.*;
 import org.openprovenance.prov.vanilla.ProvFactory;
 import org.openprovenance.prov.interop.InteropFramework;
-import cz.muni.fi.cpm.template.deserialization.TraversalInformationDeserializer;
+import org.commonprovenanceframework.cpm.template.deserialization.TraversalInformationDeserializer;
 import java.util.Arrays;
 
 // Step 1: generate traversal backbone
