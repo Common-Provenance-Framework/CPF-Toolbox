@@ -18,23 +18,23 @@
     "storage:ProcessingBundle_V1" : {
       "entity" : {
         "blank:ProcessedSampleConSpec" : {
-          "cpm:hashAlg" : [ "SHA256" ],
-          "prov:type" : [ {
+          "cpm:hashAlg" : "SHA256",
+          "prov:type" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "cpm:specForwardConnector"
-          } ],
-          "cpm:referencedMetaBundleId" : [ {
+          },
+          "cpm:referencedMetaBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:SpeciesIdentificationBundle_V0_meta"
-          } ],
-          "cpm:referencedBundleHashValue" : [ "4ca9b4672f26f9c0fde6af0eae27e8d9675c8fc8ce85934ef119d284ac4638d0" ],
-          "cpm:referencedBundleId" : [ {
+          },
+          "cpm:referencedBundleHashValue" : "539b9299c472184ce765f2906352a55554c14498f61721479930d5cb015be5bd",
+          "cpm:referencedBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:SpeciesIdentificationBundle_V0"
-          } ]
+          }
         },
         "gen:5017bc3edda5006a4c29737b48585fefdfd4ef740bed03ab10730ec86e4153d7" : {
-          "schema:description" : [ "the first set of images taken by the flowcam are stored in /Users/NMSlab/flowcam/20210101/BigProject/raw" ],
+          "schema:description" : "the first set of images taken by the flowcam are stored in /Users/NMSlab/flowcam/20210101/BigProject/raw",
           "prov:type" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "schema:Dataset"
@@ -44,32 +44,32 @@
           } ]
         },
         "blank:StoredSampleCon_r1" : {
-          "cpm:hashAlg" : [ "SHA256" ],
-          "prov:type" : [ {
+          "cpm:hashAlg" : "SHA256",
+          "prov:type" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "cpm:backwardConnector"
-          } ],
-          "cpm:referencedMetaBundleId" : [ {
+          },
+          "cpm:referencedMetaBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:SamplingBundle_V0_meta"
-          } ],
-          "cpm:referencedBundleHashValue" : [ "d637bb8e75757ccf052369044c96bee95a6b2da9652ea5efb18a08f588e8435a" ],
-          "cpm:referencedBundleId" : [ {
+          },
+          "cpm:referencedBundleHashValue" : "dc76720f4a8a8dba16782a01aa083afcd1bf1f6907fc93983f471b5455283888",
+          "cpm:referencedBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "storage:SamplingBundle_V0"
-          } ]
+          }
         },
         "obolibrary:ENVO_00002150" : {
-          "schema:name" : [ "coastal sea water" ],
-          "prov:type" : [ {
+          "schema:name" : "coastal sea water",
+          "prov:type" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "schema:DefinedTerm"
-          } ],
-          "schema:termCode" : [ "ENVO_00002150" ]
+          },
+          "schema:termCode" : "ENVO_00002150"
         },
         "gen:a237c6fdc6c44c8dcda8bd87bd58b4690dcf34a0cc5732a1636bb1183f448575" : {
-          "schema:name" : [ "Nice Marine Station" ],
-          "schema:address" : [ "NiceMarineStation Rd, Ostend, Belgium" ],
+          "schema:name" : "Nice Marine Station",
+          "schema:address" : "NiceMarineStation Rd, Ostend, Belgium",
           "prov:type" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "schema:Place"
@@ -79,9 +79,9 @@
           } ]
         },
         "blank:FlowCam_seawater_sop" : {
-          "schema:name" : [ "FlowCam_seawater_sop" ],
-          "schema:accessibilitySummary" : [ "see file FlowCam_seawaterSOP.pdf which is part of this data package" ],
-          "schema:description" : [ "Instructions for using FlowCam with seawater, including camera settings" ],
+          "schema:name" : "FlowCam_seawater_sop",
+          "schema:accessibilitySummary" : "see file FlowCam_seawaterSOP.pdf which is part of this data package",
+          "schema:description" : "Instructions for using FlowCam with seawater, including camera settings",
           "prov:type" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "schema:Thing"
@@ -91,7 +91,7 @@
           } ]
         },
         "blank:BigProject_belgium_water_10m_1000um_r1" : {
-          "schema:name" : [ "BigProject_belgium_water_10m_1000um_r1" ],
+          "schema:name" : "BigProject_belgium_water_10m_1000um_r1",
           "schema:keywords" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "obolibrary:ENVO_00002150"
@@ -99,7 +99,7 @@
             "type" : "prov:QUALIFIED_NAME",
             "$" : "blank:NCBI_txid1874687"
           } ],
-          "schema:description" : [ "Water sample collected from 10m depth and filtered at 1000um" ],
+          "schema:description" : "Water sample collected from 10m depth and filtered at 1000um",
           "prov:type" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "sosa:Sample"
@@ -109,33 +109,33 @@
           } ]
         },
         "blank:NMS_flowcam_2010" : {
-          "schema:name" : [ "FlowCam Micro from CoolLabInstruments Corp., 2010" ],
-          "schema:identifier" : [ "NMS_flowcam_2010" ],
-          "dct:type" : [ "https://vocab.nerc.ac.uk/collection/L05/current/LAB27" ],
-          "schema:description" : [ "see file flowcam-settings.txt for software and hardware settings" ],
-          "prov:type" : [ {
+          "schema:name" : "FlowCam Micro from CoolLabInstruments Corp., 2010",
+          "schema:identifier" : "NMS_flowcam_2010",
+          "dct:type" : "https://vocab.nerc.ac.uk/collection/L05/current/LAB27",
+          "schema:description" : "see file flowcam-settings.txt for software and hardware settings",
+          "prov:type" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "schema:Thing"
-          } ]
+          }
         },
         "blank:ProcessedSampleCon" : {
-          "prov:type" : [ {
+          "prov:type" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "cpm:forwardConnector"
-          } ]
+          }
         },
         "blank:NCBI_txid1874687" : {
-          "schema:name" : [ "marine plaknton metagenome" ],
-          "prov:type" : [ {
+          "schema:name" : "marine plaknton metagenome",
+          "prov:type" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "schema:DefinedTerm"
-          } ],
-          "schema:termCode" : [ "NCBI:txid1874687" ]
+          },
+          "schema:termCode" : "NCBI:txid1874687"
         },
         "blank:VisualSpreadsheet_FlowCam" : {
-          "schema:name" : [ "VisualSpreadsheet FlowCam Micro software" ],
-          "schema:accessibilitySummary" : [ "see file flowcam-settings.txt which is part of the data package" ],
-          "schema:description" : [ "The software that comes with this FlowCam, bought in 2010" ],
+          "schema:name" : "VisualSpreadsheet FlowCam Micro software",
+          "schema:accessibilitySummary" : "see file flowcam-settings.txt which is part of the data package",
+          "schema:description" : "The software that comes with this FlowCam, bought in 2010",
           "prov:type" : [ {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "schema:SoftwareApplication"
@@ -147,30 +147,30 @@
       },
       "activity" : {
         "blank:Processing" : {
-          "dct:hasPart" : [ {
+          "dct:hasPart" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "blank:MaterialProcessing"
-          } ],
-          "prov:type" : [ {
+          },
+          "prov:type" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "cpm:mainActivity"
-          } ],
-          "cpm:referencedMetaBundleId" : [ {
+          },
+          "cpm:referencedMetaBundleId" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "meta:ProcessingBundle_V0_meta"
-          } ]
+          }
         },
         "blank:MaterialProcessing" : {
           "prov:startTime" : "2021-01-01T00:00:00.000+01:00",
           "prov:endTime" : "2021-01-01T00:00:00.000+01:00",
-          "prov:location" : [ "gen:a237c6fdc6c44c8dcda8bd87bd58b4690dcf34a0cc5732a1636bb1183f448575" ],
-          "schema:result" : [ "gen:5017bc3edda5006a4c29737b48585fefdfd4ef740bed03ab10730ec86e4153d7" ],
-          "dct:type" : [ "Material Processing; FlowCam imaging" ],
-          "prov:type" : [ {
+          "prov:location" : "gen:a237c6fdc6c44c8dcda8bd87bd58b4690dcf34a0cc5732a1636bb1183f448575",
+          "schema:result" : "gen:5017bc3edda5006a4c29737b48585fefdfd4ef740bed03ab10730ec86e4153d7",
+          "dct:type" : "Material Processing; FlowCam imaging",
+          "prov:type" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "schema:Action"
-          } ],
-          "schema:object" : [ "blank:BigProject_belgium_water_10m_1000um_r1" ]
+          },
+          "schema:object" : "blank:BigProject_belgium_water_10m_1000um_r1"
         }
       },
       "agent" : {
@@ -184,24 +184,24 @@
           } ]
         },
         "seadatanet:00000" : {
-          "schema:name" : [ "Nice Marine Station" ],
-          "schema:email" : [ "info@nicemarinestation.eu" ],
-          "schema:identifier" : [ "seadatanet:00000" ],
-          "schema:mainEntityOfPage" : [ "https://NiceMarineStation.eu" ],
-          "prov:type" : [ {
+          "schema:name" : "Nice Marine Station",
+          "schema:email" : "info@nicemarinestation.eu",
+          "schema:identifier" : "seadatanet:00000",
+          "schema:mainEntityOfPage" : "https://NiceMarineStation.eu",
+          "prov:type" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "schema:Organization"
-          } ]
+          }
         },
         "orcid:0000-0001-0001-0002" : {
-          "schema:name" : [ "J. Gerschwin" ],
-          "schema:email" : [ "jg@somewhere.com" ],
-          "schema:identifier" : [ "orcid:0000-0001-0001-0002" ],
-          "schema:affiliation" : [ "seadatanet:00000" ],
-          "prov:type" : [ {
+          "schema:name" : "J. Gerschwin",
+          "schema:email" : "jg@somewhere.com",
+          "schema:identifier" : "orcid:0000-0001-0001-0002",
+          "schema:affiliation" : "seadatanet:00000",
+          "prov:type" : {
             "type" : "prov:QUALIFIED_NAME",
             "$" : "schema:Person"
-          } ]
+          }
         }
       },
       "used" : {
@@ -226,7 +226,7 @@
         "_:n115" : {
           "prov:activity" : "blank:MaterialProcessing",
           "prov:agent" : "orcid:0000-0001-0001-0002",
-          "prov:role" : [ "lab technician" ]
+          "prov:role" : "lab technician"
         }
       },
       "wasAttributedTo" : {
