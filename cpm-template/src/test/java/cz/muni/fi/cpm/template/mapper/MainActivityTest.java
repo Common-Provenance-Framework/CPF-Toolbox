@@ -18,7 +18,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openprovenance.prov.model.Activity;
 import org.openprovenance.prov.model.Attribute;
-import org.openprovenance.prov.model.LangString;
 import org.openprovenance.prov.model.ProvFactory;
 import org.openprovenance.prov.model.QualifiedName;
 import org.openprovenance.prov.model.Statement;
@@ -86,8 +85,8 @@ public class MainActivityTest {
 
     Attribute attr = activity.getOther().getFirst();
     assertEquals(CpmAttribute.REFERENCED_META_BUNDLE_SPECV.toString(), attr.getElementName().getLocalPart());
-    assertInstanceOf(LangString.class, attr.getValue());
-    assertEquals(version, LangString.class.cast(attr.getValue()).getValue());
+    assertInstanceOf(String.class, attr.getValue());
+    assertEquals(version, String.class.cast(attr.getValue()));
   }
 
   @Test
