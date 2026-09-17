@@ -5,7 +5,7 @@ prefix ex <test>
 prefix schema <https://schema.org/>
 bundle ex:bundle1
 
-entity(ex:identifierEntity1,[prov:type = 'cpm:id', cpm:externalId = "ex:extID1" %% xsd:string, cpm:externalIdType = "Document" %% xsd:string, cpm:comment = "An example identifier entity" %% xsd:string])
+entity(ex:identifierEntity1,[prov:type = 'cpm:id', prov:value = 'ex:identification', cpm:externalId = "ex:extID1", cpm:externalIdType = "Document", cpm:comment = "An example identifier entity", ex:attr = "description"])
 agent(ex:currentAgent1,[prov:type = 'cpm:currentAgent', prov:type = 'ex:person', cpm:contactIdPid = "contact003", ex:attrs = 'ex:org'])
 activity(ex:activity1,2011-11-16T16:05:00.000Z,2011-11-16T18:05:00.000Z,[prov:type = 'cpm:mainActivity', prov:type = 'schema:Permit', prov:location = "Brno", cpm:referencedMetaBundleId = 'ex:metaBundle1', cpm:referencedMetaBundleSpecV = "1.0.0", dct:hasPart = 'ex:subActivity1', ex:inAttr2 = "1111111111", ex:inAttr2 = "adsfasd", ex:inAttr1 = "5" %% xsd:integer, ex:inAttr4 = "true" %% xsd:boolean, ex:inAttr2 = "value2", ex:attrs = "Y29udGBudCBoZXJl" %% xsd:base64Binary ])
 entity(ex:specForwardConnector1,[prov:type = 'cpm:specForwardConnector', prov:value = "true" %% xsd:boolean, cpm:hashAlg = "SHA512" %% xsd:string, cpm:provenanceServiceUri = "http://provenance.service.org" %% xsd:anyURI, cpm:referencedBundleHashValue = "{hash=def789ghi012}" %% xsd:byte, cpm:referencedBundleId = 'ex:referencedBundle2', cpm:referencedMetaBundleId = 'ex:referencedMeta2', ex:attrs = 'ex:value'])

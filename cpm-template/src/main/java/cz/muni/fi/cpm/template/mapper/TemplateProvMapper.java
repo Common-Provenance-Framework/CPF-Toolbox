@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 
 import org.openprovenance.prov.model.Activity;
 import org.openprovenance.prov.model.Agent;
-import org.openprovenance.prov.model.Attribute;
 import org.openprovenance.prov.model.Bundle;
 import org.openprovenance.prov.model.Document;
 import org.openprovenance.prov.model.Entity;
@@ -264,6 +263,19 @@ public class TemplateProvMapper implements ITemplateProvMapper {
               .map(cPF::newCpmAttributeComment)
               .ifPresent(entity.getOther()::add);
 
+          listToStreamSafe(iE.getAttributes())
+              .forEach(attr -> {
+                if (attr.getKind() == AttributeKind.PROV_TYPE)
+                  entity.getType().add(((Type) attr));
+                else if (attr.getKind() == AttributeKind.PROV_LABEL)
+                  entity.getLabel().add(((LangString) attr.getValue()));
+                else if (attr.getKind() == AttributeKind.PROV_LOCATION)
+                  entity.getLocation().add(((Location) attr));
+                else if (attr.getKind() == AttributeKind.PROV_VALUE)
+                  entity.setValue((((Value) attr)));
+                else
+                  entity.getOther().add(((Other) attr));
+              });
           return entity;
         });
   }

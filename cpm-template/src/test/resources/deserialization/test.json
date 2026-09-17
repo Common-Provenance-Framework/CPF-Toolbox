@@ -158,7 +158,17 @@
       "id": "ex:identifierEntity1",
       "externalId": "ex:extID1",
       "externalIdType": "Document",
-      "comment": "An example identifier entity"
+      "comment": "An example identifier entity",
+      "attributes": {
+        "prov:value": {
+          "$":"ex:identification",
+          "type": "prov:QUALIFIED_NAME"
+        },
+        "ex:attr": {
+          "$": "description",
+          "type": "xsd:string"
+        }
+      }
     }
   ]
 }
