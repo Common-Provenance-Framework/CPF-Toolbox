@@ -1,7 +1,10 @@
 {
   "prefixes" : {
     "_" : "https://openprovenance.org/blank#",
-    "ex" : "test"
+    "ex" : "test",
+    "cpm" : "https://www.commonprovenancemodel.org/cpm-namespace-v1-0/",
+    "prov" : "http://www.w3.org/ns/prov#",
+    "schema" : "https://schema.org/"
   },
   "mainActivity" : {
     "id" : "ex:activity1",
@@ -9,6 +12,20 @@
     "endTime" : "2011-11-16T18:05:00.000Z",
     "referencedMetaBundleId" : "ex:metaBundle1",
     "referencedMetaBundleSpecV" : "1.0.0",
+    "attributes" : {
+      "ex:inAttr2" : [ "1111111111", "adsfasd", "value2" ],
+      "ex:attrs" : {
+        "$" : "Y29udGBudCBoZXJl",
+        "type" : "xsd:base64Binary"
+      },
+      "ex:inAttr1" : 5,
+      "prov:location" : "Brno",
+      "ex:inAttr4" : true,
+      "prov:type" : {
+        "$" : "schema:Permit",
+        "type" : "prov:QUALIFIED_NAME"
+      }
+    },
     "hasPart" : [ "ex:subActivity1" ],
     "used" : [ {
       "id" : "ex:id1",

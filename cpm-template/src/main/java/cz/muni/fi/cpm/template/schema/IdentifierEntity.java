@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import cz.muni.fi.cpm.template.deserialization.AttributesDeserializer;
+import cz.muni.fi.cpm.template.serialization.AttributesSeserializer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class IdentifierEntity {
     private String comment;
 
     @JsonDeserialize(using = AttributesDeserializer.class)
+    @JsonSerialize(using = AttributesSeserializer.class)
     @JsonPropertyDescription("Other arbitrary attributes in IdentifierEntity")
     private List<Attribute> attributes;
 

@@ -11,9 +11,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import cz.muni.fi.cpm.constants.CpmType;
 import cz.muni.fi.cpm.template.deserialization.AttributesDeserializer;
+import cz.muni.fi.cpm.template.serialization.AttributesSeserializer;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public abstract class CpmAgent {
@@ -23,6 +25,7 @@ public abstract class CpmAgent {
   private String contactIdPid;
 
   @JsonDeserialize(using = AttributesDeserializer.class)
+  @JsonSerialize(using = AttributesSeserializer.class)
   @JsonPropertyDescription("Other arbitrary attributes in Agent")
   private List<Attribute> attributes;
 

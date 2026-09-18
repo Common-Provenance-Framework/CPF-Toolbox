@@ -1,6 +1,9 @@
 {
   "prefixes": {
-    "ex": "test"
+    "ex": "test",
+    "schema": "https://schema.org/",
+    "cpm": "https://www.commonprovenancemodel.org/cpm-namespace-v1-0/",
+    "prov": "http://www.w3.org/ns/prov#"
   },
   "mainActivity": {
     "id": "ex:activity1",
@@ -11,6 +14,24 @@
     "hasPart": [
       "ex:subActivity1"
     ],
+    "attributes": {
+      "ex:inAttr1": 5,
+      "ex:inAttr2": [
+        "value2",
+        "adsfasd",
+        "1111111111"
+      ],
+      "ex:inAttr4": true,
+      "prov:location": "Brno",
+      "prov:type": {
+        "type": "prov:QUALIFIED_NAME",
+        "$": "schema:Permit"
+      },
+      "ex:attrs": {
+        "$": "Y29udGBudCBoZXJl",
+        "type": "xsd:base64Binary"
+      }
+    },
     "used": [
       {
         "id": "ex:id1",
