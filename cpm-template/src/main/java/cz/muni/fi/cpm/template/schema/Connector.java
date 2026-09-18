@@ -10,9 +10,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import cz.muni.fi.cpm.constants.CpmType;
 import cz.muni.fi.cpm.template.deserialization.AttributesDeserializer;
+import cz.muni.fi.cpm.template.serialization.AttributesSeserializer;
 
 public abstract class Connector {
   @JsonProperty(required = true)
@@ -21,6 +23,7 @@ public abstract class Connector {
   private String externalId;
 
   @JsonDeserialize(using = AttributesDeserializer.class)
+    @JsonSerialize(using = AttributesSeserializer.class)
   @JsonPropertyDescription("Other arbitrary attributes in Connector")
   private List<Attribute> attributes;
 
