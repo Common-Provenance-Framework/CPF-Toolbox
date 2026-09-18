@@ -178,6 +178,7 @@ Where a field maps to an attribute in the output, the attribute is shown as `→
 | `endTime` | no | ISO-8601. |
 | `referencedMetaBundleId` | no | Meta-bundle describing this bundle. → `cpm:referencedMetaBundleId` |
 | `referencedMetaBundleSpecV` | no | Content version of the referenced meta-bundle. → `cpm:referencedMetaBundleSpecV` |
+| `attributes` | no | Object with arbitrary attributes which are not mandatory for mainActivity. |
 | `hasPart` | no | Qualified names of **sub-activities**, declared in the domain-specific part. Not devices or protocols. → `dct:hasPart` |
 | `used` | no | Array of `{ "id": <optional>, "backwardConnectorId": <required> }`. → `used` |
 | `generated` | no | Qualified names of forward connectors this activity produces. → `wasGeneratedBy` |
@@ -196,6 +197,7 @@ Where a field maps to an attribute in the output, the attribute is shown as `→
 | `referencedMetaBundleSpecV` | no | Content version of the referenced meta-bundle. → `cpm:referencedMetaBundleSpecV` |
 | `hashAlg` | no | One of `MD5`, `SHA1`, `SHA256`, `SHA512`. → `cpm:hashAlg` |
 | `referencedBundleHashValue` | no | Hash of the referenced bundle. Pass a plain string — a JSON object is not converted correctly. |
+| `attributes` | no | Object with arbitrary attributes which are not mandatory for backwardConnector. |
 | `attributedTo` | no | `{ "id": <optional>, "agentId": <required> }`. → `wasAttributedTo` |
 
 #### `forwardConnectors[]`
@@ -204,6 +206,7 @@ Where a field maps to an attribute in the output, the attribute is shown as `→
 |---|---|---|
 | `id` | yes | Qualified name of the connector. |
 | `externalId` | no | → `cpm:externalId` |
+| `attributes` | no | Object with arbitrary attributes which are not mandatory for forwardConnector. |
 | `derivedFrom` | no | Backward connectors this one derives from. → `wasDerivedFrom` |
 
 Forward connectors accept **nothing else**. There is no `attributedTo` and no
@@ -235,6 +238,7 @@ Entities get `prov:type = cpm:specForwardConnector`.
 |---|---|---|
 | `id` | yes | Qualified name of the agent. |
 | `contactIdPid` | no | Persistent identifier for the contact point. → `cpm:contactIdPid` |
+| `attributes` | no | Object with arbitrary attributes which are not mandatory for senderAgent/ receiverAgent. |
 
 #### `currentAgent`
 
@@ -246,6 +250,7 @@ bundle, and it is associated with one current agent.
 |---|---|---|
 | `id` | yes | Qualified name of the agent. |
 | `contactIdPid` | no | Persistent identifier for the contact point. → `cpm:contactIdPid` |
+| `attributes` | no | Object with arbitrary attributes which are not mandatory for currentAgent. |
 
 Agents get `prov:type = cpm:currentAgent`.
 
@@ -274,6 +279,7 @@ either — declare the association with `mainActivity.associatedWith`:
 | `externalId` | no | The identifier value. → `cpm:externalId` |
 | `externalIdType` | no | What kind of identifier it is. → `cpm:externalIdType` |
 | `comment` | no | Free text. → `cpm:comment` |
+| `attributes` | no | Object with arbitrary attributes which are not mandatory for identifierEntity. |
 
 <a id="unknown-fields"></a>
 
