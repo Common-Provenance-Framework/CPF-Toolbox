@@ -163,8 +163,8 @@ public class CpmDocument implements StatementAction {
         for (IEdge existingEdge : edges) {
             if (ProvUtilities2.sameEdge(u, hadMember, existingEdge.getAnyRelation())) {
                 existingEdge.handleDuplicate(hadMember);
+                return;
             }
-            return;
         }
 
         for (QualifiedName member : hadMember.getEntity()) {
@@ -385,8 +385,8 @@ public class CpmDocument implements StatementAction {
         for (IEdge existingEdge : edges) {
             if (ProvUtilities2.sameEdge(u, clonedInfluence, existingEdge.getAnyRelation())) {
                 existingEdge.handleDuplicate(clonedInfluence);
+                return;
             }
-            return;
         }
 
         List<INode> effectNodes = new ArrayList<>();

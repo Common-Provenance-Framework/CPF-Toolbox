@@ -602,6 +602,40 @@ public abstract class CpmDocumentConstructorTest {
 
 
     @Test
+    public void constructor_hadMemberAfterOtherRelation_returnsMappedHadMemberRelations() {
+        Document document = pF.newDocument();
+        document.setNamespace(cPF.newCpmNamespace());
+
+        QualifiedName id = pF.newQualifiedName("uri", "bundle", "ex");
+        Bundle bundle = pF.newNamedBundle(id, new ArrayList<>());
+        document.getStatementOrBundle().add(bundle);
+
+        QualifiedName collectionId = pF.newQualifiedName("uri", "collection", "ex");
+        Entity collection = pF.newEntity(collectionId);
+
+        QualifiedName entityId1 = pF.newQualifiedName("uri", "entity", "ex");
+        Entity entity1 = pF.newEntity(entityId1);
+
+        QualifiedName entityId2 = pF.newQualifiedName("uri", "entity2", "ex");
+        Entity entity2 = pF.newEntity(entityId2);
+
+        WasDerivedFrom derivation = pF.newWasDerivedFrom(entityId2, entityId1);
+        HadMember hadMember = pF.newHadMember(collectionId, entityId1, entityId2);
+
+        bundle.getStatement().addAll(List.of(collection, entity1, entity2, derivation, hadMember));
+
+        CpmDocument doc = new CpmDocument(document, pF, cPF, cF);
+
+        assertNotNull(doc.getEdge(entityId2, entityId1));
+        assertNotNull(doc.getEdge(collectionId, entityId1));
+        assertNotNull(doc.getEdge(collectionId, entityId2));
+        assertEquals(hadMember, doc.getEdge(collectionId, entityId1).getAnyRelation());
+        assertEquals(hadMember, doc.getEdge(collectionId, entityId2).getAnyRelation());
+        assertTrue(doc.areAllRelationsMapped());
+    }
+
+
+    @Test
     public void constructor_unMappedHadMember_returnsCorrectEdge() {
         Document document = pF.newDocument();
         document.setNamespace(cPF.newCpmNamespace());
