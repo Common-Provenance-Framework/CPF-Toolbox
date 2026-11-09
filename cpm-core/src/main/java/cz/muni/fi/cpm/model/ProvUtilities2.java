@@ -6,6 +6,7 @@ import org.openprovenance.prov.model.*;
 import org.openprovenance.prov.model.StatementOrBundle.Kind;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -151,6 +152,16 @@ public class ProvUtilities2 {
         existing.getOther().addAll(set4);
     }
 
+    /**
+     * Checks whether two relations represent the same edge: the same kind, identifier and arguments.
+     * Relations without an identifier are only the same edge when their attributes are equal too,
+     * because PROV gives each of them its own unknown identifier.
+     *
+     * @param u  the PROV utilities used to read the relations' arguments
+     * @param r1 the first relation
+     * @param r2 the second relation
+     * @return true if both relations represent the same edge, false otherwise
+     */
     public static boolean sameEdge(ProvUtilities u, Relation r1, Relation r2) {
         if (r1 instanceof WasInformedBy && r2 instanceof WasInformedBy) {
             return sameEdge(u, r1, r2, 2);
@@ -192,7 +203,29 @@ public class ProvUtilities2 {
                 return false;
             }
         }
+        if (r1 instanceof Identifiable identifiable && identifiable.getId() == null) {
+            return sameAttributes(r1, r2);
+        }
         return true;
+    }
+
+    private static boolean sameAttributes(Relation r1, Relation r2) {
+        if (r1 instanceof QualifiedRelation q1 && r2 instanceof QualifiedRelation q2
+                && (!sameValues(q1.getLabel(), q2.getLabel())
+                || !sameValues(q1.getType(), q2.getType())
+                || !sameValues(q1.getOther(), q2.getOther()))) {
+            return false;
+        }
+        if (r1 instanceof HasLocation l1 && r2 instanceof HasLocation l2
+                && !sameValues(l1.getLocation(), l2.getLocation())) {
+            return false;
+        }
+        return !(r1 instanceof HasRole role1 && r2 instanceof HasRole role2
+                && !sameValues(role1.getRole(), role2.getRole()));
+    }
+
+    private static boolean sameValues(List<?> values1, List<?> values2) {
+        return new HashSet<>(values1).equals(new HashSet<>(values2));
     }
 
 }

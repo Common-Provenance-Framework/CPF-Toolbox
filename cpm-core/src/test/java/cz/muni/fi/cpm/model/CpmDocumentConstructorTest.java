@@ -602,6 +602,77 @@ public abstract class CpmDocumentConstructorTest {
 
 
     @Test
+    public void constructor_associationsWithoutIdWithDifferentRoles_returnsBothAssociations() {
+        Document document = pF.newDocument();
+        document.setNamespace(cPF.newCpmNamespace());
+
+        QualifiedName id = pF.newQualifiedName("uri", "bundle", "ex");
+        Bundle bundle = pF.newNamedBundle(id, new ArrayList<>());
+        document.getStatementOrBundle().add(bundle);
+
+        QualifiedName activityId = pF.newQualifiedName("uri", "activity", "ex");
+        Activity activity = pF.newActivity(activityId);
+
+        QualifiedName agentId = pF.newQualifiedName("uri", "agent", "ex");
+        Agent agent = pF.newAgent(agentId);
+
+        WasAssociatedWith association1 = pF.newWasAssociatedWith(null, activityId, agentId);
+        Role technician = pF.newRole("laboratory technician", pF.getName().XSD_STRING);
+        association1.getRole().add(technician);
+
+        WasAssociatedWith association2 = pF.newWasAssociatedWith(null, activityId, agentId);
+        Role provider = pF.newRole("providing agent", pF.getName().XSD_STRING);
+        association2.getRole().add(provider);
+
+        bundle.getStatement().addAll(List.of(activity, agent, association1, association2));
+
+        CpmDocument doc = new CpmDocument(document, pF, cPF, cF);
+
+        List<IEdge> edges = doc.getEdges(activityId, agentId, Kind.PROV_ASSOCIATION);
+        Set<Role> roles = new HashSet<>();
+        for (IEdge edge : edges) {
+            for (Relation relation : edge.getRelations()) {
+                ((WasAssociatedWith) relation).getRole().forEach(roles::add);
+            }
+        }
+
+        assertEquals(2, edges.size());
+        assertEquals(Set.of(technician, provider), roles);
+        assertTrue(doc.areAllRelationsMapped());
+    }
+
+
+    @Test
+    public void constructor_identicalAssociationsWithoutId_returnsOneEdge() {
+        Document document = pF.newDocument();
+        document.setNamespace(cPF.newCpmNamespace());
+
+        QualifiedName id = pF.newQualifiedName("uri", "bundle", "ex");
+        Bundle bundle = pF.newNamedBundle(id, new ArrayList<>());
+        document.getStatementOrBundle().add(bundle);
+
+        QualifiedName activityId = pF.newQualifiedName("uri", "activity", "ex");
+        Activity activity = pF.newActivity(activityId);
+
+        QualifiedName agentId = pF.newQualifiedName("uri", "agent", "ex");
+        Agent agent = pF.newAgent(agentId);
+
+        WasAssociatedWith association1 = pF.newWasAssociatedWith(null, activityId, agentId);
+        association1.getRole().add(pF.newRole("laboratory technician", pF.getName().XSD_STRING));
+
+        WasAssociatedWith association2 = pF.newWasAssociatedWith(null, activityId, agentId);
+        association2.getRole().add(pF.newRole("laboratory technician", pF.getName().XSD_STRING));
+
+        bundle.getStatement().addAll(List.of(activity, agent, association1, association2));
+
+        CpmDocument doc = new CpmDocument(document, pF, cPF, cF);
+
+        assertEquals(1, doc.getEdges(activityId, agentId, Kind.PROV_ASSOCIATION).size());
+        assertTrue(doc.areAllRelationsMapped());
+    }
+
+
+    @Test
     public void constructor_unMappedHadMember_returnsCorrectEdge() {
         Document document = pF.newDocument();
         document.setNamespace(cPF.newCpmNamespace());
