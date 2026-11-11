@@ -129,6 +129,33 @@ public abstract class CpmDocumentInfluenceTest {
     }
 
     @Test
+    public void addInfluence_afterOtherRelation_returnsMappedInfluence() {
+        QualifiedName id1 = cPF.newCpmQualifiedName("qN1");
+        Entity effect = pF.newEntity(id1);
+
+        QualifiedName id2 = cPF.newCpmQualifiedName("qN2");
+        Entity cause = pF.newEntity(id2);
+
+        QualifiedName id3 = cPF.newCpmQualifiedName("qN3");
+        Entity other = pF.newEntity(id3);
+
+        WasDerivedFrom derivation = pF.newWasDerivedFrom(id3, id1);
+
+        QualifiedName rel = cPF.newCpmQualifiedName("rel");
+        WasInfluencedBy inf = pF.newWasInfluencedBy(rel, id1, id2);
+
+        QualifiedName bundleId = pF.newQualifiedName("uri", "bundle", "ex");
+
+        CpmDocument doc = new CpmDocument(List.of(), List.of(effect, cause, other, derivation, inf), List.of(), bundleId, pF, cPF, cF);
+
+        assertFalse(doc.getEdges(id3, id1, Kind.PROV_DERIVATION).isEmpty());
+        assertFalse(doc.getEdges(id1, id2, Kind.PROV_INFLUENCE).isEmpty());
+        assertEquals(doc.getNode(id1), doc.getEdge(id1, id2).getEffect());
+        assertEquals(doc.getNode(id2), doc.getEdge(id1, id2).getCause());
+        assertTrue(doc.areAllRelationsMapped());
+    }
+
+    @Test
     public void addInfluence_effectFirstCauseSecondInfluenceThird_returnsMappedInfluence() {
         QualifiedName id1 = cPF.newCpmQualifiedName("qN1");
         Entity cause = pF.newEntity(id1);
